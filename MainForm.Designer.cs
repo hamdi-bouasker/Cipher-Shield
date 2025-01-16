@@ -90,10 +90,10 @@
             label3 = new System.Windows.Forms.Label();
             label2 = new System.Windows.Forms.Label();
             tabPage5 = new System.Windows.Forms.TabPage();
+            panel8 = new System.Windows.Forms.Panel();
             hideShowPassword = new System.Windows.Forms.Button();
-            panel5 = new System.Windows.Forms.Panel();
-            verticalLabel1 = new VerticalLabel();
             panel4 = new System.Windows.Forms.Panel();
+            focusBtn = new System.Windows.Forms.Button();
             QuestionsPasswordTxtBox = new System.Windows.Forms.TextBox();
             label19 = new System.Windows.Forms.Label();
             ChangeSecurityQuestion1TtxBx = new System.Windows.Forms.TextBox();
@@ -111,9 +111,12 @@
             RepeatNewPasswordTxtBox = new System.Windows.Forms.TextBox();
             SubmitNewPasswordBtn = new System.Windows.Forms.Button();
             tabPage6 = new System.Windows.Forms.TabPage();
+            label14 = new System.Windows.Forms.Label();
             panel1 = new System.Windows.Forms.Panel();
-            panel8 = new System.Windows.Forms.Panel();
-            label17 = new System.Windows.Forms.Label();
+            aboutCarousselLbl = new System.Windows.Forms.Label();
+            textBox1 = new System.Windows.Forms.TextBox();
+            panel5 = new System.Windows.Forms.Panel();
+            verticalLabel1 = new VerticalLabel();
             openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             openFileDialog2 = new System.Windows.Forms.OpenFileDialog();
@@ -124,6 +127,8 @@
             timer1 = new System.Windows.Forms.Timer(components);
             printDialog1 = new System.Windows.Forms.PrintDialog();
             contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(components);
+            contextMenuStrip2 = new System.Windows.Forms.ContextMenuStrip(components);
+            timer2 = new System.Windows.Forms.Timer(components);
             tabControl1.SuspendLayout();
             tabPage3.SuspendLayout();
             panel6.SuspendLayout();
@@ -138,13 +143,13 @@
             ((System.ComponentModel.ISupportInitialize)RegexIncrementNumeric).BeginInit();
             ((System.ComponentModel.ISupportInitialize)RegexStartFromNumeric).BeginInit();
             tabPage5.SuspendLayout();
-            panel5.SuspendLayout();
+            panel8.SuspendLayout();
             panel4.SuspendLayout();
             panel3.SuspendLayout();
             panel2.SuspendLayout();
             tabPage6.SuspendLayout();
             panel1.SuspendLayout();
-            panel8.SuspendLayout();
+            panel5.SuspendLayout();
             SuspendLayout();
             // 
             // tabControl1
@@ -831,28 +836,36 @@
             // tabPage5
             // 
             tabPage5.BackColor = System.Drawing.Color.FromArgb(32, 33, 36);
-            tabPage5.Controls.Add(hideShowPassword);
-            tabPage5.Controls.Add(panel5);
+            tabPage5.Controls.Add(panel8);
             tabPage5.Controls.Add(panel4);
             tabPage5.Controls.Add(panel3);
             tabPage5.Controls.Add(panel2);
             tabPage5.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            tabPage5.Location = new System.Drawing.Point(4, 24);
+            tabPage5.Location = new System.Drawing.Point(4, 27);
             tabPage5.Name = "tabPage5";
             tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            tabPage5.Size = new System.Drawing.Size(752, 524);
+            tabPage5.Size = new System.Drawing.Size(752, 521);
             tabPage5.TabIndex = 4;
             tabPage5.Text = "Help";
+            // 
+            // panel8
+            // 
+            panel8.BackColor = System.Drawing.Color.FromArgb(41, 42, 45);
+            panel8.Controls.Add(hideShowPassword);
+            panel8.Location = new System.Drawing.Point(332, 3);
+            panel8.Name = "panel8";
+            panel8.Size = new System.Drawing.Size(78, 444);
+            panel8.TabIndex = 24;
             // 
             // hideShowPassword
             // 
             hideShowPassword.BackgroundImage = (System.Drawing.Image)resources.GetObject("hideShowPassword.BackgroundImage");
-            hideShowPassword.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            hideShowPassword.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             hideShowPassword.FlatAppearance.BorderSize = 0;
             hideShowPassword.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(32, 33, 36);
             hideShowPassword.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             hideShowPassword.ForeColor = System.Drawing.Color.FromArgb(32, 33, 36);
-            hideShowPassword.Location = new System.Drawing.Point(361, 6);
+            hideShowPassword.Location = new System.Drawing.Point(28, 74);
             hideShowPassword.Name = "hideShowPassword";
             hideShowPassword.Size = new System.Drawing.Size(22, 24);
             hideShowPassword.TabIndex = 23;
@@ -860,46 +873,42 @@
             hideShowPassword.MouseDown += hideShowPassword_MouseDown;
             hideShowPassword.MouseUp += hideShowPassword_MouseUp;
             // 
-            // panel5
-            // 
-            panel5.BackColor = System.Drawing.Color.FromArgb(41, 42, 45);
-            panel5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            panel5.Controls.Add(verticalLabel1);
-            panel5.Location = new System.Drawing.Point(300, 36);
-            panel5.Name = "panel5";
-            panel5.Size = new System.Drawing.Size(152, 408);
-            panel5.TabIndex = 22;
-            // 
-            // verticalLabel1
-            // 
-            verticalLabel1.Font = new System.Drawing.Font("Comic Sans MS", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
-            verticalLabel1.Location = new System.Drawing.Point(56, 18);
-            verticalLabel1.Name = "verticalLabel1";
-            verticalLabel1.Size = new System.Drawing.Size(34, 364);
-            verticalLabel1.TabIndex = 0;
-            verticalLabel1.Text = "Cipher Shield ®  Secure your protection";
-            verticalLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
             // panel4
             // 
             panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            panel4.Controls.Add(focusBtn);
             panel4.Controls.Add(QuestionsPasswordTxtBox);
             panel4.Controls.Add(label19);
             panel4.Controls.Add(ChangeSecurityQuestion1TtxBx);
             panel4.Controls.Add(ChangeSecurityQuestion2TtxBx);
             panel4.Controls.Add(ChangeSecurityQuestion3TtxBx);
             panel4.Controls.Add(SubmitNewSecurityQuestionsBtn);
-            panel4.Location = new System.Drawing.Point(458, 3);
+            panel4.Location = new System.Drawing.Point(416, 3);
             panel4.Name = "panel4";
-            panel4.Size = new System.Drawing.Size(291, 444);
+            panel4.Size = new System.Drawing.Size(333, 444);
             panel4.TabIndex = 21;
+            // 
+            // focusBtn
+            // 
+            focusBtn.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(32, 33, 36);
+            focusBtn.FlatAppearance.BorderSize = 0;
+            focusBtn.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(32, 33, 36);
+            focusBtn.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(32, 33, 36);
+            focusBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            focusBtn.ForeColor = System.Drawing.Color.FromArgb(32, 33, 36);
+            focusBtn.Location = new System.Drawing.Point(275, 3);
+            focusBtn.Name = "focusBtn";
+            focusBtn.Size = new System.Drawing.Size(1, 1);
+            focusBtn.TabIndex = 58;
+            focusBtn.TabStop = false;
+            focusBtn.UseVisualStyleBackColor = true;
             // 
             // QuestionsPasswordTxtBox
             // 
             QuestionsPasswordTxtBox.BackColor = System.Drawing.Color.FromArgb(41, 42, 45);
             QuestionsPasswordTxtBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             QuestionsPasswordTxtBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            QuestionsPasswordTxtBox.Location = new System.Drawing.Point(26, 261);
+            QuestionsPasswordTxtBox.Location = new System.Drawing.Point(45, 261);
             QuestionsPasswordTxtBox.Name = "QuestionsPasswordTxtBox";
             QuestionsPasswordTxtBox.PasswordChar = '*';
             QuestionsPasswordTxtBox.PlaceholderText = "Enter Password";
@@ -911,7 +920,7 @@
             // 
             label19.AutoSize = true;
             label19.Font = new System.Drawing.Font("Comic Sans MS", 12F);
-            label19.Location = new System.Drawing.Point(35, 21);
+            label19.Location = new System.Drawing.Point(54, 21);
             label19.Name = "label19";
             label19.Size = new System.Drawing.Size(225, 23);
             label19.TabIndex = 7;
@@ -922,7 +931,7 @@
             ChangeSecurityQuestion1TtxBx.BackColor = System.Drawing.Color.FromArgb(41, 42, 45);
             ChangeSecurityQuestion1TtxBx.BorderStyle = System.Windows.Forms.BorderStyle.None;
             ChangeSecurityQuestion1TtxBx.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            ChangeSecurityQuestion1TtxBx.Location = new System.Drawing.Point(26, 78);
+            ChangeSecurityQuestion1TtxBx.Location = new System.Drawing.Point(45, 78);
             ChangeSecurityQuestion1TtxBx.Name = "ChangeSecurityQuestion1TtxBx";
             ChangeSecurityQuestion1TtxBx.PasswordChar = '*';
             ChangeSecurityQuestion1TtxBx.PlaceholderText = "Your favorite city?";
@@ -935,7 +944,7 @@
             ChangeSecurityQuestion2TtxBx.BackColor = System.Drawing.Color.FromArgb(41, 42, 45);
             ChangeSecurityQuestion2TtxBx.BorderStyle = System.Windows.Forms.BorderStyle.None;
             ChangeSecurityQuestion2TtxBx.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            ChangeSecurityQuestion2TtxBx.Location = new System.Drawing.Point(26, 138);
+            ChangeSecurityQuestion2TtxBx.Location = new System.Drawing.Point(45, 138);
             ChangeSecurityQuestion2TtxBx.Name = "ChangeSecurityQuestion2TtxBx";
             ChangeSecurityQuestion2TtxBx.PasswordChar = '*';
             ChangeSecurityQuestion2TtxBx.PlaceholderText = "Your favorite cartoon?";
@@ -948,7 +957,7 @@
             ChangeSecurityQuestion3TtxBx.BackColor = System.Drawing.Color.FromArgb(41, 42, 45);
             ChangeSecurityQuestion3TtxBx.BorderStyle = System.Windows.Forms.BorderStyle.None;
             ChangeSecurityQuestion3TtxBx.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            ChangeSecurityQuestion3TtxBx.Location = new System.Drawing.Point(26, 200);
+            ChangeSecurityQuestion3TtxBx.Location = new System.Drawing.Point(45, 200);
             ChangeSecurityQuestion3TtxBx.Name = "ChangeSecurityQuestion3TtxBx";
             ChangeSecurityQuestion3TtxBx.PasswordChar = '*';
             ChangeSecurityQuestion3TtxBx.PlaceholderText = "Your favorite sport?";
@@ -960,7 +969,7 @@
             // 
             SubmitNewSecurityQuestionsBtn.Font = new System.Drawing.Font("Comic Sans MS", 12F);
             SubmitNewSecurityQuestionsBtn.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            SubmitNewSecurityQuestionsBtn.Location = new System.Drawing.Point(82, 341);
+            SubmitNewSecurityQuestionsBtn.Location = new System.Drawing.Point(101, 341);
             SubmitNewSecurityQuestionsBtn.Name = "SubmitNewSecurityQuestionsBtn";
             SubmitNewSecurityQuestionsBtn.Size = new System.Drawing.Size(133, 31);
             SubmitNewSecurityQuestionsBtn.TabIndex = 9;
@@ -974,7 +983,7 @@
             panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             panel3.Controls.Add(homeCarousselLbl);
             panel3.Dock = System.Windows.Forms.DockStyle.Bottom;
-            panel3.Location = new System.Drawing.Point(3, 453);
+            panel3.Location = new System.Drawing.Point(3, 450);
             panel3.Name = "panel3";
             panel3.Size = new System.Drawing.Size(746, 68);
             panel3.TabIndex = 20;
@@ -1002,7 +1011,7 @@
             panel2.Controls.Add(SubmitNewPasswordBtn);
             panel2.Location = new System.Drawing.Point(3, 3);
             panel2.Name = "panel2";
-            panel2.Size = new System.Drawing.Size(291, 444);
+            panel2.Size = new System.Drawing.Size(323, 444);
             panel2.TabIndex = 19;
             // 
             // backupPasswordTxtBox
@@ -1010,7 +1019,7 @@
             backupPasswordTxtBox.BackColor = System.Drawing.Color.FromArgb(41, 42, 45);
             backupPasswordTxtBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             backupPasswordTxtBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            backupPasswordTxtBox.Location = new System.Drawing.Point(24, 338);
+            backupPasswordTxtBox.Location = new System.Drawing.Point(40, 338);
             backupPasswordTxtBox.Name = "backupPasswordTxtBox";
             backupPasswordTxtBox.PasswordChar = '*';
             backupPasswordTxtBox.PlaceholderText = "Enter password to backup ";
@@ -1022,7 +1031,7 @@
             // 
             BackupLockPasswordbtn.Font = new System.Drawing.Font("Comic Sans MS", 12F);
             BackupLockPasswordbtn.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            BackupLockPasswordbtn.Location = new System.Drawing.Point(80, 384);
+            BackupLockPasswordbtn.Location = new System.Drawing.Point(96, 384);
             BackupLockPasswordbtn.Name = "BackupLockPasswordbtn";
             BackupLockPasswordbtn.Size = new System.Drawing.Size(133, 31);
             BackupLockPasswordbtn.TabIndex = 8;
@@ -1034,7 +1043,7 @@
             // 
             label11.AutoSize = true;
             label11.Font = new System.Drawing.Font("Comic Sans MS", 12F);
-            label11.Location = new System.Drawing.Point(57, 21);
+            label11.Location = new System.Drawing.Point(73, 21);
             label11.Name = "label11";
             label11.Size = new System.Drawing.Size(170, 23);
             label11.TabIndex = 7;
@@ -1045,7 +1054,7 @@
             oldPasswordTxtBox.BackColor = System.Drawing.Color.FromArgb(41, 42, 45);
             oldPasswordTxtBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             oldPasswordTxtBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            oldPasswordTxtBox.Location = new System.Drawing.Point(24, 78);
+            oldPasswordTxtBox.Location = new System.Drawing.Point(40, 78);
             oldPasswordTxtBox.Name = "oldPasswordTxtBox";
             oldPasswordTxtBox.PasswordChar = '*';
             oldPasswordTxtBox.PlaceholderText = "Enter current Password";
@@ -1058,7 +1067,7 @@
             NewPasswordTxtBox.BackColor = System.Drawing.Color.FromArgb(41, 42, 45);
             NewPasswordTxtBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             NewPasswordTxtBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            NewPasswordTxtBox.Location = new System.Drawing.Point(24, 138);
+            NewPasswordTxtBox.Location = new System.Drawing.Point(40, 138);
             NewPasswordTxtBox.Name = "NewPasswordTxtBox";
             NewPasswordTxtBox.PasswordChar = '*';
             NewPasswordTxtBox.PlaceholderText = "Enter new password";
@@ -1071,7 +1080,7 @@
             RepeatNewPasswordTxtBox.BackColor = System.Drawing.Color.FromArgb(41, 42, 45);
             RepeatNewPasswordTxtBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             RepeatNewPasswordTxtBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            RepeatNewPasswordTxtBox.Location = new System.Drawing.Point(24, 203);
+            RepeatNewPasswordTxtBox.Location = new System.Drawing.Point(40, 203);
             RepeatNewPasswordTxtBox.Name = "RepeatNewPasswordTxtBox";
             RepeatNewPasswordTxtBox.PasswordChar = '*';
             RepeatNewPasswordTxtBox.PlaceholderText = "Repeat new password";
@@ -1083,7 +1092,7 @@
             // 
             SubmitNewPasswordBtn.Font = new System.Drawing.Font("Comic Sans MS", 12F);
             SubmitNewPasswordBtn.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            SubmitNewPasswordBtn.Location = new System.Drawing.Point(80, 250);
+            SubmitNewPasswordBtn.Location = new System.Drawing.Point(96, 250);
             SubmitNewPasswordBtn.Name = "SubmitNewPasswordBtn";
             SubmitNewPasswordBtn.Size = new System.Drawing.Size(133, 31);
             SubmitNewPasswordBtn.TabIndex = 4;
@@ -1093,51 +1102,83 @@
             // 
             // tabPage6
             // 
-            tabPage6.AutoScroll = true;
-            tabPage6.AutoScrollMargin = new System.Drawing.Size(5, 5);
-            tabPage6.AutoScrollMinSize = new System.Drawing.Size(5, 5);
             tabPage6.BackColor = System.Drawing.Color.FromArgb(32, 33, 36);
+            tabPage6.Controls.Add(label14);
             tabPage6.Controls.Add(panel1);
-            tabPage6.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            tabPage6.Location = new System.Drawing.Point(4, 27);
+            tabPage6.Controls.Add(textBox1);
+            tabPage6.Controls.Add(panel5);
+            tabPage6.Location = new System.Drawing.Point(4, 24);
             tabPage6.Name = "tabPage6";
-            tabPage6.Padding = new System.Windows.Forms.Padding(3);
-            tabPage6.Size = new System.Drawing.Size(752, 521);
+            tabPage6.Size = new System.Drawing.Size(752, 524);
             tabPage6.TabIndex = 5;
             tabPage6.Text = "About";
             // 
+            // label14
+            // 
+            label14.Font = new System.Drawing.Font("Comic Sans MS", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, 0);
+            label14.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            label14.Location = new System.Drawing.Point(222, 28);
+            label14.Name = "label14";
+            label14.Size = new System.Drawing.Size(333, 42);
+            label14.TabIndex = 26;
+            label14.Text = "Cipher Shield® All Rights Rserved © 2025";
+            // 
             // panel1
             // 
-            panel1.AutoScroll = true;
-            panel1.AutoScrollMargin = new System.Drawing.Size(5, 5);
-            panel1.AutoScrollMinSize = new System.Drawing.Size(5, 5);
-            panel1.Controls.Add(panel8);
-            panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            panel1.Location = new System.Drawing.Point(3, 3);
+            panel1.BackColor = System.Drawing.Color.FromArgb(41, 42, 45);
+            panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            panel1.Controls.Add(aboutCarousselLbl);
+            panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            panel1.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            panel1.Location = new System.Drawing.Point(0, 456);
             panel1.Name = "panel1";
-            panel1.Size = new System.Drawing.Size(746, 515);
-            panel1.TabIndex = 0;
+            panel1.Size = new System.Drawing.Size(752, 68);
+            panel1.TabIndex = 25;
             // 
-            // panel8
+            // aboutCarousselLbl
             // 
-            panel8.BackColor = System.Drawing.Color.FromArgb(41, 42, 45);
-            panel8.Controls.Add(label17);
-            panel8.Location = new System.Drawing.Point(4, 68);
-            panel8.Name = "panel8";
-            panel8.Size = new System.Drawing.Size(740, 273);
-            panel8.TabIndex = 13;
+            aboutCarousselLbl.BackColor = System.Drawing.Color.FromArgb(41, 42, 45);
+            aboutCarousselLbl.Font = new System.Drawing.Font("Comic Sans MS", 12F);
+            aboutCarousselLbl.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            aboutCarousselLbl.Location = new System.Drawing.Point(61, 25);
+            aboutCarousselLbl.Name = "aboutCarousselLbl";
+            aboutCarousselLbl.Size = new System.Drawing.Size(620, 23);
+            aboutCarousselLbl.TabIndex = 16;
+            aboutCarousselLbl.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // label17
+            // textBox1
             // 
-            label17.AutoSize = true;
-            label17.Font = new System.Drawing.Font("Comic Sans MS", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
-            label17.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            label17.Location = new System.Drawing.Point(230, 69);
-            label17.Name = "label17";
-            label17.Size = new System.Drawing.Size(257, 135);
-            label17.TabIndex = 12;
-            label17.Text = "Cipher Shield ®\r\n\r\n 2025 All rights reserved \r\n\r\nSecure your protection";
-            label17.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            textBox1.BackColor = System.Drawing.Color.FromArgb(41, 42, 45);
+            textBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            textBox1.Font = new System.Drawing.Font("Comic Sans MS", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
+            textBox1.ForeColor = System.Drawing.SystemColors.Window;
+            textBox1.Location = new System.Drawing.Point(47, 106);
+            textBox1.Multiline = true;
+            textBox1.Name = "textBox1";
+            textBox1.Size = new System.Drawing.Size(702, 267);
+            textBox1.TabIndex = 24;
+            textBox1.Text = resources.GetString("textBox1.Text");
+            // 
+            // panel5
+            // 
+            panel5.BackColor = System.Drawing.Color.FromArgb(41, 42, 45);
+            panel5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            panel5.Controls.Add(verticalLabel1);
+            panel5.ForeColor = System.Drawing.SystemColors.ControlLight;
+            panel5.Location = new System.Drawing.Point(3, 3);
+            panel5.Name = "panel5";
+            panel5.Size = new System.Drawing.Size(38, 444);
+            panel5.TabIndex = 23;
+            // 
+            // verticalLabel1
+            // 
+            verticalLabel1.Font = new System.Drawing.Font("Comic Sans MS", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
+            verticalLabel1.Location = new System.Drawing.Point(2, 24);
+            verticalLabel1.Name = "verticalLabel1";
+            verticalLabel1.Size = new System.Drawing.Size(31, 401);
+            verticalLabel1.TabIndex = 0;
+            verticalLabel1.Text = "Cipher Shield ®  Secure your sensitive data";
+            verticalLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // openFileDialog1
             // 
@@ -1215,6 +1256,16 @@
             contextMenuStrip1.Name = "contextMenuStrip1";
             contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
             // 
+            // contextMenuStrip2
+            // 
+            contextMenuStrip2.Name = "contextMenuStrip2";
+            contextMenuStrip2.Size = new System.Drawing.Size(61, 4);
+            // 
+            // timer2
+            // 
+            timer2.Interval = 5000;
+            timer2.Tick += timer2_Tick;
+            // 
             // MainForm
             // 
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -1255,16 +1306,16 @@
             ((System.ComponentModel.ISupportInitialize)RegexIncrementNumeric).EndInit();
             ((System.ComponentModel.ISupportInitialize)RegexStartFromNumeric).EndInit();
             tabPage5.ResumeLayout(false);
-            panel5.ResumeLayout(false);
+            panel8.ResumeLayout(false);
             panel4.ResumeLayout(false);
             panel4.PerformLayout();
             panel3.ResumeLayout(false);
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
             tabPage6.ResumeLayout(false);
+            tabPage6.PerformLayout();
             panel1.ResumeLayout(false);
-            panel8.ResumeLayout(false);
-            panel8.PerformLayout();
+            panel5.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -1275,7 +1326,6 @@
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.TabPage tabPage5;
-        private System.Windows.Forms.TabPage tabPage6;
         private System.Windows.Forms.Button FilesEncryptionBrowseFilesBtn;
         private System.Windows.Forms.TextBox FileEncryptionFilesNumberTxtBox;
         private System.Windows.Forms.Button FilesEncryptionDecryptFilesBtn;
@@ -1341,8 +1391,6 @@
         private System.Windows.Forms.Button PasswordManagerExportBtn;
         private System.Windows.Forms.Button PasswordManagerPrintBtn;
         private System.Windows.Forms.PrintDialog printDialog1;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label currentFileNameLabel;
         private System.Windows.Forms.Button BackupPasswordBtn;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
@@ -1355,13 +1403,21 @@
         private System.Windows.Forms.TextBox ChangeSecurityQuestion3TtxBx;
         private System.Windows.Forms.Button SubmitNewSecurityQuestionsBtn;
         private System.Windows.Forms.TextBox QuestionsPasswordTxtBox;
-        private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.Button BackupLockPasswordbtn;
-        private VerticalLabel verticalLabel1;
         private System.Windows.Forms.TextBox backupPasswordTxtBox;
         private System.Windows.Forms.Button hideShowPassword;
         private System.Windows.Forms.Panel panel6;
         private System.Windows.Forms.Panel panel7;
+        private System.Windows.Forms.Button focusBtn;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip2;
+        private System.Windows.Forms.TabPage tabPage6;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Panel panel5;
+        private VerticalLabel verticalLabel1;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label aboutCarousselLbl;
+        private System.Windows.Forms.Timer timer2;
         private System.Windows.Forms.Panel panel8;
     }
 }

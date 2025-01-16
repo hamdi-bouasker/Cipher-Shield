@@ -44,6 +44,7 @@
             hideShowPassword = new System.Windows.Forms.Button();
             panel1 = new System.Windows.Forms.Panel();
             panel2 = new System.Windows.Forms.Panel();
+            focusBtn = new System.Windows.Forms.Button();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             SuspendLayout();
@@ -73,16 +74,18 @@
             // CloseBtn
             // 
             CloseBtn.BackColor = System.Drawing.SystemColors.ControlLight;
+            CloseBtn.BackgroundImage = (System.Drawing.Image)resources.GetObject("CloseBtn.BackgroundImage");
+            CloseBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             CloseBtn.FlatAppearance.BorderSize = 0;
             CloseBtn.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ScrollBar;
             CloseBtn.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ControlLightLight;
             CloseBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             CloseBtn.ForeColor = System.Drawing.SystemColors.ControlLight;
-            CloseBtn.Image = (System.Drawing.Image)resources.GetObject("CloseBtn.Image");
             CloseBtn.Location = new System.Drawing.Point(408, 3);
             CloseBtn.Name = "CloseBtn";
             CloseBtn.Size = new System.Drawing.Size(20, 21);
             CloseBtn.TabIndex = 18;
+            CloseBtn.TabStop = false;
             CloseBtn.UseVisualStyleBackColor = false;
             CloseBtn.Click += CloseBtn_Click;
             // 
@@ -192,7 +195,7 @@
             // 
             hideShowPassword.BackColor = System.Drawing.SystemColors.ControlLight;
             hideShowPassword.BackgroundImage = (System.Drawing.Image)resources.GetObject("hideShowPassword.BackgroundImage");
-            hideShowPassword.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            hideShowPassword.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             hideShowPassword.FlatAppearance.BorderSize = 0;
             hideShowPassword.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ControlLight;
             hideShowPassword.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -201,6 +204,7 @@
             hideShowPassword.Name = "hideShowPassword";
             hideShowPassword.Size = new System.Drawing.Size(22, 24);
             hideShowPassword.TabIndex = 32;
+            hideShowPassword.TabStop = false;
             hideShowPassword.UseVisualStyleBackColor = false;
             hideShowPassword.MouseDown += hideShowPassword_MouseDown;
             hideShowPassword.MouseUp += hideShowPassword_MouseUp;
@@ -219,10 +223,26 @@
             panel2.BackColor = System.Drawing.Color.FromArgb(41, 42, 45);
             panel2.Controls.Add(SubmitRecoverPwdBtn);
             panel2.Controls.Add(CancelRecoverPwdBtn);
-            panel2.Location = new System.Drawing.Point(0, 345);
+            panel2.Location = new System.Drawing.Point(3, 348);
             panel2.Name = "panel2";
             panel2.Size = new System.Drawing.Size(428, 65);
             panel2.TabIndex = 34;
+            // 
+            // focusBtn
+            // 
+            focusBtn.CausesValidation = false;
+            focusBtn.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(32, 33, 36);
+            focusBtn.FlatAppearance.BorderSize = 0;
+            focusBtn.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(32, 33, 36);
+            focusBtn.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(32, 33, 36);
+            focusBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            focusBtn.ForeColor = System.Drawing.Color.FromArgb(32, 33, 36);
+            focusBtn.Location = new System.Drawing.Point(417, 332);
+            focusBtn.Name = "focusBtn";
+            focusBtn.Size = new System.Drawing.Size(1, 1);
+            focusBtn.TabIndex = 57;
+            focusBtn.TabStop = false;
+            focusBtn.UseVisualStyleBackColor = true;
             // 
             // RecoverPassword
             // 
@@ -230,6 +250,7 @@
             BackColor = System.Drawing.Color.FromArgb(32, 33, 36);
             ClientSize = new System.Drawing.Size(431, 412);
             ControlBox = false;
+            Controls.Add(focusBtn);
             Controls.Add(panel2);
             Controls.Add(panel1);
             Controls.Add(hideShowPassword);
@@ -276,5 +297,6 @@
         private System.Windows.Forms.Button hideShowPassword;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Button focusBtn;
     }
 }

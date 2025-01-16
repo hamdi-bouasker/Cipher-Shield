@@ -40,10 +40,14 @@
     <None Remove="Icons\ClosedEyeBlack.png" />
     <None Remove="Icons\closeEye.png" />
     <None Remove="Icons\error.png" />
+    <None Remove="Icons\EyeBlack.png" />
+    <None Remove="Icons\EyeWhite.png" />
     <None Remove="Icons\icons8-close-17.png" />
     <None Remove="Icons\info.png" />
     <None Remove="Icons\lockICO.ico" />
     <None Remove="Icons\minimize.png" />
+    <None Remove="Icons\NotEyeBlack.png" />
+    <None Remove="Icons\NotEyeWhite.png" />
     <None Remove="Icons\OpenedEye.png" />
     <None Remove="Icons\OpenedEyeBlack.png" />
     <None Remove="Icons\openEye.png" />
@@ -63,13 +67,13 @@
     <Content Include="Icons\close.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Icons\ClosedEye.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Icons\ClosedEyeBlack.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Icons\error.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Icons\EyeBlack.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Icons\EyeWhite.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Icons\info.png">
@@ -78,10 +82,10 @@
     <Content Include="Icons\minimize.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Icons\OpenedEye.png">
+    <Content Include="Icons\NotEyeBlack.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Icons\OpenedEyeBlack.png">
+    <Content Include="Icons\NotEyeWhite.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Icons\success.png">

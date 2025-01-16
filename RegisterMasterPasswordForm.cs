@@ -84,18 +84,25 @@ namespace CipherShield
             Close();
         }
 
+        // close the form
         private void CloseBtn_Click(object sender, EventArgs e)
         {
             Close();
         }
 
+        // Minimize the form
         private void MinimizeBtn_Click(object sender, EventArgs e)
         {
+            focusBtn.Focus();
             ActiveForm.WindowState = FormWindowState.Minimized;
+            
         }
+
+        // method to show inputs
 
         private void hideShowPassword_MouseDown(object sender, MouseEventArgs e)
         {
+            focusBtn.Focus();
             hideShowPassword.BackgroundImage = Image.FromFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "OpenedEyeBlack.png"));
             RegisterMasterPwdTxtBox.PasswordChar = '\0';
             RegisterMasterPwdConfirmTxtBox.PasswordChar = '\0';
@@ -104,8 +111,10 @@ namespace CipherShield
             SecurityQuestion3txtBox.PasswordChar = '\0';
         }
 
+        // method to hide inputs
         private void hideShowPassword_MouseUp(object sender, MouseEventArgs e)
         {
+            focusBtn.Focus();
             hideShowPassword.BackgroundImage = Image.FromFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "ClosedEyeBlack.png"));
             RegisterMasterPwdTxtBox.PasswordChar = '*';
             RegisterMasterPwdConfirmTxtBox.PasswordChar = '*';
@@ -114,5 +123,4 @@ namespace CipherShield
             SecurityQuestion3txtBox.PasswordChar = '*';
         }
     }
-
 }

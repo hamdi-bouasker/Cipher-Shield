@@ -81,7 +81,7 @@ C:\Users\hamdi\source\repos\Cipher Sync\obj\x64\Release\net8.0-windows10.0.17763
 C:\Users\hamdi\source\repos\Cipher Sync\obj\x64\Release\net8.0-windows10.0.17763.0\Cipher Shield.dll
 C:\Users\hamdi\source\repos\Cipher Sync\obj\x64\Release\net8.0-windows10.0.17763.0\Cipher Shield.pdb
 C:\Users\hamdi\source\repos\Cipher Sync\obj\x64\Release\net8.0-windows10.0.17763.0\Cipher Shield.genruntimeconfig.cache
-C:\Users\hamdi\source\repos\Cipher Sync\bin\x64\Release\net8.0-windows10.0.17763.0\Icons\ClosedEye.png
-C:\Users\hamdi\source\repos\Cipher Sync\bin\x64\Release\net8.0-windows10.0.17763.0\Icons\OpenedEye.png
-C:\Users\hamdi\source\repos\Cipher Sync\bin\x64\Release\net8.0-windows10.0.17763.0\Icons\ClosedEyeBlack.png
-C:\Users\hamdi\source\repos\Cipher Sync\bin\x64\Release\net8.0-windows10.0.17763.0\Icons\OpenedEyeBlack.png
+C:\Users\hamdi\source\repos\Cipher Sync\bin\x64\Release\net8.0-windows10.0.17763.0\Icons\EyeBlack.png
+C:\Users\hamdi\source\repos\Cipher Sync\bin\x64\Release\net8.0-windows10.0.17763.0\Icons\EyeWhite.png
+C:\Users\hamdi\source\repos\Cipher Sync\bin\x64\Release\net8.0-windows10.0.17763.0\Icons\NotEyeBlack.png
+C:\Users\hamdi\source\repos\Cipher Sync\bin\x64\Release\net8.0-windows10.0.17763.0\Icons\NotEyeWhite.png

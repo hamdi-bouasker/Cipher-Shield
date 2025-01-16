@@ -27,8 +27,8 @@ namespace CipherShield
         private readonly byte[] backupKey = { 132, 42, 53, 84, 75, 96, 37, 28, 99, 10, 11, 12, 13, 14, 15, 16 };
         private DatabaseHelper db;
         private int counter = 0;
-        string[] hints = { "It's always a great idea to backup your files to the cloud and to an external drive.", "Always backup your passwords to different safe places.", "The more backups you do, the easier to restore.", "Consider backup your important files by printing them.", "Daily system backup to an external drive is your best choice.", "A stitch in time saves nine." };
-
+        string[] hints = { "It's always a great idea to backup your files to the cloud and to an external drive.", "Always backup your passwords to different safe places.", "The more backups you do, the easier to restore.", "Consider backup your important files by printing them.", "Daily system backup to an external drive is your best choice." };
+        string[] Hints = { "A stitch in time saves nine.", "Always secure your files from curious eyes.", "Your password should be at least 16 random characters long.", "Don't be lazy, always make a new strong password.", "Daily system backup is your best friend." };
         // mainform method
         public MainForm()
         {
@@ -36,7 +36,7 @@ namespace CipherShield
             this.MakeDraggable(); // Make the form draggable
             this.menuBarLbl.MakeDraggable(this); // Make the form draggable
             timer1.Start(); // timer for the hintlabel in help tab
-
+            timer2.Start(); // timer for the aboutlabel in about tab
             // Initialize SQLitePCL to use SQLCipher
             SQLitePCL.Batteries_V2.Init();
             PasswordManagerDGV.SelectionChanged += DataGridView1_SelectionChanged;
@@ -46,7 +46,7 @@ namespace CipherShield
         }
 
 
-        // if no registered passwrd, show the register form, else show the login form
+        // if no registered password, show the register form, else show the login form
         private void MainForm_Load(object sender, EventArgs e)
         {
             SetControlsEnabled(false); // Method to disable controls
@@ -104,6 +104,13 @@ namespace CipherShield
             counter = (counter + 1) % hints.Length;
         }
 
+        // timer for the hintlabel in about tab
+        private void timer2_Tick(object sender, EventArgs e)
+        {
+            aboutCarousselLbl.Text = Hints[counter];
+            counter = (counter + 1) % Hints.Length;
+        }
+
         // close the form
         private void CloseBtn_Click(object sender, EventArgs e)
         {
@@ -113,9 +120,11 @@ namespace CipherShield
         // minimize the form
         private void MinimizeBtn_Click(object sender, EventArgs e)
         {
+            focusBtn.Focus();
             ActiveForm.WindowState = FormWindowState.Minimized;
         }
 
+        // method to show notification
         private void ShowNotification(string message, string iconFileName)
         {
             string iconPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", iconFileName);
@@ -215,7 +224,7 @@ namespace CipherShield
 
         #region Password Generator Tab
 
-        // generate passwords
+        // method to generate passwords
         private void GenerateButton_Click(object sender, EventArgs e)
         {
             PasswordGeneratorGeneratedPwdTextBox.Clear();
@@ -235,7 +244,7 @@ namespace CipherShield
             PasswordGeneratorClearPwdGenBtn.Enabled = hasPasswords;
         }
 
-        // copy passwords - updated method
+        // method to copy passwords
         private void copyPwdBtn_Click(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(PasswordGeneratorGeneratedPwdTextBox.Text))
@@ -406,6 +415,7 @@ namespace CipherShield
             PasswordManagerDGV.SelectionChanged += DataGridView1_SelectionChanged;
         }
 
+        // print button
         private void PasswordManagerPrintBtn_Click(object sender, EventArgs e)
         {
             if (PasswordManagerDGV.Rows.Count == 0)
@@ -427,7 +437,7 @@ namespace CipherShield
             }
         }
 
-        // print all credentials
+        // method to print all entries
         private void PrintDocument_PrintPage(object sender, PrintPageEventArgs ev)
         {
             int y = ev.MarginBounds.Top;
@@ -719,7 +729,7 @@ namespace CipherShield
                         }
                     });
                 });
-                ShowNotification("Your files have been successfully encrypted.", "success.png");
+                ShowNotification("Your files have been successfully encrypted." + Environment.NewLine + "Please do not change the prefix added at the end of the filename: _ENCRYPTED" + Environment.NewLine + "It will be used in hte decryption process to distinguish the encrypted files.", "success.png");
             }
             catch (Exception ex)
             {
@@ -786,6 +796,7 @@ namespace CipherShield
             }
         }
 
+        // method to diable controles during encryption and decryption
         private void DisableControls()
         {
             foreach (var button in Controls.OfType<Button>())
@@ -796,6 +807,7 @@ namespace CipherShield
                 FilesEncryptionEnterPwdTxtBox.Enabled = false;
         }
 
+        // method to enable controles after encryption or after decryption
         private void EnableControls()
         {
             foreach (var button in Controls.OfType<Button>())
@@ -1155,6 +1167,7 @@ namespace CipherShield
             RegexIncrementNumeric.Value = 1;
         }
 
+        // method for regex help button
         private void RegexHelpBtn_Click(object sender, EventArgs e)
         {
             string url = "https://learn.microsoft.com/en-us/dotnet/standard/base-types/regular-expression-language-quick-reference";
@@ -1167,6 +1180,7 @@ namespace CipherShield
 
         #endregion
 
+        // method to update security questions answers
         private void SubmitNewSecurityQuestionsBtn_Click(object sender, EventArgs e)
         {
             if (ChangeSecurityQuestion1TtxBx.Text.Length == 0 || ChangeSecurityQuestion2TtxBx.Text.Length == 0 || ChangeSecurityQuestion3TtxBx.Text.Length == 0)
@@ -1191,6 +1205,7 @@ namespace CipherShield
 
         }
 
+        // method to offer the user the ability to save lock password file as backup
         private void BackupLockPasswordbtn_Click(object sender, EventArgs e)
         {
             if (backupPasswordTxtBox.Text == SecureStorage.GetPassword())
@@ -1207,9 +1222,11 @@ namespace CipherShield
 
         }
 
+        // method to show inputs
         private void hideShowPassword_MouseDown(object sender, MouseEventArgs e)
         {
-            hideShowPassword.BackgroundImage = Image.FromFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "OpenedEye.png"));
+            focusBtn.Focus();
+            hideShowPassword.BackgroundImage = Image.FromFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "EyeWhite.png"));
             oldPasswordTxtBox.PasswordChar = '\0';
             NewPasswordTxtBox.PasswordChar = '\0';
             RepeatNewPasswordTxtBox.PasswordChar = '\0';
@@ -1221,9 +1238,11 @@ namespace CipherShield
 
         }
 
+        // method to hide inputs
         private void hideShowPassword_MouseUp(object sender, MouseEventArgs e)
         {
-            hideShowPassword.BackgroundImage = Image.FromFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "ClosedEye.png"));
+            focusBtn.Focus();
+            hideShowPassword.BackgroundImage = Image.FromFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "NotEyeWhite.png"));
             oldPasswordTxtBox.PasswordChar = '*';
             NewPasswordTxtBox.PasswordChar = '*';
             RepeatNewPasswordTxtBox.PasswordChar = '*';
@@ -1233,6 +1252,8 @@ namespace CipherShield
             ChangeSecurityQuestion3TtxBx.PasswordChar = '*';
             QuestionsPasswordTxtBox.PasswordChar = '*';
         }
+
+        
     }
 }
 

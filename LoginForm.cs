@@ -73,6 +73,7 @@ namespace CipherShield
 
         private void MinimizeBtn_Click(object sender, EventArgs e)
         {
+            focusBtn.Focus();
             ActiveForm.WindowState = FormWindowState.Minimized;
         }
 
@@ -82,15 +83,19 @@ namespace CipherShield
             SecureStorage.LoadBackupPassword(LoginMasterPwdTxtBox);
         }
 
+        // method to show input
         private void hideShowPassword_MouseDown(object sender, MouseEventArgs e)
         {
-            hideShowPassword.BackgroundImage = Image.FromFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "OpenedEye.png"));
+            focusBtn.Focus();
+            hideShowPassword.BackgroundImage = Image.FromFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "EyeWhite.png"));
             LoginMasterPwdTxtBox.PasswordChar = '\0';
         }
 
+        // method to hide input
         private void hideShowPassword_MouseUp(object sender, MouseEventArgs e)
         {
-            hideShowPassword.BackgroundImage = Image.FromFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "ClosedEye.png"));
+            focusBtn.Focus();
+            hideShowPassword.BackgroundImage = Image.FromFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "NotEyeWhite.png"));
             LoginMasterPwdTxtBox.PasswordChar = '*';
         }
     }

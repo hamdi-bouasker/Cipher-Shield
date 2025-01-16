@@ -51,6 +51,7 @@
             panel1 = new System.Windows.Forms.Panel();
             panel2 = new System.Windows.Forms.Panel();
             panel3 = new System.Windows.Forms.Panel();
+            focusBtn = new System.Windows.Forms.Button();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             panel3.SuspendLayout();
@@ -61,10 +62,11 @@
             SubmitMasterPwdBtn.BackColor = System.Drawing.Color.PowderBlue;
             SubmitMasterPwdBtn.FlatStyle = System.Windows.Forms.FlatStyle.System;
             SubmitMasterPwdBtn.Font = new System.Drawing.Font("Comic Sans MS", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
-            SubmitMasterPwdBtn.Location = new System.Drawing.Point(23, 20);
+            SubmitMasterPwdBtn.Location = new System.Drawing.Point(25, 20);
             SubmitMasterPwdBtn.Name = "SubmitMasterPwdBtn";
             SubmitMasterPwdBtn.Size = new System.Drawing.Size(158, 33);
             SubmitMasterPwdBtn.TabIndex = 6;
+            SubmitMasterPwdBtn.TabStop = false;
             SubmitMasterPwdBtn.Text = "Submit";
             SubmitMasterPwdBtn.UseVisualStyleBackColor = false;
             SubmitMasterPwdBtn.Click += SubmitMasterPwdBtn_Click;
@@ -86,10 +88,11 @@
             CancelRegisterMasterPwdBtn.BackColor = System.Drawing.Color.PowderBlue;
             CancelRegisterMasterPwdBtn.FlatStyle = System.Windows.Forms.FlatStyle.System;
             CancelRegisterMasterPwdBtn.Font = new System.Drawing.Font("Comic Sans MS", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
-            CancelRegisterMasterPwdBtn.Location = new System.Drawing.Point(232, 20);
+            CancelRegisterMasterPwdBtn.Location = new System.Drawing.Point(234, 20);
             CancelRegisterMasterPwdBtn.Name = "CancelRegisterMasterPwdBtn";
             CancelRegisterMasterPwdBtn.Size = new System.Drawing.Size(158, 33);
             CancelRegisterMasterPwdBtn.TabIndex = 7;
+            CancelRegisterMasterPwdBtn.TabStop = false;
             CancelRegisterMasterPwdBtn.Text = "Cancel";
             CancelRegisterMasterPwdBtn.UseVisualStyleBackColor = false;
             CancelRegisterMasterPwdBtn.Click += CancelRegisterMasterPwdBtn_Click;
@@ -97,7 +100,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new System.Drawing.Point(21, 98);
+            label1.Location = new System.Drawing.Point(22, 98);
             label1.Name = "label1";
             label1.Size = new System.Drawing.Size(106, 18);
             label1.TabIndex = 11;
@@ -106,7 +109,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new System.Drawing.Point(21, 150);
+            label2.Location = new System.Drawing.Point(22, 150);
             label2.Name = "label2";
             label2.Size = new System.Drawing.Size(121, 18);
             label2.TabIndex = 13;
@@ -136,16 +139,18 @@
             // CloseBtn
             // 
             CloseBtn.BackColor = System.Drawing.SystemColors.ControlLight;
+            CloseBtn.BackgroundImage = (System.Drawing.Image)resources.GetObject("CloseBtn.BackgroundImage");
+            CloseBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             CloseBtn.FlatAppearance.BorderSize = 0;
             CloseBtn.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ScrollBar;
             CloseBtn.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ControlLightLight;
             CloseBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             CloseBtn.ForeColor = System.Drawing.SystemColors.ControlLight;
-            CloseBtn.Image = (System.Drawing.Image)resources.GetObject("CloseBtn.Image");
-            CloseBtn.Location = new System.Drawing.Point(395, 3);
+            CloseBtn.Location = new System.Drawing.Point(396, 3);
             CloseBtn.Name = "CloseBtn";
             CloseBtn.Size = new System.Drawing.Size(20, 21);
-            CloseBtn.TabIndex = 15;
+            CloseBtn.TabIndex = 8;
+            CloseBtn.TabStop = false;
             CloseBtn.UseVisualStyleBackColor = false;
             CloseBtn.Click += CloseBtn_Click;
             // 
@@ -158,7 +163,7 @@
             label13.Location = new System.Drawing.Point(0, 0);
             label13.Name = "label13";
             label13.Size = new System.Drawing.Size(116, 26);
-            label13.TabIndex = 16;
+            label13.TabIndex = 55;
             label13.Text = "Cipher Shield";
             label13.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
@@ -233,32 +238,34 @@
             label6.AutoSize = true;
             label6.Location = new System.Drawing.Point(145, 14);
             label6.Name = "label6";
-            label6.Size = new System.Drawing.Size(123, 18);
+            label6.Size = new System.Drawing.Size(119, 18);
             label6.TabIndex = 23;
-            label6.Text = "Register Password:";
+            label6.Text = "Register Password";
             // 
             // label7
             // 
             label7.AutoSize = true;
             label7.Location = new System.Drawing.Point(115, 12);
             label7.Name = "label7";
-            label7.Size = new System.Drawing.Size(182, 18);
+            label7.Size = new System.Drawing.Size(178, 18);
             label7.TabIndex = 24;
-            label7.Text = "Register Security Questions:";
+            label7.Text = "Register Security Questions";
             // 
             // MinimizeBtn
             // 
             MinimizeBtn.BackColor = System.Drawing.SystemColors.ControlLight;
+            MinimizeBtn.BackgroundImage = (System.Drawing.Image)resources.GetObject("MinimizeBtn.BackgroundImage");
+            MinimizeBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             MinimizeBtn.FlatAppearance.BorderSize = 0;
             MinimizeBtn.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ScrollBar;
             MinimizeBtn.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ControlLightLight;
             MinimizeBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             MinimizeBtn.ForeColor = System.Drawing.SystemColors.ControlLight;
-            MinimizeBtn.Image = (System.Drawing.Image)resources.GetObject("MinimizeBtn.Image");
-            MinimizeBtn.Location = new System.Drawing.Point(370, 3);
+            MinimizeBtn.Location = new System.Drawing.Point(373, 3);
             MinimizeBtn.Name = "MinimizeBtn";
             MinimizeBtn.Size = new System.Drawing.Size(20, 21);
-            MinimizeBtn.TabIndex = 25;
+            MinimizeBtn.TabIndex = 7;
+            MinimizeBtn.TabStop = false;
             MinimizeBtn.UseVisualStyleBackColor = false;
             MinimizeBtn.Click += MinimizeBtn_Click;
             // 
@@ -266,15 +273,17 @@
             // 
             hideShowPassword.BackColor = System.Drawing.SystemColors.ControlLight;
             hideShowPassword.BackgroundImage = (System.Drawing.Image)resources.GetObject("hideShowPassword.BackgroundImage");
-            hideShowPassword.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            hideShowPassword.FlatAppearance.BorderSize = 0;
-            hideShowPassword.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ControlLight;
+            hideShowPassword.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            hideShowPassword.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlLight;
+            hideShowPassword.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ControlLightLight;
+            hideShowPassword.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ControlLightLight;
             hideShowPassword.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            hideShowPassword.ForeColor = System.Drawing.Color.FromArgb(32, 33, 36);
-            hideShowPassword.Location = new System.Drawing.Point(342, 2);
+            hideShowPassword.ForeColor = System.Drawing.SystemColors.ControlLight;
+            hideShowPassword.Location = new System.Drawing.Point(347, 3);
             hideShowPassword.Name = "hideShowPassword";
-            hideShowPassword.Size = new System.Drawing.Size(22, 24);
-            hideShowPassword.TabIndex = 26;
+            hideShowPassword.Size = new System.Drawing.Size(22, 20);
+            hideShowPassword.TabIndex = 6;
+            hideShowPassword.TabStop = false;
             hideShowPassword.UseVisualStyleBackColor = false;
             hideShowPassword.MouseDown += hideShowPassword_MouseDown;
             hideShowPassword.MouseUp += hideShowPassword_MouseUp;
@@ -307,11 +316,28 @@
             panel3.Size = new System.Drawing.Size(419, 72);
             panel3.TabIndex = 29;
             // 
+            // focusBtn
+            // 
+            focusBtn.CausesValidation = false;
+            focusBtn.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(32, 33, 36);
+            focusBtn.FlatAppearance.BorderSize = 0;
+            focusBtn.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(32, 33, 36);
+            focusBtn.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(32, 33, 36);
+            focusBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            focusBtn.ForeColor = System.Drawing.Color.FromArgb(32, 33, 36);
+            focusBtn.Location = new System.Drawing.Point(396, 381);
+            focusBtn.Name = "focusBtn";
+            focusBtn.Size = new System.Drawing.Size(1, 1);
+            focusBtn.TabIndex = 55;
+            focusBtn.TabStop = false;
+            focusBtn.UseVisualStyleBackColor = true;
+            // 
             // RegisterMasterPasswordForm
             // 
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             BackColor = System.Drawing.Color.FromArgb(32, 33, 36);
             ClientSize = new System.Drawing.Size(419, 534);
+            Controls.Add(focusBtn);
             Controls.Add(panel3);
             Controls.Add(panel2);
             Controls.Add(panel1);
@@ -373,5 +399,6 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Button focusBtn;
     }
 }

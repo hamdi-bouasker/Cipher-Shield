@@ -57,17 +57,21 @@ namespace CipherShield
             Close();
         }
 
+        // method to show inputs
         private void hideShowPassword_MouseDown(object sender, MouseEventArgs e)
         {
-            hideShowPassword.BackgroundImage = Image.FromFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "OpenedEyeBlack.png"));
+            focusBtn.Focus();
+            hideShowPassword.BackgroundImage = Image.FromFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "EyeBlack.png"));
             SecurityQuestion1txtBox.PasswordChar = '\0';
             SecurityQuestion2txtBox.PasswordChar = '\0';
             SecurityQuestion3txtBox.PasswordChar = '\0';
         }
 
+        // method to hide inputs
         private void hideShowPassword_MouseUp(object sender, MouseEventArgs e)
         {
-            hideShowPassword.BackgroundImage = Image.FromFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "ClosedEyeBlack.png"));
+            focusBtn.Focus();
+            hideShowPassword.BackgroundImage = Image.FromFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "NotEyeBlack.png"));
             SecurityQuestion1txtBox.PasswordChar = '*';
             SecurityQuestion2txtBox.PasswordChar = '*';
             SecurityQuestion3txtBox.PasswordChar = '*';

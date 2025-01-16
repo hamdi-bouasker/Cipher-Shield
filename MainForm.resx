@@ -161,17 +161,25 @@
   </data>
   <data name="hideShowPassword.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        DAAACwwBP0AiyAAAAclJREFUSEu9lbtqFVEUhiMigmBpQAst1M7GKGhhKRbBS5sH0NLC0somYLw8gFhY
-        ig/gIyiIlS9x8HLgzPr+fQ5JjGSHdZyRNSsTvET9YTPM7H99s/daa88smNkZSfcX/rYcKqkCj/LcvgWs
-        OlzS0zy3bwFrQyuvtR4ys4vAdeCGmV2otR6Onp8qwpumOQ88lzRtdxMHkl4AlzNjT3XwgQHwKT4DtiW9
-        nE6nxzOnp8lkcsqvYeXbwDMzOx08JyU9BrbCCz5KutKDdQJuAutd6wX4Wva6PN8JvinpVs9USrkKfA3b
-        3AUvpSzOZrMTMU7Sk5SaTTO7Np/0bUqyaGjHsQhvAz01qx3YUzcQZ37oPPBNngQ+h4XtgsdiAV9yvKS3
-        vp33ecLNEdwCfsA9Lf6s1npA35XB7zwV3vwxv/NVefX3gncFBc5mKLBRSjk3DzCzu9ngLZXBrgj3VhyI
-        u5MDHqY3b3lL9UytYp8n6IPsnQu4B3yLcG+p7uC4uvymgnoP3+7BsvwEAR/yFr2g3i3tfe7zV5kzqFrr
-        wVLKiqTXubAtaANYdm+A/973fDweHwUutUd4uWmapdFodCR6/hj+K/ovP4t/9g/1b8UOO9xRJYGrEkEA
-        AAAASUVORK5CYII=
+        iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
+        DAAACwwBP0AiyAAAAZFJREFUOE/NUz1LA0EQDSqC4lcR0EJEEAQbbfwCQaxs/Bda+T/8FxbaqCAIkkoL
+        tRYUOwvRSoOGHHfz3l6KiLIyx51s1kvUFOKD5Y43bx6zM7OFwn+EiMxZa3t8vi2Q3ADwJiLzfiwXYRiO
+        AVjQo/9uLDPTr8t/gYjMktwB8ELSeqdkre38kRnJIsk9TQRwDmAdwGS5XO6NomgojuOZMAwHU7N3ADdB
+        EAz4Pgk0keQDgFuSS348Q1YZgC2S9yTvRGSiQWSMGQbwSPKkWq32Z3ytVhsFsA3gQKv0r6laAGdqHMfx
+        yKchyVOSV+7ooygaB/BM8lKvm12TZOAOp1Kp9JG8BnCcEADWALySnMpEKX+YY5YMRit2tcaYafUQkVWt
+        rkRy1xUodCh5Zumhrye5D+BIE8skl92gtbajhZlWWFeNm2OMWQHwpMldbiBDM7PU8MLXK6y13T6XwFkN
+        7a1vVgew6Oc0hbsa2gpdXsdM/xva0xL+njm8vqCiy32L9Jmp2aYf+zW0J3mVtQ19Vr9q9F/iA3PdGTUx
+        A/y+AAAAAElFTkSuQmCC
 </value>
+  </data>
+  <data name="textBox1.Text" xml:space="preserve">
+    <value>Cipher Shield is a comprehensive security application designed to safeguard sensitive information through robust encryption and secure password management. 
+
+Cipher Shield allows you to securely manage your passwords, and encrypt/decrypt files using advanced encryption algorithms. 
+
+Cipher Shield employs sophisticated techniques ensuring your stored passwords and encrypted files remain confidential and protected from unauthorized access. 
+
+Cipher Shield serves as an essential tool for individuals and organizations aiming to enhance their cybersecurity practices and protect their valuable information.</value>
   </data>
   <metadata name="openFileDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>171, 17</value>
@@ -217,8 +225,14 @@
   <metadata name="contextMenuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>791, 17</value>
   </metadata>
+  <metadata name="contextMenuStrip2.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>945, 17</value>
+  </metadata>
+  <metadata name="timer2.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>1099, 17</value>
+  </metadata>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>25</value>
+    <value>78</value>
   </metadata>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
