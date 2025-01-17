@@ -2,8 +2,11 @@
 
 Cipher Shield is coded from the scratch and heavily tested for a flawless usability.
 
-Cipher Shield is a robust and secure solution designed to handle all your password and file management needs. It includes a password generator, password manager, file encryption using AES-256, and regex-based file renaming. 
+Cipher Shield is a robust and secure solution designed to handle all your password and file management needs. It includes a password generator, password manager, file encryption using **AES-256**, and regex-based file renaming. 
 With Cipher Shield, you can ensure that your sensitive data remains protected at all times.
+
+**AES-256** is a symmetric key encryption, which means the same key is used for both encrypting and decrypting data. 
+This type of encryption is known for its speed and security, making it a preferred choice for many organizations, including the U.S. government.
 
 ![register.png](https://github.com/hamdi-bouasker/Cipher-Shield/blob/master/register.png)                     ![login.png](https://github.com/hamdi-bouasker/Cipher-Shield/blob/master/login.png)
 
@@ -15,12 +18,12 @@ With Cipher Shield, you can ensure that your sensitive data remains protected at
   
   ![password-generator.png](https://github.com/hamdi-bouasker/Cipher-Shield/blob/master/password-generator.png)
 
-- **Password Manager:** Securely saves passwords to the database using SQLCipher.
+- **Password Manager:** Securely saves passwords to the database using **SQLCipher**.
 
   
   ![password-manager.png](https://github.com/hamdi-bouasker/Cipher-Shield/blob/master/password-manager.png)
   
-- **File Encryption:** Files are encrypted using the AES-256 encryption algorithm, and the password is saved and encrypted with the same algorithm.
+- **File Encryption:** Files are encrypted using the **AES-256** encryption algorithm, and the password is saved and encrypted with the same algorithm.
 
   
   ![files-encryption.png](https://github.com/hamdi-bouasker/Cipher-Shield/blob/master/files-encryption.png)
