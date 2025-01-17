@@ -308,10 +308,10 @@
             tabPage4.Controls.Add(usernameTxtBox);
             tabPage4.Controls.Add(PasswordManagerDGV);
             tabPage4.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            tabPage4.Location = new System.Drawing.Point(4, 27);
+            tabPage4.Location = new System.Drawing.Point(4, 24);
             tabPage4.Name = "tabPage4";
             tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            tabPage4.Size = new System.Drawing.Size(752, 521);
+            tabPage4.Size = new System.Drawing.Size(752, 524);
             tabPage4.TabIndex = 3;
             tabPage4.Text = "Passwords Manager";
             // 
@@ -1114,9 +1114,9 @@
             tabPage6.Controls.Add(panel1);
             tabPage6.Controls.Add(textBox1);
             tabPage6.Controls.Add(panel5);
-            tabPage6.Location = new System.Drawing.Point(4, 24);
+            tabPage6.Location = new System.Drawing.Point(4, 27);
             tabPage6.Name = "tabPage6";
-            tabPage6.Size = new System.Drawing.Size(752, 524);
+            tabPage6.Size = new System.Drawing.Size(752, 521);
             tabPage6.TabIndex = 5;
             tabPage6.Text = "About";
             // 
@@ -1138,7 +1138,7 @@
             panel1.Controls.Add(aboutCarousselLbl);
             panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             panel1.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            panel1.Location = new System.Drawing.Point(0, 456);
+            panel1.Location = new System.Drawing.Point(0, 453);
             panel1.Name = "panel1";
             panel1.Size = new System.Drawing.Size(752, 68);
             panel1.TabIndex = 25;

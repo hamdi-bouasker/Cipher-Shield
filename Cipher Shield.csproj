@@ -3,7 +3,7 @@
     <TargetFramework>net8.0-windows10.0.17763.0</TargetFramework>
     <OutputType>WinExe</OutputType>
     <RootNamespace>CipherShield</RootNamespace>
-    <GenerateAssemblyInfo>False</GenerateAssemblyInfo>
+    <GenerateAssemblyInfo>True</GenerateAssemblyInfo>
     <UseWindowsForms>true</UseWindowsForms>
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
     <UseWPF>True</UseWPF>
@@ -11,9 +11,9 @@
     <ApplicationIcon>Icons\CipherProgramIco.ico</ApplicationIcon>
     <PackageIcon>CipherProgramPNG.png</PackageIcon>
     <SignAssembly>False</SignAssembly>
-    <AssemblyOriginatorKeyFile>Cipher Shield</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>C:\Users\hamdi\Downloads\Hamdi+Bouasker.cer</AssemblyOriginatorKeyFile>
     <Description>Protect Your Files and Credentials From Unauthorized Access</Description>
-    <Copyright>Cipher Sync © 2025 Tuntech.  All rights reserved.</Copyright>
+    <Copyright>Cipher Shield®  TUNTECH All Rights Reserved © 2025</Copyright>
     <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
     <GenerateDocumentationFile>False</GenerateDocumentationFile>
     <Title>Cipher Shield</Title>
@@ -22,9 +22,10 @@
     <PlatformTarget>x64</PlatformTarget>
     <Platforms>AnyCPU;x64</Platforms>
     <Product>Cipher Shield</Product>
-    <Version>1.0.0.0</Version>
-    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <Version>5.7.9.1</Version>
+    <AssemblyVersion>5.1.9.2</AssemblyVersion>
     <AssemblyName>Cipher Shield</AssemblyName>
+    <FileVersion>7.5.9.1</FileVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <Optimize>True</Optimize>

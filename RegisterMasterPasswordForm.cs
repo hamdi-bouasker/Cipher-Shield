@@ -103,7 +103,7 @@ namespace CipherShield
         private void hideShowPassword_MouseDown(object sender, MouseEventArgs e)
         {
             focusBtn.Focus();
-            hideShowPassword.BackgroundImage = Image.FromFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "OpenedEyeBlack.png"));
+            hideShowPassword.BackgroundImage = Image.FromFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "EyeBlack.png"));
             RegisterMasterPwdTxtBox.PasswordChar = '\0';
             RegisterMasterPwdConfirmTxtBox.PasswordChar = '\0';
             SecurityQuestion1txtBox.PasswordChar = '\0';
@@ -115,7 +115,7 @@ namespace CipherShield
         private void hideShowPassword_MouseUp(object sender, MouseEventArgs e)
         {
             focusBtn.Focus();
-            hideShowPassword.BackgroundImage = Image.FromFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "ClosedEyeBlack.png"));
+            hideShowPassword.BackgroundImage = Image.FromFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "NotEyeBlack.png"));
             RegisterMasterPwdTxtBox.PasswordChar = '*';
             RegisterMasterPwdConfirmTxtBox.PasswordChar = '*';
             SecurityQuestion1txtBox.PasswordChar = '*';

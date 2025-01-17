@@ -1,0 +1,54 @@
+C:\Users\hamdi\source\repos\Cipher Shield\obj\x64\Release\net8.0-windows10.0.17763.0\win-x64\Cipher Shield.csproj.AssemblyReference.cache
+C:\Users\hamdi\source\repos\Cipher Shield\obj\x64\Release\net8.0-windows10.0.17763.0\win-x64\CipherShield.LoginForm.resources
+C:\Users\hamdi\source\repos\Cipher Shield\obj\x64\Release\net8.0-windows10.0.17763.0\win-x64\CipherShield.MainForm.resources
+C:\Users\hamdi\source\repos\Cipher Shield\obj\x64\Release\net8.0-windows10.0.17763.0\win-x64\CipherShield.Properties.Resources.resources
+C:\Users\hamdi\source\repos\Cipher Shield\obj\x64\Release\net8.0-windows10.0.17763.0\win-x64\CipherShield.RecoverPassword.resources
+C:\Users\hamdi\source\repos\Cipher Shield\obj\x64\Release\net8.0-windows10.0.17763.0\win-x64\CipherShield.RegisterMasterPasswordForm.resources
+C:\Users\hamdi\source\repos\Cipher Shield\obj\x64\Release\net8.0-windows10.0.17763.0\win-x64\Cipher Shield.csproj.GenerateResource.cache
+C:\Users\hamdi\source\repos\Cipher Shield\obj\x64\Release\net8.0-windows10.0.17763.0\win-x64\Cipher Shield.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\hamdi\source\repos\Cipher Shield\obj\x64\Release\net8.0-windows10.0.17763.0\win-x64\Cipher Shield.AssemblyInfoInputs.cache
+C:\Users\hamdi\source\repos\Cipher Shield\obj\x64\Release\net8.0-windows10.0.17763.0\win-x64\Cipher Shield.AssemblyInfo.cs
+C:\Users\hamdi\source\repos\Cipher Shield\obj\x64\Release\net8.0-windows10.0.17763.0\win-x64\Cipher Shield.csproj.CoreCompileInputs.cache
+C:\Users\hamdi\source\repos\Cipher Shield\obj\x64\Release\net8.0-windows10.0.17763.0\win-x64\Cipher Shield.sourcelink.json
+C:\Users\hamdi\source\repos\Cipher Shield\obj\x64\Release\net8.0-windows10.0.17763.0\win-x64\Cipher Shield.dll
+C:\Users\hamdi\source\repos\Cipher Shield\obj\x64\Release\net8.0-windows10.0.17763.0\win-x64\Cipher Shield.pdb
+C:\Users\hamdi\source\repos\Cipher Shield\bin\x64\Release\net8.0-windows10.0.17763.0\win-x64\Cipher Shield.deps.json
+C:\Users\hamdi\source\repos\Cipher Shield\bin\x64\Release\net8.0-windows10.0.17763.0\win-x64\Cipher Shield.runtimeconfig.json
+C:\Users\hamdi\source\repos\Cipher Shield\bin\x64\Release\net8.0-windows10.0.17763.0\win-x64\Icons\addKey.png
+C:\Users\hamdi\source\repos\Cipher Shield\bin\x64\Release\net8.0-windows10.0.17763.0\win-x64\Icons\CipherProgramIco.ico
+C:\Users\hamdi\source\repos\Cipher Shield\bin\x64\Release\net8.0-windows10.0.17763.0\win-x64\Icons\CipherProgramPNG.png
+C:\Users\hamdi\source\repos\Cipher Shield\bin\x64\Release\net8.0-windows10.0.17763.0\win-x64\Icons\close.png
+C:\Users\hamdi\source\repos\Cipher Shield\bin\x64\Release\net8.0-windows10.0.17763.0\win-x64\Icons\error.png
+C:\Users\hamdi\source\repos\Cipher Shield\bin\x64\Release\net8.0-windows10.0.17763.0\win-x64\Icons\EyeBlack.png
+C:\Users\hamdi\source\repos\Cipher Shield\bin\x64\Release\net8.0-windows10.0.17763.0\win-x64\Icons\EyeWhite.png
+C:\Users\hamdi\source\repos\Cipher Shield\bin\x64\Release\net8.0-windows10.0.17763.0\win-x64\Icons\info.png
+C:\Users\hamdi\source\repos\Cipher Shield\bin\x64\Release\net8.0-windows10.0.17763.0\win-x64\Icons\minimize.png
+C:\Users\hamdi\source\repos\Cipher Shield\bin\x64\Release\net8.0-windows10.0.17763.0\win-x64\Icons\NotEyeBlack.png
+C:\Users\hamdi\source\repos\Cipher Shield\bin\x64\Release\net8.0-windows10.0.17763.0\win-x64\Icons\NotEyeWhite.png
+C:\Users\hamdi\source\repos\Cipher Shield\bin\x64\Release\net8.0-windows10.0.17763.0\win-x64\Icons\removeKey.png
+C:\Users\hamdi\source\repos\Cipher Shield\bin\x64\Release\net8.0-windows10.0.17763.0\win-x64\Icons\success.png
+C:\Users\hamdi\source\repos\Cipher Shield\bin\x64\Release\net8.0-windows10.0.17763.0\win-x64\Icons\warning.png
+C:\Users\hamdi\source\repos\Cipher Shield\bin\x64\Release\net8.0-windows10.0.17763.0\win-x64\Cipher Shield.exe
+C:\Users\hamdi\source\repos\Cipher Shield\bin\x64\Release\net8.0-windows10.0.17763.0\win-x64\Cipher Shield.dll.config
+C:\Users\hamdi\source\repos\Cipher Shield\bin\x64\Release\net8.0-windows10.0.17763.0\win-x64\Cipher Shield.dll.manifest
+C:\Users\hamdi\source\repos\Cipher Shield\bin\x64\Release\net8.0-windows10.0.17763.0\win-x64\Cipher Shield.application
+C:\Users\hamdi\source\repos\Cipher Shield\bin\x64\Release\net8.0-windows10.0.17763.0\win-x64\Cipher Shield.dll
+C:\Users\hamdi\source\repos\Cipher Shield\bin\x64\Release\net8.0-windows10.0.17763.0\win-x64\Cipher Shield.pdb
+C:\Users\hamdi\source\repos\Cipher Shield\bin\x64\Release\net8.0-windows10.0.17763.0\win-x64\Dapper.dll
+C:\Users\hamdi\source\repos\Cipher Shield\bin\x64\Release\net8.0-windows10.0.17763.0\win-x64\Microsoft.AspNetCore.SystemWebAdapters.dll
+C:\Users\hamdi\source\repos\Cipher Shield\bin\x64\Release\net8.0-windows10.0.17763.0\win-x64\Microsoft.Data.Sqlite.dll
+C:\Users\hamdi\source\repos\Cipher Shield\bin\x64\Release\net8.0-windows10.0.17763.0\win-x64\Microsoft.Office.Interop.Word.dll
+C:\Users\hamdi\source\repos\Cipher Shield\bin\x64\Release\net8.0-windows10.0.17763.0\win-x64\Microsoft.Toolkit.Uwp.Notifications.dll
+C:\Users\hamdi\source\repos\Cipher Shield\bin\x64\Release\net8.0-windows10.0.17763.0\win-x64\SQLitePCLRaw.batteries_v2.dll
+C:\Users\hamdi\source\repos\Cipher Shield\bin\x64\Release\net8.0-windows10.0.17763.0\win-x64\SQLitePCLRaw.core.dll
+C:\Users\hamdi\source\repos\Cipher Shield\bin\x64\Release\net8.0-windows10.0.17763.0\win-x64\SQLitePCLRaw.provider.e_sqlcipher.dll
+C:\Users\hamdi\source\repos\Cipher Shield\bin\x64\Release\net8.0-windows10.0.17763.0\win-x64\SQLitePCLRaw.provider.e_sqlite3.dll
+C:\Users\hamdi\source\repos\Cipher Shield\bin\x64\Release\net8.0-windows10.0.17763.0\win-x64\System.Runtime.Caching.dll
+C:\Users\hamdi\source\repos\Cipher Shield\bin\x64\Release\net8.0-windows10.0.17763.0\win-x64\e_sqlcipher.dll
+C:\Users\hamdi\source\repos\Cipher Shield\bin\x64\Release\net8.0-windows10.0.17763.0\win-x64\e_sqlite3.dll
+C:\Users\hamdi\source\repos\Cipher Shield\bin\x64\Release\net8.0-windows10.0.17763.0\win-x64\Microsoft.Windows.SDK.NET.dll
+C:\Users\hamdi\source\repos\Cipher Shield\bin\x64\Release\net8.0-windows10.0.17763.0\win-x64\WinRT.Runtime.dll
+C:\Users\hamdi\source\repos\Cipher Shield\obj\x64\Release\net8.0-windows10.0.17763.0\win-x64\Cipher Shield.genruntimeconfig.cache
+C:\Users\hamdi\source\repos\Cipher Shield\obj\x64\Release\net8.0-windows10.0.17763.0\win-x64\Cipher Shield.dll.manifest
+C:\Users\hamdi\source\repos\Cipher Shield\obj\x64\Release\net8.0-windows10.0.17763.0\win-x64\Cipher Shield.application
+C:\Users\hamdi\source\repos\Cipher Shield\obj\x64\Release\net8.0-windows10.0.17763.0\win-x64\Cipher S.D3ED6B37.Up2Date

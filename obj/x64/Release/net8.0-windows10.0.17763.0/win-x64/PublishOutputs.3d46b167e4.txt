@@ -1,0 +1,34 @@
+C:\Users\hamdi\source\repos\Cipher Shield\bin\Release\net8.0-windows10.0.17763.0\win-x64\app.publish\Cipher Shield.exe
+C:\Users\hamdi\source\repos\Cipher Shield\bin\Release\net8.0-windows10.0.17763.0\win-x64\app.publish\Icons\addKey.png
+C:\Users\hamdi\source\repos\Cipher Shield\bin\Release\net8.0-windows10.0.17763.0\win-x64\app.publish\Icons\CipherProgramIco.ico
+C:\Users\hamdi\source\repos\Cipher Shield\bin\Release\net8.0-windows10.0.17763.0\win-x64\app.publish\Icons\CipherProgramPNG.png
+C:\Users\hamdi\source\repos\Cipher Shield\bin\Release\net8.0-windows10.0.17763.0\win-x64\app.publish\Icons\close.png
+C:\Users\hamdi\source\repos\Cipher Shield\bin\Release\net8.0-windows10.0.17763.0\win-x64\app.publish\Icons\error.png
+C:\Users\hamdi\source\repos\Cipher Shield\bin\Release\net8.0-windows10.0.17763.0\win-x64\app.publish\Icons\EyeBlack.png
+C:\Users\hamdi\source\repos\Cipher Shield\bin\Release\net8.0-windows10.0.17763.0\win-x64\app.publish\Icons\EyeWhite.png
+C:\Users\hamdi\source\repos\Cipher Shield\bin\Release\net8.0-windows10.0.17763.0\win-x64\app.publish\Icons\info.png
+C:\Users\hamdi\source\repos\Cipher Shield\bin\Release\net8.0-windows10.0.17763.0\win-x64\app.publish\Icons\minimize.png
+C:\Users\hamdi\source\repos\Cipher Shield\bin\Release\net8.0-windows10.0.17763.0\win-x64\app.publish\Icons\NotEyeBlack.png
+C:\Users\hamdi\source\repos\Cipher Shield\bin\Release\net8.0-windows10.0.17763.0\win-x64\app.publish\Icons\NotEyeWhite.png
+C:\Users\hamdi\source\repos\Cipher Shield\bin\Release\net8.0-windows10.0.17763.0\win-x64\app.publish\Icons\removeKey.png
+C:\Users\hamdi\source\repos\Cipher Shield\bin\Release\net8.0-windows10.0.17763.0\win-x64\app.publish\Icons\success.png
+C:\Users\hamdi\source\repos\Cipher Shield\bin\Release\net8.0-windows10.0.17763.0\win-x64\app.publish\Icons\warning.png
+C:\Users\hamdi\source\repos\Cipher Shield\bin\Release\net8.0-windows10.0.17763.0\win-x64\app.publish\Cipher Shield.dll
+C:\Users\hamdi\source\repos\Cipher Shield\bin\Release\net8.0-windows10.0.17763.0\win-x64\app.publish\Cipher Shield.deps.json
+C:\Users\hamdi\source\repos\Cipher Shield\bin\Release\net8.0-windows10.0.17763.0\win-x64\app.publish\Cipher Shield.runtimeconfig.json
+C:\Users\hamdi\source\repos\Cipher Shield\bin\Release\net8.0-windows10.0.17763.0\win-x64\app.publish\Cipher Shield.dll.config
+C:\Users\hamdi\source\repos\Cipher Shield\bin\Release\net8.0-windows10.0.17763.0\win-x64\app.publish\Cipher Shield.pdb
+C:\Users\hamdi\source\repos\Cipher Shield\bin\Release\net8.0-windows10.0.17763.0\win-x64\app.publish\Microsoft.Windows.SDK.NET.dll
+C:\Users\hamdi\source\repos\Cipher Shield\bin\Release\net8.0-windows10.0.17763.0\win-x64\app.publish\WinRT.Runtime.dll
+C:\Users\hamdi\source\repos\Cipher Shield\bin\Release\net8.0-windows10.0.17763.0\win-x64\app.publish\Dapper.dll
+C:\Users\hamdi\source\repos\Cipher Shield\bin\Release\net8.0-windows10.0.17763.0\win-x64\app.publish\Microsoft.AspNetCore.SystemWebAdapters.dll
+C:\Users\hamdi\source\repos\Cipher Shield\bin\Release\net8.0-windows10.0.17763.0\win-x64\app.publish\Microsoft.Data.Sqlite.dll
+C:\Users\hamdi\source\repos\Cipher Shield\bin\Release\net8.0-windows10.0.17763.0\win-x64\app.publish\Microsoft.Office.Interop.Word.dll
+C:\Users\hamdi\source\repos\Cipher Shield\bin\Release\net8.0-windows10.0.17763.0\win-x64\app.publish\Microsoft.Toolkit.Uwp.Notifications.dll
+C:\Users\hamdi\source\repos\Cipher Shield\bin\Release\net8.0-windows10.0.17763.0\win-x64\app.publish\SQLitePCLRaw.batteries_v2.dll
+C:\Users\hamdi\source\repos\Cipher Shield\bin\Release\net8.0-windows10.0.17763.0\win-x64\app.publish\SQLitePCLRaw.core.dll
+C:\Users\hamdi\source\repos\Cipher Shield\bin\Release\net8.0-windows10.0.17763.0\win-x64\app.publish\SQLitePCLRaw.provider.e_sqlcipher.dll
+C:\Users\hamdi\source\repos\Cipher Shield\bin\Release\net8.0-windows10.0.17763.0\win-x64\app.publish\SQLitePCLRaw.provider.e_sqlite3.dll
+C:\Users\hamdi\source\repos\Cipher Shield\bin\Release\net8.0-windows10.0.17763.0\win-x64\app.publish\System.Runtime.Caching.dll
+C:\Users\hamdi\source\repos\Cipher Shield\bin\Release\net8.0-windows10.0.17763.0\win-x64\app.publish\e_sqlcipher.dll
+C:\Users\hamdi\source\repos\Cipher Shield\bin\Release\net8.0-windows10.0.17763.0\win-x64\app.publish\e_sqlite3.dll
