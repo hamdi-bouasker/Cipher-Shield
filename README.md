@@ -33,7 +33,7 @@ This type of encryption is known for its speed and security, making it a preferr
   
   ![regex-files-rename.png](https://github.com/hamdi-bouasker/Cipher-Shield/blob/master/regex-files-rename.png)
 
-- **Help:** Change your password or your security questions answer anytime.
+- **Help:** Change your password or your security questions answers anytime.
 
   
 ![help.png](https://github.com/hamdi-bouasker/Cipher-Shield/blob/master/help.png)
