@@ -15,6 +15,7 @@ using System.Drawing.Printing;
 using Microsoft.Toolkit.Uwp.Notifications;
 using System.Text;
 using System.Runtime.InteropServices;
+using Windows.UI.Notifications;
 
 
 
@@ -169,8 +170,8 @@ namespace CipherShield
             }
             SecureStorage.ChangeDatabasePassword(dbFilePath, currentPassword, RepeatNewPasswordTxtBox.Text);
             SecureStorage.UpdatePassword(RepeatNewPasswordTxtBox.Text);
-            ShowNotification("The Master password has been successfully changed." +
-                Environment.NewLine + " Cipher Shield will be restarted", "success.png");
+            ShowNotification("The lock password has been successfully changed." +
+                Environment.NewLine + " Cipher Shield will be restarted.", "success.png");
             Application.Restart();
         }
 
@@ -267,7 +268,7 @@ namespace CipherShield
             }
             else
             {
-                ShowNotification("There is no password to copy", "error.png");
+                ShowNotification("There is no password to copy.", "error.png");
             }
         }
 
@@ -338,37 +339,61 @@ namespace CipherShield
             }
             else
             {
-                PasswordEntry entry = new PasswordEntry
-                {
-                    Website = websiteTxtBox.Text,
-                    Username = usernameTxtBox.Text,
-                    Password = passwordTxtBox.Text
-                };
-                db.AddEntry(entry);
-                LoadData();
-                ClearInputFields();
-                ShowNotification("The entry has been successfully added.", "success.png");
-            }
+                // Check for duplicate entry
+                var existingEntry = db.GetAllEntries().FirstOrDefault(e => e.Website == websiteTxtBox.Text && e.Username == usernameTxtBox.Text && e.Password == passwordTxtBox.Text);
 
+                if (existingEntry != null)
+                {
+                    ShowNotification("This entry already exists.", "error.png");
+                }
+                else
+                {
+                    PasswordEntry entry = new PasswordEntry
+                    {
+                        Website = websiteTxtBox.Text,
+                        Username = usernameTxtBox.Text,
+                        Password = passwordTxtBox.Text
+                    };
+                    db.AddEntry(entry);
+                    LoadData();
+                    ClearInputFields();
+                    ShowNotification("The entry has been successfully added.", "success.png");
+                }
+            }
         }
+
 
         // select entry and edit/update it
         private void editButton_Click_1(object sender, EventArgs e)
         {
             if (PasswordManagerDGV.CurrentRow != null)
             {
-
                 int id = (int)PasswordManagerDGV.CurrentRow.Cells["Id"].Value;
                 var entry = db.GetAllEntries().FirstOrDefault(e => e.Id == id);
                 if (entry != null)
                 {
-                    entry.Website = websiteTxtBox.Text;
-                    entry.Username = usernameTxtBox.Text;
-                    entry.Password = passwordTxtBox.Text;
-                    db.UpdateEntry(entry);
-                    ShowNotification("Successfully updated:" + Environment.NewLine + $"Website: {entry.Website}" + Environment.NewLine + $"Username: {entry.Username}" + Environment.NewLine + $"Password: {entry.Password}", "success.png");
-                    LoadData();
-                    ClearInputFields();
+                    // Get the new values from the text boxes
+                    string newWebsite = websiteTxtBox.Text;
+                    string newUsername = usernameTxtBox.Text;
+                    string newPassword = passwordTxtBox.Text;
+
+                    // Check if any changes were made
+                    if (entry.Website != newWebsite || entry.Username != newUsername || entry.Password != newPassword)
+                    {
+                        // Update the entry with the new values
+                        entry.Website = newWebsite;
+                        entry.Username = newUsername;
+                        entry.Password = newPassword;
+                        db.UpdateEntry(entry);
+
+                        ShowNotification("Successfully updated:" + Environment.NewLine + $"Website: {entry.Website}" + Environment.NewLine + $"Username: {entry.Username}" + Environment.NewLine + $"Password: {entry.Password}", "success.png");
+                        LoadData();
+                        ClearInputFields();
+                    }
+                    else
+                    {
+                        ShowNotification("No changes detected. The entry remains the same.", "info.png");
+                    }
                 }
             }
             else
@@ -377,25 +402,61 @@ namespace CipherShield
             }
         }
 
-        // delete entry
-        private void deleteButton_Click_1(object sender, EventArgs e)
-        {
-            if (PasswordManagerDGV.CurrentRow != null)
-            {
-                int id = (int)PasswordManagerDGV.CurrentRow.Cells[0].Value;
-                db.DeleteEntry(id);
-                LoadData();
-                ClearInputFields();
-                ShowNotification("The entry has been deleted.", "info.png");
-            }
-            else
-            {
-                ShowNotification("Please select an entry to delete.", "error.png");
-            }
-        }
 
-        // clear inputs
-        private void ClearBtn_Click(object sender, EventArgs e)
+        // delete entry
+
+        private void deleteButton_Click_1(object sender, EventArgs e)
+            {
+                if (PasswordManagerDGV.CurrentRow != null)
+                {
+                    string warningIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "warning.png");
+                    Uri warningUri = new Uri($"file:///{warningIcon}");
+                    // Create the confirmation toast notification
+                    var toastContent = new ToastContentBuilder()
+                        .AddAppLogoOverride(warningUri, ToastGenericAppLogoCrop.Default)
+                        .AddText("Are you sure you want to delete this entry?")
+                        .AddButton(new ToastButton()
+                            .SetContent("Yes")
+                            .AddArgument("action", "delete")
+                            .SetBackgroundActivation())
+                        .AddButton(new ToastButton()
+                            .SetContent("No")
+                            .AddArgument("action", "cancel")
+                            .SetBackgroundActivation())
+                        .GetToastContent();
+
+                    var toastNotification = new ToastNotification(toastContent.GetXml());
+
+                    // Register the notification
+                    ToastNotificationManagerCompat.CreateToastNotifier().Show(toastNotification);
+
+                    // Subscribe to toast activated event
+                    ToastNotificationManagerCompat.OnActivated += toastArgs =>
+                    {
+                        if (toastArgs.Argument == "action=delete")
+                        {
+                            // Proceed with deletion
+                            int id = (int)PasswordManagerDGV.CurrentRow.Cells[0].Value;
+                            db.DeleteEntry(id);
+                            LoadData();
+                            ClearInputFields();
+                            ShowNotification("The entry has been deleted.", "info.png");
+                        }
+                        else if (toastArgs.Argument == "action=cancel")
+                        {
+                            ShowNotification("Deletion canceled.", "info.png");
+                        }
+                    };
+                }
+                else
+                {
+                    ShowNotification("Please select an entry to delete.", "error.png");
+                }
+            }
+
+
+    // clear inputs
+    private void ClearBtn_Click(object sender, EventArgs e)
         {
             ClearInputFields();
         }
@@ -628,13 +689,13 @@ namespace CipherShield
                 }
                 catch (Exception ex)
                 {
-                    ShowNotification($"Error Loading The Password Backup: {ex.Message}", "error.png");
+                    ShowNotification($"Error loading the password backup: {ex.Message}", "error.png");
                     return;
                 }
             }
             else
             {
-                ShowNotification("No file selected!", "error.png");
+                ShowNotification("No file selected.", "error.png");
                 return;
             }
         }
@@ -782,7 +843,7 @@ namespace CipherShield
                         Invoke(new Action(() => currentFileNameLabel.Text = Path.GetFileName(file))); // Update label with current file name
                         FilesEncryptionFilesListBox.Items.Clear();
                     });
-                    ShowNotification("Your Files are successfully decrypted.", "success.png");
+                    ShowNotification("Your files are successfully decrypted.", "success.png");
                 });
             }
             catch (Exception ex)

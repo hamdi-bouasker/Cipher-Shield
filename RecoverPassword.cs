@@ -38,7 +38,8 @@ namespace CipherShield
                 Uri successUri = new Uri($"file:///{successIcon}");
                 new ToastContentBuilder()
                     .AddAppLogoOverride(successUri, ToastGenericAppLogoCrop.Default)
-                    .AddText("Your password is successfully loaded in the login password tab.")
+                    .AddText("Successful password recover.")
+                    .AddText("Your password is loaded in the login password tab.")
                     .Show();
                 Close();
             }

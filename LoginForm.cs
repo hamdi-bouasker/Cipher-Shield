@@ -25,16 +25,16 @@ namespace CipherShield
         private void SubmitLoginPwdBtn_Click(object sender, EventArgs e)
         {
             Password = LoginMasterPwdTxtBox.Text;
-            string infoIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "info.png");
-            Uri infoUri = new Uri($"file:///{infoIcon}");
+            string successIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "success.png");
+            Uri successUri = new Uri($"file:///{successIcon}");
 
             if (Password == SecureStorage.GetPassword())
             {
                 // Display a toast notification for successful login
                 new ToastContentBuilder()
-                    .AddAppLogoOverride(infoUri, ToastGenericAppLogoCrop.Default)
+                    .AddAppLogoOverride(successUri, ToastGenericAppLogoCrop.Default)
                     .AddText("Login Successful")
-                    .AddText("Welcome Back to Cipher Shield")
+                    .AddText("Welcome back to Cipher Shield.")
                     .Show();
                 this.DialogResult = DialogResult.OK;
                 Close();
@@ -47,7 +47,7 @@ namespace CipherShield
                 new ToastContentBuilder()
                      .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
                     .AddText("Login failed!")
-                    .AddText("Check Your Password or Click on Load Master Password")
+                    .AddText("Check your password or click on Load Password.")
                     .Show();
                 return;
             }

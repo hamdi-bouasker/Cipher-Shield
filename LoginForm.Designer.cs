@@ -41,23 +41,25 @@
             LoadLockPasswordBtn = new System.Windows.Forms.Button();
             hideShowPassword = new System.Windows.Forms.Button();
             focusBtn = new System.Windows.Forms.Button();
+            panel1 = new System.Windows.Forms.Panel();
+            panel1.SuspendLayout();
             SuspendLayout();
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new System.Drawing.Point(71, 59);
+            label1.Location = new System.Drawing.Point(72, 19);
             label1.Name = "label1";
-            label1.Size = new System.Drawing.Size(106, 18);
+            label1.Size = new System.Drawing.Size(102, 18);
             label1.TabIndex = 15;
-            label1.Text = "Enter Password:";
+            label1.Text = "Enter Password";
             // 
             // CancelLoginMasterPwdBtn
             // 
             CancelLoginMasterPwdBtn.BackColor = System.Drawing.Color.PowderBlue;
             CancelLoginMasterPwdBtn.FlatStyle = System.Windows.Forms.FlatStyle.System;
             CancelLoginMasterPwdBtn.Font = new System.Drawing.Font("Comic Sans MS", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
-            CancelLoginMasterPwdBtn.Location = new System.Drawing.Point(45, 382);
+            CancelLoginMasterPwdBtn.Location = new System.Drawing.Point(45, 397);
             CancelLoginMasterPwdBtn.Name = "CancelLoginMasterPwdBtn";
             CancelLoginMasterPwdBtn.Size = new System.Drawing.Size(158, 33);
             CancelLoginMasterPwdBtn.TabIndex = 4;
@@ -70,11 +72,11 @@
             SubmitLoginPwdBtn.BackColor = System.Drawing.Color.PowderBlue;
             SubmitLoginPwdBtn.FlatStyle = System.Windows.Forms.FlatStyle.System;
             SubmitLoginPwdBtn.Font = new System.Drawing.Font("Comic Sans MS", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
-            SubmitLoginPwdBtn.Location = new System.Drawing.Point(45, 169);
+            SubmitLoginPwdBtn.Location = new System.Drawing.Point(45, 184);
             SubmitLoginPwdBtn.Name = "SubmitLoginPwdBtn";
             SubmitLoginPwdBtn.Size = new System.Drawing.Size(158, 33);
             SubmitLoginPwdBtn.TabIndex = 2;
-            SubmitLoginPwdBtn.Text = "Submit";
+            SubmitLoginPwdBtn.Text = "Login";
             SubmitLoginPwdBtn.UseVisualStyleBackColor = false;
             SubmitLoginPwdBtn.Click += SubmitLoginPwdBtn_Click;
             // 
@@ -83,7 +85,7 @@
             LoginMasterPwdTxtBox.BackColor = System.Drawing.Color.FromArgb(41, 42, 45);
             LoginMasterPwdTxtBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             LoginMasterPwdTxtBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            LoginMasterPwdTxtBox.Location = new System.Drawing.Point(45, 110);
+            LoginMasterPwdTxtBox.Location = new System.Drawing.Point(45, 125);
             LoginMasterPwdTxtBox.Name = "LoginMasterPwdTxtBox";
             LoginMasterPwdTxtBox.PasswordChar = '*';
             LoginMasterPwdTxtBox.Size = new System.Drawing.Size(158, 26);
@@ -95,7 +97,7 @@
             LoginPwdLoadBackupBtn.BackColor = System.Drawing.Color.PowderBlue;
             LoginPwdLoadBackupBtn.FlatStyle = System.Windows.Forms.FlatStyle.System;
             LoginPwdLoadBackupBtn.Font = new System.Drawing.Font("Comic Sans MS", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
-            LoginPwdLoadBackupBtn.Location = new System.Drawing.Point(45, 310);
+            LoginPwdLoadBackupBtn.Location = new System.Drawing.Point(45, 325);
             LoginPwdLoadBackupBtn.Name = "LoginPwdLoadBackupBtn";
             LoginPwdLoadBackupBtn.Size = new System.Drawing.Size(158, 33);
             LoginPwdLoadBackupBtn.TabIndex = 3;
@@ -166,7 +168,7 @@
             LoadLockPasswordBtn.BackColor = System.Drawing.Color.PowderBlue;
             LoadLockPasswordBtn.FlatStyle = System.Windows.Forms.FlatStyle.System;
             LoadLockPasswordBtn.Font = new System.Drawing.Font("Comic Sans MS", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
-            LoadLockPasswordBtn.Location = new System.Drawing.Point(45, 239);
+            LoadLockPasswordBtn.Location = new System.Drawing.Point(45, 254);
             LoadLockPasswordBtn.Name = "LoadLockPasswordBtn";
             LoadLockPasswordBtn.Size = new System.Drawing.Size(158, 33);
             LoadLockPasswordBtn.TabIndex = 20;
@@ -182,7 +184,7 @@
             hideShowPassword.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(32, 33, 36);
             hideShowPassword.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             hideShowPassword.ForeColor = System.Drawing.Color.FromArgb(32, 33, 36);
-            hideShowPassword.Location = new System.Drawing.Point(209, 112);
+            hideShowPassword.Location = new System.Drawing.Point(209, 127);
             hideShowPassword.Name = "hideShowPassword";
             hideShowPassword.Size = new System.Drawing.Size(22, 24);
             hideShowPassword.TabIndex = 21;
@@ -206,11 +208,21 @@
             focusBtn.TabStop = false;
             focusBtn.UseVisualStyleBackColor = true;
             // 
+            // panel1
+            // 
+            panel1.BackColor = System.Drawing.Color.FromArgb(41, 42, 45);
+            panel1.Controls.Add(label1);
+            panel1.Location = new System.Drawing.Point(0, 29);
+            panel1.Name = "panel1";
+            panel1.Size = new System.Drawing.Size(245, 58);
+            panel1.TabIndex = 57;
+            // 
             // LoginForm
             // 
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             BackColor = System.Drawing.Color.FromArgb(32, 33, 36);
             ClientSize = new System.Drawing.Size(245, 458);
+            Controls.Add(panel1);
             Controls.Add(focusBtn);
             Controls.Add(hideShowPassword);
             Controls.Add(LoadLockPasswordBtn);
@@ -219,7 +231,6 @@
             Controls.Add(CloseBtn);
             Controls.Add(menuBarLbl);
             Controls.Add(LoginPwdLoadBackupBtn);
-            Controls.Add(label1);
             Controls.Add(CancelLoginMasterPwdBtn);
             Controls.Add(SubmitLoginPwdBtn);
             Controls.Add(LoginMasterPwdTxtBox);
@@ -233,6 +244,8 @@
             Name = "LoginForm";
             StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             Text = "Cipher Shield";
+            panel1.ResumeLayout(false);
+            panel1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -251,5 +264,6 @@
         private System.Windows.Forms.Button LoadLockPasswordBtn;
         private System.Windows.Forms.Button hideShowPassword;
         private System.Windows.Forms.Button focusBtn;
+        private System.Windows.Forms.Panel panel1;
     }
 }

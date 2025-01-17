@@ -256,26 +256,32 @@
             // 
             // PasswordGeneratorLengthNumeric
             // 
-            PasswordGeneratorLengthNumeric.Location = new System.Drawing.Point(490, 56);
+            PasswordGeneratorLengthNumeric.BackColor = System.Drawing.Color.FromArgb(41, 42, 45);
+            PasswordGeneratorLengthNumeric.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            PasswordGeneratorLengthNumeric.Location = new System.Drawing.Point(496, 56);
             PasswordGeneratorLengthNumeric.Minimum = new decimal(new int[] { 16, 0, 0, 0 });
             PasswordGeneratorLengthNumeric.Name = "PasswordGeneratorLengthNumeric";
             PasswordGeneratorLengthNumeric.Size = new System.Drawing.Size(80, 26);
             PasswordGeneratorLengthNumeric.TabIndex = 2;
+            PasswordGeneratorLengthNumeric.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             PasswordGeneratorLengthNumeric.Value = new decimal(new int[] { 16, 0, 0, 0 });
             // 
             // PasswordGeneratorCountNumeric
             // 
+            PasswordGeneratorCountNumeric.BackColor = System.Drawing.Color.FromArgb(41, 42, 45);
+            PasswordGeneratorCountNumeric.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             PasswordGeneratorCountNumeric.Location = new System.Drawing.Point(192, 56);
             PasswordGeneratorCountNumeric.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             PasswordGeneratorCountNumeric.Name = "PasswordGeneratorCountNumeric";
             PasswordGeneratorCountNumeric.Size = new System.Drawing.Size(80, 26);
             PasswordGeneratorCountNumeric.TabIndex = 1;
+            PasswordGeneratorCountNumeric.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             PasswordGeneratorCountNumeric.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
             // label8
             // 
             label8.AutoSize = true;
-            label8.Location = new System.Drawing.Point(347, 64);
+            label8.Location = new System.Drawing.Point(353, 64);
             label8.Name = "label8";
             label8.Size = new System.Drawing.Size(113, 18);
             label8.TabIndex = 1;
@@ -302,10 +308,10 @@
             tabPage4.Controls.Add(usernameTxtBox);
             tabPage4.Controls.Add(PasswordManagerDGV);
             tabPage4.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            tabPage4.Location = new System.Drawing.Point(4, 24);
+            tabPage4.Location = new System.Drawing.Point(4, 27);
             tabPage4.Name = "tabPage4";
             tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            tabPage4.Size = new System.Drawing.Size(752, 524);
+            tabPage4.Size = new System.Drawing.Size(752, 521);
             tabPage4.TabIndex = 3;
             tabPage4.Text = "Passwords Manager";
             // 
@@ -460,6 +466,7 @@
             PasswordManagerDGV.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             PasswordManagerDGV.BackgroundColor = System.Drawing.Color.FromArgb(41, 42, 45);
             PasswordManagerDGV.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            PasswordManagerDGV.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
             PasswordManagerDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             PasswordManagerDGV.Location = new System.Drawing.Point(73, 218);
             PasswordManagerDGV.Name = "PasswordManagerDGV";
@@ -590,9 +597,9 @@
             label1.AutoSize = true;
             label1.Location = new System.Drawing.Point(215, 335);
             label1.Name = "label1";
-            label1.Size = new System.Drawing.Size(106, 18);
+            label1.Size = new System.Drawing.Size(102, 18);
             label1.TabIndex = 10;
-            label1.Text = "Enter Password:";
+            label1.Text = "Enter Password";
             // 
             // FilesEncryptionEnterPwdTxtBox
             // 
@@ -841,10 +848,10 @@
             tabPage5.Controls.Add(panel3);
             tabPage5.Controls.Add(panel2);
             tabPage5.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            tabPage5.Location = new System.Drawing.Point(4, 27);
+            tabPage5.Location = new System.Drawing.Point(4, 24);
             tabPage5.Name = "tabPage5";
             tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            tabPage5.Size = new System.Drawing.Size(752, 521);
+            tabPage5.Size = new System.Drawing.Size(752, 524);
             tabPage5.TabIndex = 4;
             tabPage5.Text = "Help";
             // 
@@ -983,7 +990,7 @@
             panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             panel3.Controls.Add(homeCarousselLbl);
             panel3.Dock = System.Windows.Forms.DockStyle.Bottom;
-            panel3.Location = new System.Drawing.Point(3, 450);
+            panel3.Location = new System.Drawing.Point(3, 453);
             panel3.Name = "panel3";
             panel3.Size = new System.Drawing.Size(746, 68);
             panel3.TabIndex = 20;
@@ -1057,7 +1064,7 @@
             oldPasswordTxtBox.Location = new System.Drawing.Point(40, 78);
             oldPasswordTxtBox.Name = "oldPasswordTxtBox";
             oldPasswordTxtBox.PasswordChar = '*';
-            oldPasswordTxtBox.PlaceholderText = "Enter current Password";
+            oldPasswordTxtBox.PlaceholderText = "Enter current password";
             oldPasswordTxtBox.Size = new System.Drawing.Size(239, 19);
             oldPasswordTxtBox.TabIndex = 1;
             oldPasswordTxtBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -1117,15 +1124,16 @@
             // 
             label14.Font = new System.Drawing.Font("Comic Sans MS", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, 0);
             label14.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            label14.Location = new System.Drawing.Point(222, 28);
+            label14.Location = new System.Drawing.Point(222, 8);
             label14.Name = "label14";
-            label14.Size = new System.Drawing.Size(333, 42);
+            label14.Size = new System.Drawing.Size(345, 35);
             label14.TabIndex = 26;
-            label14.Text = "Cipher Shield® All Rights Rserved © 2025";
+            label14.Text = "Cipher Shield® All Rights Reserved © 2025";
+            label14.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // panel1
             // 
-            panel1.BackColor = System.Drawing.Color.FromArgb(41, 42, 45);
+            panel1.BackColor = System.Drawing.Color.FromArgb(32, 33, 36);
             panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             panel1.Controls.Add(aboutCarousselLbl);
             panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -1137,7 +1145,7 @@
             // 
             // aboutCarousselLbl
             // 
-            aboutCarousselLbl.BackColor = System.Drawing.Color.FromArgb(41, 42, 45);
+            aboutCarousselLbl.BackColor = System.Drawing.Color.FromArgb(32, 33, 36);
             aboutCarousselLbl.Font = new System.Drawing.Font("Comic Sans MS", 12F);
             aboutCarousselLbl.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             aboutCarousselLbl.Location = new System.Drawing.Point(61, 25);
@@ -1152,22 +1160,22 @@
             textBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             textBox1.Font = new System.Drawing.Font("Comic Sans MS", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
             textBox1.ForeColor = System.Drawing.SystemColors.Window;
-            textBox1.Location = new System.Drawing.Point(47, 106);
+            textBox1.Location = new System.Drawing.Point(47, 50);
             textBox1.Multiline = true;
             textBox1.Name = "textBox1";
-            textBox1.Size = new System.Drawing.Size(702, 267);
+            textBox1.Size = new System.Drawing.Size(702, 400);
             textBox1.TabIndex = 24;
             textBox1.Text = resources.GetString("textBox1.Text");
             // 
             // panel5
             // 
-            panel5.BackColor = System.Drawing.Color.FromArgb(41, 42, 45);
+            panel5.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             panel5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             panel5.Controls.Add(verticalLabel1);
             panel5.ForeColor = System.Drawing.SystemColors.ControlLight;
             panel5.Location = new System.Drawing.Point(3, 3);
             panel5.Name = "panel5";
-            panel5.Size = new System.Drawing.Size(38, 444);
+            panel5.Size = new System.Drawing.Size(38, 447);
             panel5.TabIndex = 23;
             // 
             // verticalLabel1
