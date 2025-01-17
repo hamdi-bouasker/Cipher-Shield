@@ -1,5 +1,7 @@
 # Cipher Shield
 
+Cipher Shield is coded from the scratch and heavily tested for a flawless usability.
+
 Cipher Shield is a robust and secure solution designed to handle all your password and file management needs. It includes a password generator, password manager, file encryption using AES-256, and regex-based file renaming. 
 With Cipher Shield, you can ensure that your sensitive data remains protected at all times.
 
@@ -42,10 +44,6 @@ Encrypt files using the AES-256 encryption algorithm, ensuring that both the fil
 
 ### Regex File Rename
 Utilize the regex-based file renaming feature to organize and rename files flexibly.
-
-## Contributing
-
-We welcome contributions to improve Cipher Shield! Please submit pull requests or open issues for any bugs or feature requests.
 
 ## License
 
