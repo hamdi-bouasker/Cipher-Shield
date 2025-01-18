@@ -66,7 +66,7 @@ When you uninstall the app, this folder will be deleted!
    ```sh
    git clone https://github.com/hamdi-bouasker/cipher-shield.git
    cd cipher-shield
-
+   ```
 ## Usage
 
 ### Password Generator
