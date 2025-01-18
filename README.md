@@ -1,6 +1,6 @@
 # Cipher Shield
 
-Cipher Shield is coded from the scratch and heavily tested for a flawless usability.
+Cipher Shield is coded from the scratch and heavily tested for a flawless usability and functionality.
 
 Cipher Shield is a robust and secure solution designed to handle all your password and file management needs. It includes a password generator, password manager, file encryption using **AES-256**, and regex-based file renaming. 
 With Cipher Shield, you can ensure that your sensitive data remains protected at all times.
@@ -53,7 +53,16 @@ Encrypting sensitive data is crucial for maintaining privacy and security in tod
 
 To get started with Cipher Shield, follow these steps:
 
-1. **Clone the repository:**
+**Using the installer:**
+
+Install Cipher Shield using the provided installer. Your browser will warn you that the file will damage your computer but the reason behind this warning is that the installer is not signed with third-party authority such as [sectigo](https://sectigo.com)
+or [digicert](https://digicert.com).
+
+A folder named **Cipher Shield** wil be created in AppData directory which will hold **the database**, the answers of your **security questions** and **the master password**. Those files are all encrypted.
+When you uninstall the app, this folder will be deleted!
+
+ **Clone the repository:**
+
    ```sh
    git clone https://github.com/hamdi-bouasker/cipher-shield.git
    cd cipher-shield
@@ -70,7 +79,7 @@ Securely save and manage your passwords using SQLCipher for encryption.
 Encrypt files using the AES-256 encryption algorithm, ensuring that both the files and their associated passwords are protected.
 
 ### Regex File Rename
-Utilize the regex-based file renaming feature to organize and rename files flexibly.
+Utilize the regex-based file renaming feature to organize and rename files flexibly. If you want to use the counter please add this symbol **{n}**
 
 ## License
 
