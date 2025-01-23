@@ -62,7 +62,7 @@
             CancelLoginMasterPwdBtn.Location = new System.Drawing.Point(45, 397);
             CancelLoginMasterPwdBtn.Name = "CancelLoginMasterPwdBtn";
             CancelLoginMasterPwdBtn.Size = new System.Drawing.Size(158, 33);
-            CancelLoginMasterPwdBtn.TabIndex = 4;
+            CancelLoginMasterPwdBtn.TabIndex = 5;
             CancelLoginMasterPwdBtn.Text = "Cancel";
             CancelLoginMasterPwdBtn.UseVisualStyleBackColor = false;
             CancelLoginMasterPwdBtn.Click += CancelLoginMasterPwdBtn_Click;
@@ -100,7 +100,7 @@
             LoginPwdLoadBackupBtn.Location = new System.Drawing.Point(45, 325);
             LoginPwdLoadBackupBtn.Name = "LoginPwdLoadBackupBtn";
             LoginPwdLoadBackupBtn.Size = new System.Drawing.Size(158, 33);
-            LoginPwdLoadBackupBtn.TabIndex = 3;
+            LoginPwdLoadBackupBtn.TabIndex = 4;
             LoginPwdLoadBackupBtn.Text = "Recover Password";
             LoginPwdLoadBackupBtn.UseVisualStyleBackColor = false;
             LoginPwdLoadBackupBtn.Click += LoginPwdLoadBackupBtn_Click;
@@ -127,7 +127,7 @@
             CloseBtn.Location = new System.Drawing.Point(222, 3);
             CloseBtn.Name = "CloseBtn";
             CloseBtn.Size = new System.Drawing.Size(20, 21);
-            CloseBtn.TabIndex = 17;
+            CloseBtn.TabIndex = 7;
             CloseBtn.TabStop = false;
             CloseBtn.UseVisualStyleBackColor = false;
             CloseBtn.Click += CloseBtn_Click;
@@ -158,7 +158,7 @@
             MinimizeBtn.Location = new System.Drawing.Point(199, 3);
             MinimizeBtn.Name = "MinimizeBtn";
             MinimizeBtn.Size = new System.Drawing.Size(20, 21);
-            MinimizeBtn.TabIndex = 19;
+            MinimizeBtn.TabIndex = 6;
             MinimizeBtn.TabStop = false;
             MinimizeBtn.UseVisualStyleBackColor = false;
             MinimizeBtn.Click += MinimizeBtn_Click;
@@ -171,7 +171,7 @@
             LoadLockPasswordBtn.Location = new System.Drawing.Point(45, 254);
             LoadLockPasswordBtn.Name = "LoadLockPasswordBtn";
             LoadLockPasswordBtn.Size = new System.Drawing.Size(158, 33);
-            LoadLockPasswordBtn.TabIndex = 20;
+            LoadLockPasswordBtn.TabIndex = 3;
             LoadLockPasswordBtn.Text = "Load Password";
             LoadLockPasswordBtn.UseVisualStyleBackColor = false;
             LoadLockPasswordBtn.Click += LoadLockPasswordBtn_Click;

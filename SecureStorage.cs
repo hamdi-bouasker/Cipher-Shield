@@ -10,6 +10,8 @@ namespace CipherShield
 {
     public static class SecureStorage
     {
+        private static readonly byte[] backupKey = { 132, 42, 53, 84, 75, 96, 37, 28, 99, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32 };
+
         // Additional entropy for the password encryption
         private static readonly byte[] AdditionalEntropy = new byte[]
         {
@@ -41,6 +43,29 @@ namespace CipherShield
             byte[] decryptedPassword = ProtectedData.Unprotect(
                 encryptedPassword, AdditionalEntropy, DataProtectionScope.CurrentUser);
             return Encoding.UTF8.GetString(decryptedPassword);
+        }
+
+    // Retrieve the answers of the security questions
+    public static string[] GetSecurityAnswers()
+    {
+            string appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Cipher Shield");
+
+            // Read the encrypted answers
+            byte[][] encryptedAnswers = new byte[3][];
+            for (int i = 0; i < 3; i++)
+            {
+                encryptedAnswers[i] = File.ReadAllBytes(Path.Combine(appDataPath, $"Security-Answer-{i + 1}.dat"));
+            }
+
+            // Decrypt the answers
+            string[] decryptedAnswers = new string[3];
+            for (int i = 0; i < 3; i++)
+            {
+                byte[] decryptedAnswerBytes = ProtectedData.Unprotect(encryptedAnswers[i], AdditionalEntropy, DataProtectionScope.CurrentUser);
+                decryptedAnswers[i] = Encoding.UTF8.GetString(decryptedAnswerBytes);
+            }
+
+            return decryptedAnswers;
         }
 
         // Update the master password
@@ -161,6 +186,61 @@ namespace CipherShield
             return Encoding.UTF8.GetString(decryptedPasswordBytes);
         }
 
+        public static string DecryptPassword(byte[] encryptedData)
+        {
+            Aes aes = Aes.Create();
+            aes.Key = backupKey;
+
+            // Get the IV from the beginning of the encrypted data
+            byte[] iv = new byte[16];
+            Array.Copy(encryptedData, 0, iv, 0, iv.Length);
+            aes.IV = iv;
+
+            // Get the encrypted password (skip the IV)
+            MemoryStream msDecrypt = new MemoryStream(encryptedData, iv.Length, encryptedData.Length - iv.Length);
+            CryptoStream csDecrypt = new CryptoStream(msDecrypt, aes.CreateDecryptor(), CryptoStreamMode.Read);
+            StreamReader srDecrypt = new StreamReader(csDecrypt);
+
+            return srDecrypt.ReadToEnd();
+        }
+
+
+        public static string RecoverEncryptionPassword(string[] userAnswers, string masterPassword)
+        {
+            string appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Cipher Shield");
+
+            // Read the encrypted answers
+            byte[][] encryptedAnswers = new byte[3][];
+            for (int i = 0; i < 3; i++)
+            {
+                encryptedAnswers[i] = File.ReadAllBytes(Path.Combine(appDataPath, $"Security-Answer-{i + 1}.dat"));
+            }
+
+            // Decrypt and compare the stored answers with the provided answers
+            for (int i = 0; i < 3; i++)
+            {
+                byte[] decryptedAnswerBytes = ProtectedData.Unprotect(encryptedAnswers[i], AdditionalEntropy, DataProtectionScope.CurrentUser);
+                string storedAnswer = Encoding.UTF8.GetString(decryptedAnswerBytes);
+
+                if (userAnswers[i] != storedAnswer || masterPassword != GetPassword())
+                {
+                    string errorIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "error.png");
+                    Uri errorUri = new Uri($"file:///{errorIcon}");
+                    new ToastContentBuilder()
+                        .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
+                        .AddText("One or more of the provided answers are incorrect.")
+                        .Show();
+                    return null;
+                }
+
+            }
+
+            // If all answers and lock password are correct, decrypt and return the files encryption password
+            byte[] encryptedPassword = File.ReadAllBytes(Path.Combine(appDataPath, "FilesEncryptionPassword.pwd"));
+            string decryptedPassword = DecryptPassword(encryptedPassword);
+            return decryptedPassword;
+        }
+
         // load backup password
         public static void LoadBackupPassword(TextBox textBox)
         {
@@ -197,6 +277,5 @@ namespace CipherShield
                 return;
             }
         }
-
     }
 }

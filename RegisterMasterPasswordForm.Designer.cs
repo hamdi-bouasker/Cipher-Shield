@@ -62,9 +62,9 @@
             SubmitMasterPwdBtn.BackColor = System.Drawing.Color.PowderBlue;
             SubmitMasterPwdBtn.FlatStyle = System.Windows.Forms.FlatStyle.System;
             SubmitMasterPwdBtn.Font = new System.Drawing.Font("Comic Sans MS", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
-            SubmitMasterPwdBtn.Location = new System.Drawing.Point(25, 20);
+            SubmitMasterPwdBtn.Location = new System.Drawing.Point(35, 20);
             SubmitMasterPwdBtn.Name = "SubmitMasterPwdBtn";
-            SubmitMasterPwdBtn.Size = new System.Drawing.Size(158, 33);
+            SubmitMasterPwdBtn.Size = new System.Drawing.Size(133, 33);
             SubmitMasterPwdBtn.TabIndex = 6;
             SubmitMasterPwdBtn.TabStop = false;
             SubmitMasterPwdBtn.Text = "Submit";
@@ -88,9 +88,9 @@
             CancelRegisterMasterPwdBtn.BackColor = System.Drawing.Color.PowderBlue;
             CancelRegisterMasterPwdBtn.FlatStyle = System.Windows.Forms.FlatStyle.System;
             CancelRegisterMasterPwdBtn.Font = new System.Drawing.Font("Comic Sans MS", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
-            CancelRegisterMasterPwdBtn.Location = new System.Drawing.Point(234, 20);
+            CancelRegisterMasterPwdBtn.Location = new System.Drawing.Point(250, 20);
             CancelRegisterMasterPwdBtn.Name = "CancelRegisterMasterPwdBtn";
-            CancelRegisterMasterPwdBtn.Size = new System.Drawing.Size(158, 33);
+            CancelRegisterMasterPwdBtn.Size = new System.Drawing.Size(133, 33);
             CancelRegisterMasterPwdBtn.TabIndex = 7;
             CancelRegisterMasterPwdBtn.TabStop = false;
             CancelRegisterMasterPwdBtn.Text = "Cancel";
@@ -102,18 +102,18 @@
             label1.AutoSize = true;
             label1.Location = new System.Drawing.Point(22, 98);
             label1.Name = "label1";
-            label1.Size = new System.Drawing.Size(106, 18);
+            label1.Size = new System.Drawing.Size(102, 18);
             label1.TabIndex = 11;
-            label1.Text = "Enter Password:";
+            label1.Text = "Enter Password";
             // 
             // label2
             // 
             label2.AutoSize = true;
             label2.Location = new System.Drawing.Point(22, 150);
             label2.Name = "label2";
-            label2.Size = new System.Drawing.Size(121, 18);
+            label2.Size = new System.Drawing.Size(117, 18);
             label2.TabIndex = 13;
-            label2.Text = "Confirm Password:";
+            label2.Text = "Confirm Password";
             // 
             // RegisterMasterPwdConfirmTxtBox
             // 
@@ -172,9 +172,9 @@
             label3.AutoSize = true;
             label3.Location = new System.Drawing.Point(21, 340);
             label3.Name = "label3";
-            label3.Size = new System.Drawing.Size(134, 18);
+            label3.Size = new System.Drawing.Size(130, 18);
             label3.TabIndex = 20;
-            label3.Text = "Security Question 2:";
+            label3.Text = "Security Question 2";
             // 
             // SecurityQuestion2txtBox
             // 
@@ -194,9 +194,9 @@
             label4.AutoSize = true;
             label4.Location = new System.Drawing.Point(23, 277);
             label4.Name = "label4";
-            label4.Size = new System.Drawing.Size(132, 18);
+            label4.Size = new System.Drawing.Size(128, 18);
             label4.TabIndex = 19;
-            label4.Text = "Security Question 1:";
+            label4.Text = "Security Question 1";
             // 
             // SecurityQuestion1txtBox
             // 
@@ -216,9 +216,9 @@
             label5.AutoSize = true;
             label5.Location = new System.Drawing.Point(23, 404);
             label5.Name = "label5";
-            label5.Size = new System.Drawing.Size(134, 18);
+            label5.Size = new System.Drawing.Size(130, 18);
             label5.TabIndex = 22;
-            label5.Text = "Security Question 3:";
+            label5.Text = "Security Question 3";
             // 
             // SecurityQuestion3txtBox
             // 
@@ -325,7 +325,7 @@
             focusBtn.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(32, 33, 36);
             focusBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             focusBtn.ForeColor = System.Drawing.Color.FromArgb(32, 33, 36);
-            focusBtn.Location = new System.Drawing.Point(396, 381);
+            focusBtn.Location = new System.Drawing.Point(13, 88);
             focusBtn.Name = "focusBtn";
             focusBtn.Size = new System.Drawing.Size(1, 1);
             focusBtn.TabIndex = 55;

@@ -178,3 +178,4 @@ C:\Users\hamdi\source\repos\Cipher Shield\obj\x64\Release\net8.0-windows10.0.177
 C:\Users\hamdi\source\repos\Cipher Shield\obj\x64\Release\net8.0-windows10.0.17763.0\Cipher Shield.dll
 C:\Users\hamdi\source\repos\Cipher Shield\obj\x64\Release\net8.0-windows10.0.17763.0\Cipher Shield.pdb
 C:\Users\hamdi\source\repos\Cipher Shield\obj\x64\Release\net8.0-windows10.0.17763.0\Cipher Shield.genruntimeconfig.cache
+C:\Users\hamdi\source\repos\Cipher Shield\obj\x64\Release\net8.0-windows10.0.17763.0\CipherShield.recoverEncPassword.resources

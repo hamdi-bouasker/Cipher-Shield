@@ -16,7 +16,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCopyrightAttribute("Cipher Shield®  TUNTECH All Rights Reserved © 2025")]
 [assembly: System.Reflection.AssemblyDescriptionAttribute("Protect Your Files and Credentials From Unauthorized Access")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("7.5.9.1")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("5.7.9.1+650fe252652a7a31e2dbf0c79eff8ebad226a282")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("5.7.9.1+5a6fb845653ff17752bf97d95d3b43967960a5c0")]
 [assembly: System.Reflection.AssemblyProductAttribute("Cipher Shield")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Cipher Shield")]
 [assembly: System.Reflection.AssemblyVersionAttribute("5.1.9.2")]

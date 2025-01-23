@@ -29,6 +29,11 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             tabControl1 = new System.Windows.Forms.TabControl();
             tabPage3 = new System.Windows.Forms.TabPage();
@@ -59,6 +64,7 @@
             PasswordManagerDGV = new System.Windows.Forms.DataGridView();
             tabPage1 = new System.Windows.Forms.TabPage();
             panel7 = new System.Windows.Forms.Panel();
+            forgotPassword = new System.Windows.Forms.Button();
             FilesEncryptionBrowseFilesBtn = new System.Windows.Forms.Button();
             BackupPasswordBtn = new System.Windows.Forms.Button();
             FilesEncryptionGeneratePasswordBtn = new System.Windows.Forms.Button();
@@ -117,6 +123,7 @@
             textBox1 = new System.Windows.Forms.TextBox();
             panel5 = new System.Windows.Forms.Panel();
             verticalLabel1 = new VerticalLabel();
+            tabPage7 = new System.Windows.Forms.TabPage();
             openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             openFileDialog2 = new System.Windows.Forms.OpenFileDialog();
@@ -160,6 +167,7 @@
             tabControl1.Controls.Add(tabPage2);
             tabControl1.Controls.Add(tabPage5);
             tabControl1.Controls.Add(tabPage6);
+            tabControl1.Controls.Add(tabPage7);
             tabControl1.HotTrack = true;
             tabControl1.Location = new System.Drawing.Point(12, 56);
             tabControl1.Name = "tabControl1";
@@ -203,7 +211,7 @@
             PasswordGeneratorCopyPwdBtn.Location = new System.Drawing.Point(15, 120);
             PasswordGeneratorCopyPwdBtn.Name = "PasswordGeneratorCopyPwdBtn";
             PasswordGeneratorCopyPwdBtn.Size = new System.Drawing.Size(119, 31);
-            PasswordGeneratorCopyPwdBtn.TabIndex = 6;
+            PasswordGeneratorCopyPwdBtn.TabIndex = 3;
             PasswordGeneratorCopyPwdBtn.Text = "Copy";
             PasswordGeneratorCopyPwdBtn.UseVisualStyleBackColor = true;
             PasswordGeneratorCopyPwdBtn.Click += copyPwdBtn_Click;
@@ -214,7 +222,7 @@
             PasswordGeneratorClearPwdGenBtn.Location = new System.Drawing.Point(15, 370);
             PasswordGeneratorClearPwdGenBtn.Name = "PasswordGeneratorClearPwdGenBtn";
             PasswordGeneratorClearPwdGenBtn.Size = new System.Drawing.Size(119, 31);
-            PasswordGeneratorClearPwdGenBtn.TabIndex = 8;
+            PasswordGeneratorClearPwdGenBtn.TabIndex = 5;
             PasswordGeneratorClearPwdGenBtn.Text = "Clear";
             PasswordGeneratorClearPwdGenBtn.UseVisualStyleBackColor = true;
             PasswordGeneratorClearPwdGenBtn.Click += clearPwdGenBtn_Click;
@@ -225,7 +233,7 @@
             PasswordGeneratorExportPwdBtn.Location = new System.Drawing.Point(15, 245);
             PasswordGeneratorExportPwdBtn.Name = "PasswordGeneratorExportPwdBtn";
             PasswordGeneratorExportPwdBtn.Size = new System.Drawing.Size(119, 31);
-            PasswordGeneratorExportPwdBtn.TabIndex = 7;
+            PasswordGeneratorExportPwdBtn.TabIndex = 4;
             PasswordGeneratorExportPwdBtn.Text = "Export";
             PasswordGeneratorExportPwdBtn.UseVisualStyleBackColor = true;
             PasswordGeneratorExportPwdBtn.Click += exportPwdBtn_Click;
@@ -236,7 +244,7 @@
             PasswordGeneratorGeneratePwdButton.Location = new System.Drawing.Point(176, 447);
             PasswordGeneratorGeneratePwdButton.Name = "PasswordGeneratorGeneratePwdButton";
             PasswordGeneratorGeneratePwdButton.Size = new System.Drawing.Size(236, 31);
-            PasswordGeneratorGeneratePwdButton.TabIndex = 9;
+            PasswordGeneratorGeneratePwdButton.TabIndex = 6;
             PasswordGeneratorGeneratePwdButton.Text = "Generate Passwords";
             PasswordGeneratorGeneratePwdButton.UseVisualStyleBackColor = true;
             PasswordGeneratorGeneratePwdButton.Click += GenerateButton_Click;
@@ -336,7 +344,7 @@
             PasswordManagerAddBtn.Location = new System.Drawing.Point(58, 13);
             PasswordManagerAddBtn.Name = "PasswordManagerAddBtn";
             PasswordManagerAddBtn.Size = new System.Drawing.Size(99, 26);
-            PasswordManagerAddBtn.TabIndex = 11;
+            PasswordManagerAddBtn.TabIndex = 1;
             PasswordManagerAddBtn.Text = "Add";
             PasswordManagerAddBtn.UseVisualStyleBackColor = true;
             PasswordManagerAddBtn.Click += addButton_Click_1;
@@ -347,7 +355,7 @@
             PasswordManagerUpdateBtn.Location = new System.Drawing.Point(163, 13);
             PasswordManagerUpdateBtn.Name = "PasswordManagerUpdateBtn";
             PasswordManagerUpdateBtn.Size = new System.Drawing.Size(99, 26);
-            PasswordManagerUpdateBtn.TabIndex = 12;
+            PasswordManagerUpdateBtn.TabIndex = 2;
             PasswordManagerUpdateBtn.Text = "Update";
             PasswordManagerUpdateBtn.UseVisualStyleBackColor = true;
             PasswordManagerUpdateBtn.Click += editButton_Click_1;
@@ -358,7 +366,7 @@
             PasswordManagerDeleteBtn.Location = new System.Drawing.Point(268, 13);
             PasswordManagerDeleteBtn.Name = "PasswordManagerDeleteBtn";
             PasswordManagerDeleteBtn.Size = new System.Drawing.Size(99, 26);
-            PasswordManagerDeleteBtn.TabIndex = 13;
+            PasswordManagerDeleteBtn.TabIndex = 3;
             PasswordManagerDeleteBtn.Text = "Delete";
             PasswordManagerDeleteBtn.UseVisualStyleBackColor = true;
             PasswordManagerDeleteBtn.Click += deleteButton_Click_1;
@@ -369,7 +377,7 @@
             PasswordManagerExportBtn.Location = new System.Drawing.Point(373, 13);
             PasswordManagerExportBtn.Name = "PasswordManagerExportBtn";
             PasswordManagerExportBtn.Size = new System.Drawing.Size(99, 26);
-            PasswordManagerExportBtn.TabIndex = 22;
+            PasswordManagerExportBtn.TabIndex = 4;
             PasswordManagerExportBtn.Text = "Export";
             PasswordManagerExportBtn.UseVisualStyleBackColor = true;
             PasswordManagerExportBtn.Click += PasswordManagerExportBtn_Click;
@@ -380,7 +388,7 @@
             PasswordManagerPrintBtn.Location = new System.Drawing.Point(478, 13);
             PasswordManagerPrintBtn.Name = "PasswordManagerPrintBtn";
             PasswordManagerPrintBtn.Size = new System.Drawing.Size(99, 26);
-            PasswordManagerPrintBtn.TabIndex = 24;
+            PasswordManagerPrintBtn.TabIndex = 5;
             PasswordManagerPrintBtn.Text = "Print";
             PasswordManagerPrintBtn.UseVisualStyleBackColor = true;
             PasswordManagerPrintBtn.Click += PasswordManagerPrintBtn_Click;
@@ -391,7 +399,7 @@
             PasswordManagerClearBtn.Location = new System.Drawing.Point(583, 13);
             PasswordManagerClearBtn.Name = "PasswordManagerClearBtn";
             PasswordManagerClearBtn.Size = new System.Drawing.Size(99, 26);
-            PasswordManagerClearBtn.TabIndex = 14;
+            PasswordManagerClearBtn.TabIndex = 6;
             PasswordManagerClearBtn.Text = "Clear";
             PasswordManagerClearBtn.UseVisualStyleBackColor = true;
             PasswordManagerClearBtn.Click += ClearBtn_Click;
@@ -431,7 +439,7 @@
             passwordTxtBox.Location = new System.Drawing.Point(284, 168);
             passwordTxtBox.Name = "passwordTxtBox";
             passwordTxtBox.Size = new System.Drawing.Size(389, 26);
-            passwordTxtBox.TabIndex = 17;
+            passwordTxtBox.TabIndex = 9;
             passwordTxtBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // websiteTxtBox
@@ -442,7 +450,7 @@
             websiteTxtBox.Location = new System.Drawing.Point(284, 89);
             websiteTxtBox.Name = "websiteTxtBox";
             websiteTxtBox.Size = new System.Drawing.Size(389, 26);
-            websiteTxtBox.TabIndex = 15;
+            websiteTxtBox.TabIndex = 7;
             websiteTxtBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // usernameTxtBox
@@ -453,7 +461,7 @@
             usernameTxtBox.Location = new System.Drawing.Point(284, 127);
             usernameTxtBox.Name = "usernameTxtBox";
             usernameTxtBox.Size = new System.Drawing.Size(389, 26);
-            usernameTxtBox.TabIndex = 16;
+            usernameTxtBox.TabIndex = 8;
             usernameTxtBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // PasswordManagerDGV
@@ -462,16 +470,52 @@
             PasswordManagerDGV.AllowUserToDeleteRows = false;
             PasswordManagerDGV.AllowUserToResizeColumns = false;
             PasswordManagerDGV.AllowUserToResizeRows = false;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(32, 33, 36);
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.ControlLightLight;
+            PasswordManagerDGV.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             PasswordManagerDGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             PasswordManagerDGV.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             PasswordManagerDGV.BackgroundColor = System.Drawing.Color.FromArgb(41, 42, 45);
             PasswordManagerDGV.BorderStyle = System.Windows.Forms.BorderStyle.None;
             PasswordManagerDGV.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(32, 33, 36);
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Comic Sans MS", 9.75F);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.ControlLightLight;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            PasswordManagerDGV.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             PasswordManagerDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(32, 33, 36);
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Comic Sans MS", 9.75F);
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.ControlLightLight;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            PasswordManagerDGV.DefaultCellStyle = dataGridViewCellStyle3;
             PasswordManagerDGV.Location = new System.Drawing.Point(73, 218);
             PasswordManagerDGV.Name = "PasswordManagerDGV";
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(32, 33, 36);
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Comic Sans MS", 9.75F);
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.ControlLightLight;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            PasswordManagerDGV.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(32, 33, 36);
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Comic Sans MS", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.ControlLightLight;
+            PasswordManagerDGV.RowsDefaultCellStyle = dataGridViewCellStyle5;
             PasswordManagerDGV.Size = new System.Drawing.Size(600, 254);
-            PasswordManagerDGV.TabIndex = 14;
+            PasswordManagerDGV.TabIndex = 10;
             PasswordManagerDGV.CellClick += dataGridView1_CellClick;
             // 
             // tabPage1
@@ -496,6 +540,7 @@
             // panel7
             // 
             panel7.BackColor = System.Drawing.Color.FromArgb(41, 42, 45);
+            panel7.Controls.Add(forgotPassword);
             panel7.Controls.Add(FilesEncryptionBrowseFilesBtn);
             panel7.Controls.Add(BackupPasswordBtn);
             panel7.Controls.Add(FilesEncryptionGeneratePasswordBtn);
@@ -506,12 +551,25 @@
             panel7.Size = new System.Drawing.Size(214, 515);
             panel7.TabIndex = 16;
             // 
+            // forgotPassword
+            // 
+            forgotPassword.BackColor = System.Drawing.Color.PowderBlue;
+            forgotPassword.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            forgotPassword.Font = new System.Drawing.Font("Comic Sans MS", 9.75F, System.Drawing.FontStyle.Bold);
+            forgotPassword.Location = new System.Drawing.Point(29, 376);
+            forgotPassword.Name = "forgotPassword";
+            forgotPassword.Size = new System.Drawing.Size(158, 33);
+            forgotPassword.TabIndex = 6;
+            forgotPassword.Text = "Forgot Password";
+            forgotPassword.UseVisualStyleBackColor = false;
+            forgotPassword.Click += forgotPassword_Click;
+            // 
             // FilesEncryptionBrowseFilesBtn
             // 
             FilesEncryptionBrowseFilesBtn.BackColor = System.Drawing.Color.PowderBlue;
             FilesEncryptionBrowseFilesBtn.FlatStyle = System.Windows.Forms.FlatStyle.System;
             FilesEncryptionBrowseFilesBtn.Font = new System.Drawing.Font("Comic Sans MS", 9.75F, System.Drawing.FontStyle.Bold);
-            FilesEncryptionBrowseFilesBtn.Location = new System.Drawing.Point(29, 17);
+            FilesEncryptionBrowseFilesBtn.Location = new System.Drawing.Point(29, 14);
             FilesEncryptionBrowseFilesBtn.Name = "FilesEncryptionBrowseFilesBtn";
             FilesEncryptionBrowseFilesBtn.Size = new System.Drawing.Size(158, 33);
             FilesEncryptionBrowseFilesBtn.TabIndex = 2;
@@ -521,14 +579,14 @@
             // 
             // BackupPasswordBtn
             // 
-            BackupPasswordBtn.BackColor = System.Drawing.Color.PowderBlue;
+            BackupPasswordBtn.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             BackupPasswordBtn.FlatStyle = System.Windows.Forms.FlatStyle.System;
             BackupPasswordBtn.Font = new System.Drawing.Font("Comic Sans MS", 9.75F, System.Drawing.FontStyle.Bold);
-            BackupPasswordBtn.Location = new System.Drawing.Point(29, 299);
+            BackupPasswordBtn.Location = new System.Drawing.Point(29, 258);
             BackupPasswordBtn.Name = "BackupPasswordBtn";
             BackupPasswordBtn.Size = new System.Drawing.Size(158, 33);
-            BackupPasswordBtn.TabIndex = 14;
-            BackupPasswordBtn.Text = "Backup Password";
+            BackupPasswordBtn.TabIndex = 5;
+            BackupPasswordBtn.Text = "Save Password";
             BackupPasswordBtn.UseVisualStyleBackColor = false;
             BackupPasswordBtn.Click += BackupPasswordBtn_Click;
             // 
@@ -537,7 +595,7 @@
             FilesEncryptionGeneratePasswordBtn.BackColor = System.Drawing.Color.PowderBlue;
             FilesEncryptionGeneratePasswordBtn.FlatStyle = System.Windows.Forms.FlatStyle.System;
             FilesEncryptionGeneratePasswordBtn.Font = new System.Drawing.Font("Comic Sans MS", 9.75F, System.Drawing.FontStyle.Bold);
-            FilesEncryptionGeneratePasswordBtn.Location = new System.Drawing.Point(29, 105);
+            FilesEncryptionGeneratePasswordBtn.Location = new System.Drawing.Point(29, 138);
             FilesEncryptionGeneratePasswordBtn.Name = "FilesEncryptionGeneratePasswordBtn";
             FilesEncryptionGeneratePasswordBtn.Size = new System.Drawing.Size(158, 33);
             FilesEncryptionGeneratePasswordBtn.TabIndex = 3;
@@ -550,10 +608,10 @@
             FilesEncryptionLoadBackupBtn.BackColor = System.Drawing.Color.PowderBlue;
             FilesEncryptionLoadBackupBtn.FlatStyle = System.Windows.Forms.FlatStyle.System;
             FilesEncryptionLoadBackupBtn.Font = new System.Drawing.Font("Comic Sans MS", 9.75F, System.Drawing.FontStyle.Bold);
-            FilesEncryptionLoadBackupBtn.Location = new System.Drawing.Point(29, 200);
+            FilesEncryptionLoadBackupBtn.Location = new System.Drawing.Point(29, 199);
             FilesEncryptionLoadBackupBtn.Name = "FilesEncryptionLoadBackupBtn";
             FilesEncryptionLoadBackupBtn.Size = new System.Drawing.Size(158, 33);
-            FilesEncryptionLoadBackupBtn.TabIndex = 5;
+            FilesEncryptionLoadBackupBtn.TabIndex = 4;
             FilesEncryptionLoadBackupBtn.Text = "Load Password";
             FilesEncryptionLoadBackupBtn.UseVisualStyleBackColor = false;
             FilesEncryptionLoadBackupBtn.Click += LoadBackupButton_Click;
@@ -566,7 +624,7 @@
             cFilesEncryptionCearBtn.Location = new System.Drawing.Point(29, 438);
             cFilesEncryptionCearBtn.Name = "cFilesEncryptionCearBtn";
             cFilesEncryptionCearBtn.Size = new System.Drawing.Size(158, 33);
-            cFilesEncryptionCearBtn.TabIndex = 6;
+            cFilesEncryptionCearBtn.TabIndex = 7;
             cFilesEncryptionCearBtn.Text = "Clear";
             cFilesEncryptionCearBtn.UseVisualStyleBackColor = false;
             cFilesEncryptionCearBtn.Click += clear_Click;
@@ -590,7 +648,7 @@
             FilesEncryptionFilesListBox.Name = "FilesEncryptionFilesListBox";
             FilesEncryptionFilesListBox.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             FilesEncryptionFilesListBox.Size = new System.Drawing.Size(493, 218);
-            FilesEncryptionFilesListBox.TabIndex = 12;
+            FilesEncryptionFilesListBox.TabIndex = 11;
             // 
             // label1
             // 
@@ -609,7 +667,7 @@
             FilesEncryptionEnterPwdTxtBox.Location = new System.Drawing.Point(22, 379);
             FilesEncryptionEnterPwdTxtBox.Name = "FilesEncryptionEnterPwdTxtBox";
             FilesEncryptionEnterPwdTxtBox.Size = new System.Drawing.Size(493, 26);
-            FilesEncryptionEnterPwdTxtBox.TabIndex = 9;
+            FilesEncryptionEnterPwdTxtBox.TabIndex = 10;
             FilesEncryptionEnterPwdTxtBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // FilesEncryptionDecryptFilesBtn
@@ -621,7 +679,7 @@
             FilesEncryptionDecryptFilesBtn.Location = new System.Drawing.Point(280, 438);
             FilesEncryptionDecryptFilesBtn.Name = "FilesEncryptionDecryptFilesBtn";
             FilesEncryptionDecryptFilesBtn.Size = new System.Drawing.Size(235, 33);
-            FilesEncryptionDecryptFilesBtn.TabIndex = 8;
+            FilesEncryptionDecryptFilesBtn.TabIndex = 9;
             FilesEncryptionDecryptFilesBtn.Text = "Decrypt";
             FilesEncryptionDecryptFilesBtn.UseVisualStyleBackColor = true;
             FilesEncryptionDecryptFilesBtn.Click += DecryptButton_Click_1;
@@ -635,7 +693,7 @@
             FilesEncryptionEncryptBtn.Location = new System.Drawing.Point(22, 438);
             FilesEncryptionEncryptBtn.Name = "FilesEncryptionEncryptBtn";
             FilesEncryptionEncryptBtn.Size = new System.Drawing.Size(235, 33);
-            FilesEncryptionEncryptBtn.TabIndex = 7;
+            FilesEncryptionEncryptBtn.TabIndex = 8;
             FilesEncryptionEncryptBtn.Text = "Encrypt";
             FilesEncryptionEncryptBtn.UseVisualStyleBackColor = true;
             FilesEncryptionEncryptBtn.Click += EncryptButton_Click_1;
@@ -920,7 +978,7 @@
             QuestionsPasswordTxtBox.PasswordChar = '*';
             QuestionsPasswordTxtBox.PlaceholderText = "Enter Password";
             QuestionsPasswordTxtBox.Size = new System.Drawing.Size(239, 19);
-            QuestionsPasswordTxtBox.TabIndex = 8;
+            QuestionsPasswordTxtBox.TabIndex = 10;
             QuestionsPasswordTxtBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label19
@@ -943,7 +1001,7 @@
             ChangeSecurityQuestion1TtxBx.PasswordChar = '*';
             ChangeSecurityQuestion1TtxBx.PlaceholderText = "Your favorite city?";
             ChangeSecurityQuestion1TtxBx.Size = new System.Drawing.Size(239, 19);
-            ChangeSecurityQuestion1TtxBx.TabIndex = 5;
+            ChangeSecurityQuestion1TtxBx.TabIndex = 7;
             ChangeSecurityQuestion1TtxBx.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // ChangeSecurityQuestion2TtxBx
@@ -956,7 +1014,7 @@
             ChangeSecurityQuestion2TtxBx.PasswordChar = '*';
             ChangeSecurityQuestion2TtxBx.PlaceholderText = "Your favorite cartoon?";
             ChangeSecurityQuestion2TtxBx.Size = new System.Drawing.Size(239, 19);
-            ChangeSecurityQuestion2TtxBx.TabIndex = 6;
+            ChangeSecurityQuestion2TtxBx.TabIndex = 8;
             ChangeSecurityQuestion2TtxBx.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // ChangeSecurityQuestion3TtxBx
@@ -969,7 +1027,7 @@
             ChangeSecurityQuestion3TtxBx.PasswordChar = '*';
             ChangeSecurityQuestion3TtxBx.PlaceholderText = "Your favorite sport?";
             ChangeSecurityQuestion3TtxBx.Size = new System.Drawing.Size(239, 19);
-            ChangeSecurityQuestion3TtxBx.TabIndex = 7;
+            ChangeSecurityQuestion3TtxBx.TabIndex = 9;
             ChangeSecurityQuestion3TtxBx.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // SubmitNewSecurityQuestionsBtn
@@ -1029,9 +1087,9 @@
             backupPasswordTxtBox.Location = new System.Drawing.Point(40, 338);
             backupPasswordTxtBox.Name = "backupPasswordTxtBox";
             backupPasswordTxtBox.PasswordChar = '*';
-            backupPasswordTxtBox.PlaceholderText = "Enter password to backup ";
+            backupPasswordTxtBox.PlaceholderText = "Save lock password";
             backupPasswordTxtBox.Size = new System.Drawing.Size(239, 19);
-            backupPasswordTxtBox.TabIndex = 9;
+            backupPasswordTxtBox.TabIndex = 5;
             backupPasswordTxtBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // BackupLockPasswordbtn
@@ -1041,8 +1099,8 @@
             BackupLockPasswordbtn.Location = new System.Drawing.Point(96, 384);
             BackupLockPasswordbtn.Name = "BackupLockPasswordbtn";
             BackupLockPasswordbtn.Size = new System.Drawing.Size(133, 31);
-            BackupLockPasswordbtn.TabIndex = 8;
-            BackupLockPasswordbtn.Text = "Backup";
+            BackupLockPasswordbtn.TabIndex = 6;
+            BackupLockPasswordbtn.Text = "Save";
             BackupLockPasswordbtn.UseVisualStyleBackColor = true;
             BackupLockPasswordbtn.Click += BackupLockPasswordbtn_Click;
             // 
@@ -1114,9 +1172,9 @@
             tabPage6.Controls.Add(panel1);
             tabPage6.Controls.Add(textBox1);
             tabPage6.Controls.Add(panel5);
-            tabPage6.Location = new System.Drawing.Point(4, 27);
+            tabPage6.Location = new System.Drawing.Point(4, 24);
             tabPage6.Name = "tabPage6";
-            tabPage6.Size = new System.Drawing.Size(752, 521);
+            tabPage6.Size = new System.Drawing.Size(752, 524);
             tabPage6.TabIndex = 5;
             tabPage6.Text = "About";
             // 
@@ -1138,7 +1196,7 @@
             panel1.Controls.Add(aboutCarousselLbl);
             panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             panel1.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            panel1.Location = new System.Drawing.Point(0, 453);
+            panel1.Location = new System.Drawing.Point(0, 456);
             panel1.Name = "panel1";
             panel1.Size = new System.Drawing.Size(752, 68);
             panel1.TabIndex = 25;
@@ -1187,6 +1245,17 @@
             verticalLabel1.TabIndex = 0;
             verticalLabel1.Text = "Cipher Shield ®  Secure your sensitive data";
             verticalLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // tabPage7
+            // 
+            tabPage7.BackColor = System.Drawing.Color.FromArgb(32, 33, 36);
+            tabPage7.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            tabPage7.Location = new System.Drawing.Point(4, 27);
+            tabPage7.Name = "tabPage7";
+            tabPage7.Padding = new System.Windows.Forms.Padding(3);
+            tabPage7.Size = new System.Drawing.Size(752, 521);
+            tabPage7.TabIndex = 6;
+            tabPage7.Text = "User Manual";
             // 
             // openFileDialog1
             // 
@@ -1342,7 +1411,6 @@
         private System.Windows.Forms.Button FilesEncryptionLoadBackupBtn;
         private System.Windows.Forms.Button FilesEncryptionGeneratePasswordBtn;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox FilesEncryptionEnterPwdTxtBox;
         private System.Windows.Forms.CheckBox RegexUseIncrementCheckBox;
         private System.Windows.Forms.TextBox RegexReplacementTxtBox;
         private System.Windows.Forms.TextBox RegexPatternTxtBox;
@@ -1427,6 +1495,9 @@
         private System.Windows.Forms.Label aboutCarousselLbl;
         private System.Windows.Forms.Timer timer2;
         private System.Windows.Forms.Panel panel8;
+        private System.Windows.Forms.Button forgotPassword;
+        public System.Windows.Forms.TextBox FilesEncryptionEnterPwdTxtBox;
+        private System.Windows.Forms.TabPage tabPage7;
     }
 }
 

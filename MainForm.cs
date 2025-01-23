@@ -406,57 +406,57 @@ namespace CipherShield
         // delete entry
 
         private void deleteButton_Click_1(object sender, EventArgs e)
+        {
+            if (PasswordManagerDGV.CurrentRow != null)
             {
-                if (PasswordManagerDGV.CurrentRow != null)
+                string warningIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "warning.png");
+                Uri warningUri = new Uri($"file:///{warningIcon}");
+                // Create the confirmation toast notification
+                var toastContent = new ToastContentBuilder()
+                    .AddAppLogoOverride(warningUri, ToastGenericAppLogoCrop.Default)
+                    .AddText("Are you sure you want to delete this entry?")
+                    .AddButton(new ToastButton()
+                        .SetContent("Yes")
+                        .AddArgument("action", "delete")
+                        .SetBackgroundActivation())
+                    .AddButton(new ToastButton()
+                        .SetContent("No")
+                        .AddArgument("action", "cancel")
+                        .SetBackgroundActivation())
+                    .GetToastContent();
+
+                var toastNotification = new ToastNotification(toastContent.GetXml());
+
+                // Register the notification
+                ToastNotificationManagerCompat.CreateToastNotifier().Show(toastNotification);
+
+                // Subscribe to toast activated event
+                ToastNotificationManagerCompat.OnActivated += toastArgs =>
                 {
-                    string warningIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "warning.png");
-                    Uri warningUri = new Uri($"file:///{warningIcon}");
-                    // Create the confirmation toast notification
-                    var toastContent = new ToastContentBuilder()
-                        .AddAppLogoOverride(warningUri, ToastGenericAppLogoCrop.Default)
-                        .AddText("Are you sure you want to delete this entry?")
-                        .AddButton(new ToastButton()
-                            .SetContent("Yes")
-                            .AddArgument("action", "delete")
-                            .SetBackgroundActivation())
-                        .AddButton(new ToastButton()
-                            .SetContent("No")
-                            .AddArgument("action", "cancel")
-                            .SetBackgroundActivation())
-                        .GetToastContent();
-
-                    var toastNotification = new ToastNotification(toastContent.GetXml());
-
-                    // Register the notification
-                    ToastNotificationManagerCompat.CreateToastNotifier().Show(toastNotification);
-
-                    // Subscribe to toast activated event
-                    ToastNotificationManagerCompat.OnActivated += toastArgs =>
+                    if (toastArgs.Argument == "action=delete")
                     {
-                        if (toastArgs.Argument == "action=delete")
-                        {
-                            // Proceed with deletion
-                            int id = (int)PasswordManagerDGV.CurrentRow.Cells[0].Value;
-                            db.DeleteEntry(id);
-                            LoadData();
-                            ClearInputFields();
-                            ShowNotification("The entry has been deleted.", "info.png");
-                        }
-                        else if (toastArgs.Argument == "action=cancel")
-                        {
-                            ShowNotification("Deletion canceled.", "info.png");
-                        }
-                    };
-                }
-                else
-                {
-                    ShowNotification("Please select an entry to delete.", "error.png");
-                }
+                        // Proceed with deletion
+                        int id = (int)PasswordManagerDGV.CurrentRow.Cells[0].Value;
+                        db.DeleteEntry(id);
+                        LoadData();
+                        ClearInputFields();
+                        ShowNotification("The entry has been deleted.", "info.png");
+                    }
+                    else if (toastArgs.Argument == "action=cancel")
+                    {
+                        ShowNotification("Deletion canceled.", "info.png");
+                    }
+                };
             }
+            else
+            {
+                ShowNotification("Please select an entry to delete.", "error.png");
+            }
+        }
 
 
-    // clear inputs
-    private void ClearBtn_Click(object sender, EventArgs e)
+        // clear inputs
+        private void ClearBtn_Click(object sender, EventArgs e)
         {
             ClearInputFields();
         }
@@ -657,6 +657,11 @@ namespace CipherShield
                     byte[] encryptedPassword = EncryptPassword(FilesEncryptionEnterPwdTxtBox.Text);
                     File.WriteAllBytes(sfd.FileName, encryptedPassword);
                     ShowNotification("The password backup file has been saved" + Environment.NewLine + "Keep this file safe.", "success.png");
+
+                    string appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Cipher Shield");
+                    Directory.CreateDirectory(appDataPath); // Ensure the directory exists
+                    string filePath = Path.Combine(appDataPath, "FilesEncryptionPassword.pwd");
+                    File.WriteAllBytes(filePath, encryptedPassword);
                     return;
                 }
                 catch (Exception ex)
@@ -782,6 +787,7 @@ namespace CipherShield
                             File.Move(file, encryptedFile); // Rename the file
                             Invoke(new Action(() => currentFileNameLabel.Text = Path.GetFileName(file))); // Update label with current file name
                             FilesEncryptionFilesListBox.Items.Clear();
+                            FileEncryptionFilesNumberTxtBox.Clear();
 
                         }
                         catch (Exception ex)
@@ -790,7 +796,7 @@ namespace CipherShield
                         }
                     });
                 });
-                ShowNotification("Your files have been successfully encrypted." + Environment.NewLine + "Please do not change the prefix added at the end of the filename: _ENCRYPTED" + Environment.NewLine + "It will be used in hte decryption process to distinguish the encrypted files.", "success.png");
+                ShowNotification("Successfully encrypted.", "success.png");
             }
             catch (Exception ex)
             {
@@ -842,8 +848,10 @@ namespace CipherShield
                         File.Move(file, decryptedFile); // Rename the file back to original
                         Invoke(new Action(() => currentFileNameLabel.Text = Path.GetFileName(file))); // Update label with current file name
                         FilesEncryptionFilesListBox.Items.Clear();
+                        FileEncryptionFilesNumberTxtBox.Clear();
                     });
-                    ShowNotification("Your files are successfully decrypted.", "success.png");
+                    ShowNotification("Successfully decrypted.", "success.png");
+                    
                 });
             }
             catch (Exception ex)
@@ -964,6 +972,13 @@ namespace CipherShield
                     File.Delete(tempFile);
                 }
             }
+        }
+
+        // recover files encryption password
+        private void forgotPassword_Click(object sender, EventArgs e)
+        {
+            recoverEncPassword RecoverEncPassword = new recoverEncPassword(this);
+            RecoverEncPassword.Show();
         }
 
         // clear inputs
@@ -1313,8 +1328,6 @@ namespace CipherShield
             ChangeSecurityQuestion3TtxBx.PasswordChar = '*';
             QuestionsPasswordTxtBox.PasswordChar = '*';
         }
-
-        
     }
 }
 
