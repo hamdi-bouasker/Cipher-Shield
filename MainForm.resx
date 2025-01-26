@@ -159,7 +159,98 @@
         A/y+AAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="textBox1.Text" xml:space="preserve">
+  <data name="UMRegexRenameBtn.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
+        DAAACwwBP0AiyAAAAnNJREFUaEPtmj1rFFEUhpMYU4kgKCJRULQwCRbWNkL+geBP0Ma/YaG9KILGT1CC
+        SaNWksZGLWzELzTRaOFXISkMihIfOeHMcvYkm52dmXNnkH3gwu49c8++z+xlP2Z3YMAAjFE9z4Gd9nHC
+        MAJ/gO8VjL/a70USCSPw0NeKACxrP+E1sMsfUylBAr+Ax9o3djsFCcjYCjwKfyaiBPR2vESkgN6PlYgW
+        0Dkr8apSiRQCOh8jkUpACJFIKSBULpFaQKhUog4BoTKJIIHfwJkc4wKwoo8v79g7fL+uBAkU5aTv15UA
+        gWPA8R7HTGMEigCc7gv0BUrQF+gLlOS/FgCGgRE/36KpAsAhYA74qR9NngBH21c2T+CE3j8MLOmcRUSO
+        +MVNEJgEngETOr664JYHfnHtAhku/GUdniW/qBECwEHgk2aZAoaAQeC8CS8s+oW1C6xz5odMTUTsM3HJ
+        L65VwIVfPfOubgXerfnSU6dAzvAyL3wBxm09O6gWAbfnr3QIf9WEn7D1FnUI5Ai/KVd4IbVAzvDXTPi1
+        28aSUsCFvyVhXV3CX9f6567hhVQCBcKP2XpHUgjkDH9D6x+BA7a+IdECOcPfNOH323pXIgXWCT/s6jb8
+        h57DC1ECEsa8Scne9md+MzCt9UVgn63nJlDgnPa93SH8Ha2/B/baek8ECsxrX/ldbNTMS/jsUmLxM58R
+        ISChtGeGfAiTOQk/q3PlwwtGQL57LhQc9ySc6XnKhM+QrXJfb78F9rQnKYgRKMM3YIvpedcfYHgD7G5P
+        UQJ9KdtWcrQue+g2+eFCy48YT4GzoX87qAKRAV7q1rqo1/+3++PK8A8Xh7bi0VLrogAAAABJRU5ErkJg
+        gg==
+</value>
+  </data>
+  <data name="UMFileEncBtn.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
+        DAAACwwBP0AiyAAAA/pJREFUaEPtmm9oV1UYx7dmqSD0B5thEmEyTC32wjcZTVgDN1QwcEYIWboXOiQH
+        koqECzIdoSAIzSgxXwjlvxf6QmOLlEAhwpyhy7DNjEwU0TQqNPvIA8+V5z7c3/3d87vXQbEP3Dfn+XPO
+        93fvOfec5/6qqob5DwA8AXQCB4Gegq9DwE6gHZjg+84NMAv4naHhFrANeMyPoyKAicAfmvyKJu8q8Lqu
+        uU8BN42Qc8AUP55ggK2a8CIw3tvzAgxq/jeA0cDbeheE88DjPiYI4KQm6/S2IrACTNsL5m7sikcEktRB
+        kQBnNP9K1y53RLgDTLW2IIZAwGea/1tghGmv0cdWeDceFcAQCHgJ+Ff7+Bp4DWjS67C29/i4zBgBi7yt
+        KIC1RkQSp31MZoBu4DLwrLcVCdAM9LqlVBBhH3r/YYYZSmR5A2YDnwPXgC+B14Ex3rdIZP3X7Uu3t2UC
+        eB7YDPzmJlaETDjZRTYCD/j4vMjKp/0MeltJgFqgA/jODVbeiPLLL5fXO/Cns/8MrAfqfM5KMW/jdAHy
+        6wHzgQNmIxVxFngHeMrFPAy06cvHr+HHgKV5H7EQAe+5AchzLtvmGd43CeAZed0DAy7PF943hBABMjmF
+        H4BXgVHeJwtANdCgJ6zyHZehEgE7vM0DTAL2AEvkMfJ2IXPHZcicJ1BAlFT4C9gNtJTwSe+4DJnz5BBg
+        eSXBJ73jMmTOU5CAjgSf9I7LkDnP/0nAp97mSRGwIsFnIB4dRoiAj9Vxr7d5UgS0GZ+3tK0vHh1GiIAP
+        1LHX2zwpAuwkXqdtR+PRYYQIWKWO/d7mSREwzfh8pG374tFhhAiQ45wgG7bU/UsJAVJdqzE+32h7rlpS
+        iICxZjAverulhID9xv6Q2anOjUeHkVmAoLtOocvbLCUEtBp7i7bJ3ayNR4cRKmCDOv/obZYEAbIBtAWp
+        T7T9SDwynFAB9WZQjd4ekSBggbHJGSGqNrfHI8MJEiAAxzWg5D7eCRD/amNbo+3yLeHReGQ4lQiQg3vE
+        TG8XTFIpdt07pckHCW0TUudRVioRIAeSaAnsB0Ym+MwDbgMvu/btGncj7+SNCBYg6FyIzsWbvF3wAwTm
+        mHPxMmvLQ0UCBK0uRCz0dgsw2Uzcr+ycyEseAQ/q10NBTl3N3kcAngZ+Ur9fiv4EVbEAAXhEytqa4G+7
+        WVN7HXBB7VLgqrf2ItBKh3DC2zIBPAl8r0nkzfq+lhlbzWMjJZgGH5sX7fuS9rHF2zMj67kWryJs7edX
+        4DnnPx1YnfOS3exV7UNWtVhRLRjdoG0E/jGDlyreuATfPuOTF7m7Tb6PipFKnezxgTe9LQJYnPBXgtBL
+        fhwpZxbyPhnmfnMXOsHRl6b8FXAAAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="UMPasswordMgrBtn.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
+        DAAACwwBP0AiyAAAAi9JREFUaEPtmc9KG1EUh4XuWroQajdV2m70IRR3lbot9gn0AfoEBa36Ctr3kBbc
+        qdtqBVddVvfiP7AF6SennIHkF5N7b3JvJsJ8EAice8/5ZnJyJpMZG2toaGh4NABvgK/AGXBHGSyv5d+2
+        eurQN8ACcKXVCmP13qlLMsDbGuQrLoHX6pSEt02dbKlTEt6TdfJbnZIo+IWN5U6dggCbwF/NVBfqFwS4
+        1iR1on5BgI1H/Qn0ApjVAqVRh4EA5rRAadQhCU1WB+qUhCarA3UK0ozRzKhfkGaM9scusALMAM+Ap8A0
+        sKwOA1FgjP4C5rVONrRaZvaAca/zElgHfgI3/joCvlhMvaLRihmxM1/JfwzcNFlsSd26MqQx+r9tXP6f
+        Bh/A1sQdxBDG6K7XsbbpdeYVu8WcUN8OhjBGV7yO9fxD7ACvgEngm8TW1DeJTGN0xnMda8CZbKk3JbGj
+        NqFUMo3R556rW/v0OoCrNqEQsjkHt8ATz93tAKxtrH1M/rvELtWxJ7J5UEz+vee1L/C5Logg3EKFxqjJ
+        L3p+kz/RBZGsqm8HBcZoLvkL4IX6dpB5jOaStwvZB3VNJnGM5pK3Mz+4vJEwRv/0If8ZOPQrrrWxvV+N
+        aptu2H+TWiWCfuTz3rhU+MOGVD753mh5YF9rZ8GfzKROpepn8g8NKFqvCP6ExvoyipZ9QdorFcQ/iS3g
+        NPSXe8ueEGXaJhdqW6HrRhYVr9B1IwtwoPIj3zYNCdwDKPuAzO4TxLwAAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="UMLoginBtn.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
+        DAAACwwBP0AiyAAAAZ5JREFUaEPt2TtKA1EUxvGgvY/eRlcgWmjjAsRGBRuzAXENii8ELcU12LgXERsV
+        FAt1B2KRxr8cuCPJl2smjmcegfuDKULOud8cyGQmN61WkiRJUgdgHNgELoHrgof1bthaun6pgDngDj+3
+        wKzmlAKYBl70DBw8A5Oa5w441WRHx5rnDnjUVEcPmucO6Ggq8Bq5QPMO61EdzXOnicG21uUB2rqI0Tp3
+        GhhsaV0e69FFjNa508AgDZDROncaGPwMACwBC71d/Ro5ALAbXn8B+9rbrc4BLFiPmfDelZzPofZnahtg
+        kPDx+ZRzOtI608gBDLACfMh5nUfqqhkAWAPeNaiAE1m3sgHeNOQfFrvWTQMMBVh1GqKej9Bf/XIRn0Xq
+        mjcAsNz4r9HITWzQjexA+zN1DhCTPUrshNf2KLGnvd0aOUB43+7G871d/Ro7wLDSAEVpYDDyA7S1Lk+d
+        P+pHflulzI2te81zZ880muooetd2BUyFjVhvT8CE5pXCtsLDlriXm8q21zPhDw77c+IicoEOe1jvOjCm
+        6ydJkiSV+AaQiEIhDVxk+AAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="UMRegisterBtn.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
+        DAAACwwBP0AiyAAABBJJREFUaEPtmUmMFVUYhTHophE1jsTYMQq6MihDREGioq5ZuTIxGlEWxMSlscW4
+        YMFCVHaiaIxsGBziDpU44RAThziBEgdCYhyi4IACon7mNKc61adfdb32lfU6pL+kkso7/636q+re+w9v
+        2rQpjjOA+cDDwMfALz50/hAwL+0nDcBpwBPAP1Qj7XHg1BzfV4BzgA/s5B/Ag8DlwCk+dK4vcMg27wNn
+        53X6AnAS8KYd+xSYnTYFwBxgl23fAE5Mm9YB7rNDXwFnpp7IBvjaY+5JvVU0l4Gf7cxVqVcBLPWY/Zpi
+        qbcGsNKOvJBaHcBLHnt7aq0BPGcnbkmtDuA2j306tdYAvrQTc1KrA7jYY79IrTWAg3ZiILU6gBkeezC1
+        1ig9wIzU6gBO9thfU2uN42EKPWsnbk2tDmCFx25LrTWAO+zEi6nVAezw2BWptYbznAN2ZGnqVQBXe8xP
+        wMzUWwUYsjNKD85KPZENsNdj7k69dZSQOTETStQuSpsCL9zdtt0JTE+bvqDUGHjPjillVkGzyLmSjiuA
+        9cBh27zbzddqFa+HjTUFzd/Ao32f9+MBXObi5aNSSalzFTmXpv0UUxybNtOBBcBdSo9d8+4DfgeOuHD5
+        BHjG2+6SSbEDAYPAGuDbXK1doDHrgAvzuv87wCzgKeCvkkN7vAvd7N6QHm7AafMFwJXATcCTwDelcUd9
+        rfPyPo0DnACsKqUP2tc3ybm0rcNxYpu3VvEbcKfukbaN4Lep+V3wPHB+2k0UR+ciqy2u22zjCzjX0VNo
+        QS5Pm15RXa3ixvdQk2xW2vwn3DLUDiI+1xtLmyYAlgHbfR+hlORD4DHgmrTvCnfdirxd0fT0tOkVd+te
+        LTlehfyoTBQ74vAvtGsMpt4raoaVGmPfqVOndMM7lw6lJYob0sSPwOK8TkeAhd4m/9R56r3ixVs4v1lF
+        ftoUKPkDtthWRdD4scORtUiP16beBKUaQs7Xbp3ewrd6zCupjwK40YbqOky451MHcJ2vr6kx5s0D7wBv
+        d/hdX+J7j12W+gjAazZamVoT+I8Q0bE7bY38XQD3Wt6Q2jDAXBso2k64YdUNTjvE3NSEtaoH0MIWu1Mb
+        BnjAButTa4pSR29k+rhGrmJnyU7TSHTu6AFv2eD61JqiFHG7fYDXS3ZdP8ANqTUF8Jnv0csU2pXaMMD9
+        NlBRcknqTeDCXgylJqxVPcBqy4+kNozbIMUfcU1SnsflbXRMh8LTaWTalH5X5+MHj7029RGAM/SEpRDe
+        BKMcUjDy74qw3QYy1Q9iR+qt4yROaYFQhB3zJQr85gvnlQ+Nn0q0hZO54iEUYRWk5vnPDx0615wvpo2c
+        X5LX6Sv+Ei/bwfFQOj053nwnvLA3eANRfaxD//xrLVYu2H8B/lifAuj3xscAAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="AboutTtxBox.Text" xml:space="preserve">
     <value>Cipher Shield is a comprehensive offline security application designed to safeguard sensitive information through robust encryption and secure password management. 
 
 Cipher Shield allows you to securely manage your passwords, and encrypt/decrypt files using advanced encryption algorithms. 

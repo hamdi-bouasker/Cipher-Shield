@@ -101,7 +101,7 @@
             LoginPwdLoadBackupBtn.Name = "LoginPwdLoadBackupBtn";
             LoginPwdLoadBackupBtn.Size = new System.Drawing.Size(158, 33);
             LoginPwdLoadBackupBtn.TabIndex = 4;
-            LoginPwdLoadBackupBtn.Text = "Recover Password";
+            LoginPwdLoadBackupBtn.Text = "Forgot Password";
             LoginPwdLoadBackupBtn.UseVisualStyleBackColor = false;
             LoginPwdLoadBackupBtn.Click += LoginPwdLoadBackupBtn_Click;
             // 

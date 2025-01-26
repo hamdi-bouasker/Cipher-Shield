@@ -30,6 +30,8 @@ namespace CipherShield
         private int counter = 0;
         string[] hints = { "It's always a great idea to backup your files to the cloud and to an external drive.", "Always backup your passwords to different safe places.", "The more backups you do, the easier to restore.", "Consider backup your important files by printing them.", "Daily system backup to an external drive is your best choice." };
         string[] Hints = { "A stitch in time saves nine.", "Always secure your files from curious eyes.", "Your password should be at least 16 random characters long.", "Don't be lazy, always make a new strong password.", "Daily system backup is your best friend." };
+        private Button previousButton;
+
         // mainform method
         public MainForm()
         {
@@ -44,6 +46,23 @@ namespace CipherShield
 
             // Attach the Load event handler
             this.Load += new EventHandler(this.MainForm_Load);
+
+            // User manual buttons event handlers
+
+            foreach (Control control in UMBtnPanel.Controls)
+            {
+                if (control is Button button)
+                {
+                    button.Click += new EventHandler(UMPanelbtns_Click);
+                }
+            }
+
+            // Assign the specific Click event handler to the UMLoginBtn
+            UMLoginBtn.Click += new EventHandler(UMLoginBtn_Click);
+            UMRegisterBtn.Click += new EventHandler(UMRegisterBtn_Click);
+            UMFileEncBtn.Click += new EventHandler(UMFileEncBtn_Click);
+            UMPasswordMgrBtn.Click += new EventHandler(UMPasswordMgrBtn_Click);
+            UMRegexRenameBtn.Click += new EventHandler(UMRegexRenameBtn_Click);
         }
 
 
@@ -851,7 +870,7 @@ namespace CipherShield
                         FileEncryptionFilesNumberTxtBox.Clear();
                     });
                     ShowNotification("Successfully decrypted.", "success.png");
-                    
+
                 });
             }
             catch (Exception ex)
@@ -1327,6 +1346,75 @@ namespace CipherShield
             ChangeSecurityQuestion2TtxBx.PasswordChar = '*';
             ChangeSecurityQuestion3TtxBx.PasswordChar = '*';
             QuestionsPasswordTxtBox.PasswordChar = '*';
+        }
+
+
+        // text for each button in UserManual tab
+        private void UMRegisterBtn_Click(object sender, EventArgs e)
+        {
+            UserManualtextBox.Text = "When you launch the app for the first time, you are asked to register yourself by providing:\r\n\r\n• Lock password\r\n• Answers of the security questions\r\n\r\nThe password is used to encrypt and decrypt the database of the passwords manager.\r\n\r\nThe security questions are used to recover your lock password or to change it.\r\n\r\nIt's advisable to backup your lock password by following the instructions in the Help tab so that next time you login, you can simply load it by clicking on Load Password.";
+        }
+
+        private void UMLoginBtn_Click(object sender, EventArgs e)
+        {
+            UserManualtextBox.Text = "Login using your lock password.\r\n\r\nYou can load the lock password by clicking on Load Password\r\nand select the Lock-Password.dat file. You will see your password\r\nloaded in the login tab.\r\n\r\nIn case you forgot it, click on Forgot Password and follow the instructions.\r\n";
+        }
+
+        private void UMPasswordMgrBtn_Click(object sender, EventArgs e)
+        {
+            UserManualtextBox.Text = "The password manager securely saves your credentials\r\nto an encrypted database.\r\n\r\nYou can add, update or delete an entry which is composed of:\r\n\r\n• Website\r\n• Username or email address\r\n• Password\r\n\r\nYou can print all inserted entries or export them as csv.\r\n\r\nThe database is securely encrypted and protected from\r\nunauthorized persons.\r\n";
+        }
+
+        private void UMFileEncBtn_Click(object sender, EventArgs e)
+        {
+            UserManualtextBox.Text = "Secure your important files from curious eyes and unauthorized persons. \r\n\r\nThe files are encrypted and decrypted using a password which you can\r\ngenerate within Files Encryption tab or input your own password \r\nbut it's highly advisable to not insert your app lock password.\r\n\r\nThe encryption does not rely on your password only, \r\nadditional encryption layers are executed for maximum protection.\r\n\r\nYou can backup your password by clicking on Save password \r\nso that next time when you want to decrypt a file, \r\nsimply click on Load password and import the password file you already saved.\r\n\r\nIn case you forgot it, you can recover it by clicking on Forgot password.\r\n\r\n";
+            ;
+        }
+
+        private void UMRegexRenameBtn_Click(object sender, EventArgs e)
+        {
+            UserManualtextBox.Text = "Embrace the power of files renaming using Regex\r\nwhich stands for Regular Expression.\r\n\r\nYou can easily rename entire filename or part of it in few clicks.\r\n\r\nPreview offers you great renaming visualization before you confirm\r\nthe renaming.\r\n\r\nPlease refer to C# regex symbols to get the pattern\r\nyou need.\r\n\r\nIf you want to use the counter, in Replacement tab add this symbol: {n}\r\n";
+        }
+
+        // handle backcolor of UserManual buttons
+        private void UMPanelbtns_Click(object sender, EventArgs e)
+        {
+            // Check if the sender is a button and if it's inside the specified panel
+            if (sender is Button clickedButton && clickedButton.Parent == UMBtnPanel)
+            {
+                // Loop through all controls in the panel
+                foreach (Control control in UMBtnPanel.Controls)
+                {
+                    // Check if the control is a button
+                    if (control is Button button)
+                    {
+                        // Reset the background color of the button
+                        button.BackColor = Color.FromArgb(41, 42, 45);
+                    }
+                }
+
+                // Change the background color of the clicked button to black
+                clickedButton.BackColor = Color.Black;
+
+                // Update the previously clicked button
+                previousButton = clickedButton;
+            }
+        }
+
+        // hide the cursor in all textboxes
+        private void AboutTtxBox_MouseDown(object sender, MouseEventArgs e)
+        {
+            this.ActiveControl = About;
+        }
+
+        private void UserManualtextBox_MouseDown(object sender, MouseEventArgs e)
+        {
+            this.ActiveControl = UserManual;
+        }
+
+        private void PasswordGeneratorGeneratedPwdTextBox_MouseDown(object sender, MouseEventArgs e)
+        {
+            this.ActiveControl = PasswordGenerator;
         }
     }
 }
