@@ -26,7 +26,7 @@ This type of encryption is known for its speed and security, making it a preferr
 - **File Encryption:** Files are encrypted using the **AES-256** encryption algorithm, and the password is saved and encrypted with the same algorithm.
 
   
-  ![files-encryption.png](https://github.com/hamdi-bouasker/Cipher-Shield/blob/master/files-encryption.png)
+  ![enc.png](https://github.com/hamdi-bouasker/Cipher-Shield/blob/master/enc.png)
 
 - **Regex File Rename:** Renames files using C# regex symbols for flexible and powerful file naming.
 
@@ -36,7 +36,15 @@ This type of encryption is known for its speed and security, making it a preferr
 - **Help:** Change your password or your security questions answers anytime.
 
   
-![help.png](https://github.com/hamdi-bouasker/Cipher-Shield/blob/master/help.png)
+![help.png](https://github.com/hamdi-bouasker/Cipher-Shield/blob/master/help.png)        
+
+- **User Manual:** Get clear instructions.
+
+![UM.png](https://github.com/hamdi-bouasker/Cipher-Shield/blob/master/UM.png)          
+
+- **About:**
+
+![about.png](https://github.com/hamdi-bouasker/Cipher-Shield/blob/master/about.png)                          
   
 
 ## Advantages of Encrypting Sensitive Data
