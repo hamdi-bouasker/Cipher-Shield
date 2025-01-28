@@ -63,7 +63,7 @@ namespace CipherShield
             if (RegisterMasterPwdTxtBox.Text == RegisterMasterPwdConfirmTxtBox.Text && SecurityQuestion1txtBox.Text.Length != 0 && SecurityQuestion2txtBox.Text.Length != 0 && SecurityQuestion3txtBox.Text.Length != 0)
             {
                 Password = RegisterMasterPwdTxtBox.Text;
-                SecureStorage.SavePassword(Password);
+                SecureStorage.SaveMasterPassword(Password);
                 SecureStorage.SaveSecurityQuestions(new string[] { SecurityQuestion1txtBox.Text, SecurityQuestion2txtBox.Text, SecurityQuestion3txtBox.Text });
                 string successIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "success.png");
                 Uri successUri = new Uri($"file:///{successIcon}");

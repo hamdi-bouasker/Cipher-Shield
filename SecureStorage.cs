@@ -1,195 +1,78 @@
 using System;
 using System.IO;
 using System.Security.Cryptography;
-using System.Text;
 using System.Windows.Forms;
 using Microsoft.Data.Sqlite;
 using Microsoft.Toolkit.Uwp.Notifications;
+using System.Linq;
+using System.Windows.Input;
 
 namespace CipherShield
 {
     public static class SecureStorage
     {
-        private static readonly byte[] backupKey = { 132, 42, 53, 84, 75, 96, 37, 28, 99, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32 };
+        private static string hexStringLockKey = "f3a4b5c6d7e8091a2b3c4d5e6f7181920a1b2c3d4e5f60718293a4b5c6d7e8f9";
+        private static readonly byte[] backupLockKey = HexStringToByteArray(hexStringLockKey);
+        private static readonly byte[] hashedLockKey = HashKeyWithSHA256(backupLockKey);
 
-        // Additional entropy for the password encryption
-        private static readonly byte[] AdditionalEntropy = new byte[]
+        private static string hexStringSecurityQuestionsKey = "d3e4f5a6b7c8091a2b3c4d5e6f7081920a1b2c3d4e5f60718293a4b5c6d7e8f9";
+        private static readonly byte[] backupSecurityQuestionsKey = HexStringToByteArray(hexStringSecurityQuestionsKey);
+        private static readonly byte[] hashedSecurityQuestionsKey = HashKeyWithSHA256(backupSecurityQuestionsKey);
+
+        private static string hexStringFilesEncKey = "a1b2c3d4e5f60718293a4b5c6d7e8f90a1b2c3d4e5f60718293a4b5c6d7e8f90";
+        private static readonly byte[] backupFilesEncKey = HexStringToByteArray(hexStringFilesEncKey);
+        private static readonly byte[] hashedFilesEncKey = HashKeyWithSHA256(backupFilesEncKey);
+
+        // method to convert hex string of 64 bytes to byte array
+        static byte[] HexStringToByteArray(string hex)
         {
-        91, 182, 173, 64, 155, 246, 137, 228,
-        19, 200, 211, 122, 133, 144, 255, 166,
-        177, 188, 199, 210, 221, 232, 243, 254,
-        165, 176, 187, 198, 209, 220, 231, 242
-        };
+            int length = hex.Length;
+            byte[] bytes = new byte[length / 2];
+            for (int i = 0; i < length; i += 2)
+            {
+                string byteValue = hex.Substring(i, 2);
+                bytes[i / 2] = Convert.ToByte(byteValue, 16);
+            }
 
-        // Save the master password to a file
-        public static void SavePassword(string password)
+            return bytes;
+        }
+
+        // method to hash the key using SHA256
+        private static byte[] HashKeyWithSHA256(byte[] key)
         {
-            byte[] encryptedPassword = ProtectedData.Protect(
-                Encoding.UTF8.GetBytes(password), AdditionalEntropy, DataProtectionScope.CurrentUser);
-            string appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Cipher Shield");
-            Directory.CreateDirectory(appDataPath); // Ensure the directory exists
-            string filePath = Path.Combine(appDataPath, "Master-Password.dat");
-            File.WriteAllBytes(filePath, encryptedPassword);
-        }
-
-
-    // Retrieve the master password from the file
-    public static string GetPassword()
-        {
-            string appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Cipher Shield");
-            string filePath = Path.Combine(appDataPath, "Master-Password.dat");
-
-            byte[] encryptedPassword = File.ReadAllBytes(filePath);
-            byte[] decryptedPassword = ProtectedData.Unprotect(
-                encryptedPassword, AdditionalEntropy, DataProtectionScope.CurrentUser);
-            return Encoding.UTF8.GetString(decryptedPassword);
-        }
-
-    // Retrieve the answers of the security questions
-    public static string[] GetSecurityAnswers()
-    {
-            string appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Cipher Shield");
-
-            // Read the encrypted answers
-            byte[][] encryptedAnswers = new byte[3][];
-            for (int i = 0; i < 3; i++)
+            using (SHA256 sha256 = SHA256.Create())
             {
-                encryptedAnswers[i] = File.ReadAllBytes(Path.Combine(appDataPath, $"Security-Answer-{i + 1}.dat"));
-            }
-
-            // Decrypt the answers
-            string[] decryptedAnswers = new string[3];
-            for (int i = 0; i < 3; i++)
-            {
-                byte[] decryptedAnswerBytes = ProtectedData.Unprotect(encryptedAnswers[i], AdditionalEntropy, DataProtectionScope.CurrentUser);
-                decryptedAnswers[i] = Encoding.UTF8.GetString(decryptedAnswerBytes);
-            }
-
-            return decryptedAnswers;
-        }
-
-        // Update the master password
-        public static void UpdatePassword(string newPassword) 
-        { 
-            SavePassword(newPassword); 
-        }
-
-        // change the master password
-        public static void ChangeDatabasePassword(string databaseFilePath, string oldPassword, string newPassword)
-        {
-            using (var connection = new SqliteConnection($"Data Source={databaseFilePath};Password={oldPassword};"))
-            {
-                connection.Open();
-
-                using (var command = new SqliteCommand($"PRAGMA rekey = '{newPassword}';", connection))
-                {
-                    
-                    command.ExecuteNonQuery();
-                }
+                return sha256.ComputeHash(key);
             }
         }
 
-        // backup the password to user's preferred location
-        public static void BackupPassword(string password)
-        {           
-            byte[] encryptedPassword = ProtectedData.Protect(
-                Encoding.UTF8.GetBytes(password), AdditionalEntropy, DataProtectionScope.CurrentUser);
 
-            // Create and configure the SaveFileDialog
-            SaveFileDialog saveFileDialog = new SaveFileDialog
-            {
-                Filter = "Data files (*.dat)|*.dat|All files (*.*)|*.*",
-                FileName = "Lock-Password.dat",
-                Title = "Save Master Password"
-            };
-
-            // Show the dialog and get the user-selected file path
-            if (saveFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                string filePath = saveFileDialog.FileName;
-                File.WriteAllBytes(filePath, encryptedPassword);
-                string successIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "success.png");
-                Uri successUri = new Uri($"file:///{successIcon}");
-                new ToastContentBuilder()
-                    .AddAppLogoOverride(successUri, ToastGenericAppLogoCrop.Default)
-                    .AddText("Password saved successfully.")
-                    .Show();
-                return;
-            }
-            else
-            {
-                string WarningIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "warning.png");
-                Uri WarningUri = new Uri($"file:///{WarningIcon}");
-                new ToastContentBuilder()
-                    .AddAppLogoOverride(WarningUri, ToastGenericAppLogoCrop.Default)
-                    .AddText("Password save cancelled.")
-                    .Show();
-                return;
-            }
-        }
-
-        // save security answers
-        public static void SaveSecurityQuestions(string[] answers)
-        {
-            // Encrypt security answers
-
-            byte[][] encryptedAnswers = new byte[3][];
-            for (int i = 0; i < 3; i++)
-            {
-                encryptedAnswers[i] = ProtectedData.Protect(
-                    Encoding.UTF8.GetBytes(answers[i]), AdditionalEntropy, DataProtectionScope.CurrentUser);
-            }
-
-            string appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Cipher Shield");
-            Directory.CreateDirectory(appDataPath); // Ensure the directory exists
-
-            // Save encrypted answers
-            for (int i = 0; i < 3; i++)
-            {
-                File.WriteAllBytes(Path.Combine(appDataPath, $"Security-Answer-{i + 1}.dat"), encryptedAnswers[i]);
-            }
-        }
-
-        // recover password using secuirty questions
-        public static string RecoverPassword(string[] userAnswers)
-        {
-            string appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Cipher Shield");
-
-            // Read the encrypted answers
-            byte[][] encryptedAnswers = new byte[3][];
-            for (int i = 0; i < 3; i++)
-            {
-                encryptedAnswers[i] = File.ReadAllBytes(Path.Combine(appDataPath, $"Security-Answer-{i + 1}.dat"));
-            }
-
-            // Decrypt and compare the stored answers with the provided answers
-            for (int i = 0; i < 3; i++)
-            {
-                byte[] decryptedAnswerBytes = ProtectedData.Unprotect(encryptedAnswers[i], AdditionalEntropy, DataProtectionScope.CurrentUser);
-                string storedAnswer = Encoding.UTF8.GetString(decryptedAnswerBytes);
-
-                if (userAnswers[i] != storedAnswer)
-                {
-                    string errorIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "error.png");
-                    Uri errorUri = new Uri($"file:///{errorIcon}");
-                    new ToastContentBuilder()
-                        .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
-                        .AddText("One or more of the provided answers are incorrect.")
-                        .Show();
-                    return null;
-                }
-            }
-
-            // If all answers and password are correct, decrypt and return the password
-            byte[] encryptedPassword = File.ReadAllBytes(Path.Combine(appDataPath, "Master-Password.dat"));
-            byte[] decryptedPasswordBytes = ProtectedData.Unprotect(encryptedPassword, AdditionalEntropy, DataProtectionScope.CurrentUser);
-            return Encoding.UTF8.GetString(decryptedPasswordBytes);
-        }
-
-        public static string DecryptPassword(byte[] encryptedData)
+        // method to encrypt the master password
+        private static byte[] EncryptLockPassword(string password)
         {
             Aes aes = Aes.Create();
-            aes.Key = backupKey;
+            aes.Key = hashedLockKey;
+            aes.GenerateIV(); // Generate a new IV for each encryption
+            byte[] iv = aes.IV;
+
+            MemoryStream msEncrypt = new MemoryStream();
+            // Write the IV to the beginning of the file
+            msEncrypt.Write(iv, 0, iv.Length);
+
+            using (CryptoStream csEncrypt = new CryptoStream(msEncrypt, aes.CreateEncryptor(), CryptoStreamMode.Write))
+            using (StreamWriter swEncrypt = new StreamWriter(csEncrypt))
+            {
+                swEncrypt.Write(password);
+            }
+
+            return msEncrypt.ToArray();
+        }
+
+        // method to decrypt the master password
+        private static string DecryptLockPassword(byte[] encryptedData)
+        {
+            Aes aes = Aes.Create();
+            aes.Key = hashedLockKey;
 
             // Get the IV from the beginning of the encrypted data
             byte[] iv = new byte[16];
@@ -204,67 +87,234 @@ namespace CipherShield
             return srDecrypt.ReadToEnd();
         }
 
+        // method to encrypt the password used to encrypt files
+        public static byte[] EncryptFilesPassword(string password)
+        {
+            Aes aes = Aes.Create();
+            aes.Key = hashedFilesEncKey;
+            aes.GenerateIV(); // Generate a new IV for each encryption
+            byte[] iv = aes.IV;
 
-        public static string RecoverEncryptionPassword(string[] userAnswers, string masterPassword)
+            MemoryStream msEncrypt = new MemoryStream();
+            // Write the IV to the beginning of the file
+            msEncrypt.Write(iv, 0, iv.Length);
+
+            using (CryptoStream csEncrypt = new CryptoStream(msEncrypt, aes.CreateEncryptor(), CryptoStreamMode.Write))
+            using (StreamWriter swEncrypt = new StreamWriter(csEncrypt))
+            {
+                swEncrypt.Write(password);
+            }
+
+            return msEncrypt.ToArray();
+        }
+
+        // method to decrypt the password used to decrypt files
+        public static string DecryptFilesPassword(byte[] encryptedData)
+        {
+            Aes aes = Aes.Create();
+            aes.Key = hashedFilesEncKey;
+
+            // Get the IV from the beginning of the encrypted data
+            byte[] iv = new byte[16];
+            Array.Copy(encryptedData, 0, iv, 0, iv.Length);
+            aes.IV = iv;
+
+            // Get the encrypted password (skip the IV)
+            MemoryStream msDecrypt = new MemoryStream(encryptedData, iv.Length, encryptedData.Length - iv.Length);
+            CryptoStream csDecrypt = new CryptoStream(msDecrypt, aes.CreateDecryptor(), CryptoStreamMode.Read);
+            StreamReader srDecrypt = new StreamReader(csDecrypt);
+
+            return srDecrypt.ReadToEnd();
+        }
+
+        // method to encrypt the password used to encrypt the answers of security questions
+        private static byte[] EncryptSecurityQuestionsPassword(string password)
+        {
+            Aes aes = Aes.Create();
+            aes.Key = hashedSecurityQuestionsKey;
+            aes.GenerateIV(); // Generate a new IV for each encryption
+            byte[] iv = aes.IV;
+
+            MemoryStream msEncrypt = new MemoryStream();
+            // Write the IV to the beginning of the file
+            msEncrypt.Write(iv, 0, iv.Length);
+
+            using (CryptoStream csEncrypt = new CryptoStream(msEncrypt, aes.CreateEncryptor(), CryptoStreamMode.Write))
+            using (StreamWriter swEncrypt = new StreamWriter(csEncrypt))
+            {
+                swEncrypt.Write(password);
+            }
+
+            return msEncrypt.ToArray();
+        }
+
+        // method to decrypt the password used to encrypt the answers of security questions
+        private static string DecryptSecurityQuestionsPassword(byte[] encryptedData)
+        {
+            Aes aes = Aes.Create();
+            aes.Key = hashedSecurityQuestionsKey;
+
+            // Get the IV from the beginning of the encrypted data
+            byte[] iv = new byte[16];
+            Array.Copy(encryptedData, 0, iv, 0, iv.Length);
+            aes.IV = iv;
+
+            // Get the encrypted password (skip the IV)
+            MemoryStream msDecrypt = new MemoryStream(encryptedData, iv.Length, encryptedData.Length - iv.Length);
+            CryptoStream csDecrypt = new CryptoStream(msDecrypt, aes.CreateDecryptor(), CryptoStreamMode.Read);
+            StreamReader srDecrypt = new StreamReader(csDecrypt);
+
+            return srDecrypt.ReadToEnd();
+        }
+
+        // Save the master password to a file
+
+        public static void SaveMasterPassword(string password)
+        {
+            // Encrypt the password using the new encryption method
+            byte[] encryptedPassword = EncryptLockPassword(password);
+
+            // Save the encrypted password to a file
+            string appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Cipher Shield");
+            Directory.CreateDirectory(appDataPath); // Ensure the directory exists
+            string filePath = Path.Combine(appDataPath, "Master-Password.dat");
+
+            File.WriteAllBytes(filePath, encryptedPassword);
+        }
+
+        // Retrieve the master password from the file
+        public static string GetMasterPassword()
         {
             string appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Cipher Shield");
+            string filePath = Path.Combine(appDataPath, "Master-Password.dat");
 
-            // Read the encrypted answers
-            byte[][] encryptedAnswers = new byte[3][];
-            for (int i = 0; i < 3; i++)
-            {
-                encryptedAnswers[i] = File.ReadAllBytes(Path.Combine(appDataPath, $"Security-Answer-{i + 1}.dat"));
-            }
+            byte[] encryptedData = File.ReadAllBytes(filePath);
 
-            // Decrypt and compare the stored answers with the provided answers
-            for (int i = 0; i < 3; i++)
-            {
-                byte[] decryptedAnswerBytes = ProtectedData.Unprotect(encryptedAnswers[i], AdditionalEntropy, DataProtectionScope.CurrentUser);
-                string storedAnswer = Encoding.UTF8.GetString(decryptedAnswerBytes);
+            string decryptedPassword = DecryptLockPassword(encryptedData);
 
-                if (userAnswers[i] != storedAnswer || masterPassword != GetPassword())
-                {
-                    string errorIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "error.png");
-                    Uri errorUri = new Uri($"file:///{errorIcon}");
-                    new ToastContentBuilder()
-                        .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
-                        .AddText("One or more of the provided answers are incorrect.")
-                        .Show();
-                    return null;
-                }
-
-            }
-
-            // If all answers and lock password are correct, decrypt and return the files encryption password
-            byte[] encryptedPassword = File.ReadAllBytes(Path.Combine(appDataPath, "FilesEncryptionPassword.pwd"));
-            string decryptedPassword = DecryptPassword(encryptedPassword);
             return decryptedPassword;
         }
 
-        // load backup password
+        // save security answers
+        public static void SaveSecurityQuestions(string[] answers)
+        {
+            byte[][] encryptedAnswers = new byte[3][];
+
+            for (int i = 0; i < 3; i++)
+            {
+                encryptedAnswers[i] = EncryptSecurityQuestionsPassword(answers[i]);
+            }
+
+            string appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Cipher Shield");
+            Directory.CreateDirectory(appDataPath); // Ensure the directory exists
+
+            for (int i = 0; i < 3; i++)
+            {
+                File.WriteAllBytes(Path.Combine(appDataPath, $"Security-Answer-{i + 1}.dat"), encryptedAnswers[i]);
+            }
+        }
+
+
+        // Retrieve the answers of the security questions
+        public static string[] GetSecurityAnswers()
+        {
+            string[] answers = new string[3];
+            string appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Cipher Shield");
+
+            for (int i = 0; i < 3; i++)
+            {
+                string filePath = Path.Combine(appDataPath, $"Security-Answer-{i + 1}.dat");
+                byte[] encryptedData = File.ReadAllBytes(filePath);
+
+                answers[i] = DecryptSecurityQuestionsPassword(encryptedData);
+            }
+
+            return answers;
+        }
+
+        // Update the master password
+        public static void UpdatePassword(string newPassword)
+        {
+            SaveMasterPassword(newPassword);
+        }
+
+        // change the database password
+        public static void ChangeDatabasePassword(string databaseFilePath, string oldPassword, string newPassword)
+        {
+            using (var connection = new SqliteConnection($"Data Source={databaseFilePath};Password={oldPassword};"))
+            {
+                connection.Open();
+
+                using (var command = new SqliteCommand($"PRAGMA rekey = '{newPassword}';", connection))
+                {
+
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
+        // backup the master password to user's preferred location
+        public static void BackupPassword(string password)
+        {
+            // Encrypt the password using the new encryption method
+            byte[] encryptedPassword = EncryptLockPassword(password);
+
+            // Create and configure the SaveFileDialog
+            SaveFileDialog saveFileDialog = new SaveFileDialog
+            {
+                Filter = "Data files (*.dat)|*.dat|All files (*.*)|*.*",
+                FileName = "Lock-Password.dat",
+                Title = "Save Master Password"
+            };
+
+            // Show the dialog and get the user-selected file path
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string filePath = saveFileDialog.FileName;
+                File.WriteAllBytes(filePath, encryptedPassword);
+
+                string successIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "success.png");
+                Uri successUri = new Uri($"file:///{successIcon}");
+                new ToastContentBuilder()
+                    .AddAppLogoOverride(successUri, ToastGenericAppLogoCrop.Default)
+                    .AddText("Password saved successfully.")
+                    .Show();
+                
+            }
+            else
+            {
+                string warningIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "warning.png");
+                Uri warningUri = new Uri($"file:///{warningIcon}");
+                new ToastContentBuilder()
+                    .AddAppLogoOverride(warningUri, ToastGenericAppLogoCrop.Default)
+                    .AddText("Password save cancelled.")
+                    .Show();
+            }
+        }
+
+        // load backup lock password
         public static void LoadBackupPassword(TextBox textBox)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog
             {
                 Filter = "Data files (*.dat)|*.dat|All files (*.*)|*.*",
-                Title = "Open Master Password"
+                Title = "Open Lock Password"
             };
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 string filePath = openFileDialog.FileName;
-                byte[] encryptedPassword = File.ReadAllBytes(filePath);
-                byte[] decryptedPassword = ProtectedData.Unprotect(
-                    encryptedPassword, AdditionalEntropy, DataProtectionScope.CurrentUser);
-                string password = Encoding.UTF8.GetString(decryptedPassword);
+                byte[] encryptedData = File.ReadAllBytes(filePath);
+
+                string password = DecryptLockPassword(encryptedData);
                 textBox.Text = password;
+
                 string successIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "success.png");
                 Uri successUri = new Uri($"file:///{successIcon}");
                 new ToastContentBuilder()
                     .AddAppLogoOverride(successUri, ToastGenericAppLogoCrop.Default)
                     .AddText("The password has been loaded successfully.")
                     .Show();
-                return;
             }
             else
             {
@@ -274,8 +324,33 @@ namespace CipherShield
                     .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
                     .AddText("Password load cancelled.")
                     .Show();
-                return;
             }
+        }
+
+        // Save the password used to encrypt files
+        public static void SaveEncPassword(string password)
+        {
+            // Encrypt the password using the new encryption method
+            byte[] encryptedPassword = EncryptFilesPassword(password);
+
+            // Save the encrypted password to a file
+            string appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Cipher Shield");
+            Directory.CreateDirectory(appDataPath); // Ensure the directory exists
+            string filePath = Path.Combine(appDataPath, "Files-Encryption-Password.pwd");
+            File.WriteAllBytes(filePath, encryptedPassword);
+        }
+
+
+        // Retrieve the password used to encrypt files
+        public static string GetEncPassword()
+        {
+            string appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Cipher Shield");
+            string filePath = Path.Combine(appDataPath, "Files-Encryption-Password.pwd");
+            byte[] encryptedData = File.ReadAllBytes(filePath);
+
+            string decryptedPassword = DecryptFilesPassword(encryptedData);
+
+            return decryptedPassword;
         }
     }
 }

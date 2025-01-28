@@ -16,6 +16,7 @@ using Microsoft.Toolkit.Uwp.Notifications;
 using System.Text;
 using System.Runtime.InteropServices;
 using Windows.UI.Notifications;
+using System.Windows.Controls;
 
 
 
@@ -25,12 +26,11 @@ namespace CipherShield
     {
         private List<string> selectedFiles1 = new List<string>();
         private List<string> selectedFiles2 = new List<string>();
-        private readonly byte[] backupKey = { 132, 42, 53, 84, 75, 96, 37, 28, 99, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32 };
         private DatabaseHelper db;
         private int counter = 0;
         string[] hints = { "It's always a great idea to backup your files to the cloud and to an external drive.", "Always backup your passwords to different safe places.", "The more backups you do, the easier to restore.", "Consider backup your important files by printing them.", "Daily system backup to an external drive is your best choice." };
         string[] Hints = { "A stitch in time saves nine.", "Always secure your files from curious eyes.", "Your password should be at least 16 random characters long.", "Don't be lazy, always make a new strong password.", "Daily system backup is your best friend." };
-        private Button previousButton;
+        private System.Windows.Forms.Button previousButton;
 
         // mainform method
         public MainForm()
@@ -43,26 +43,27 @@ namespace CipherShield
             // Initialize SQLitePCL to use SQLCipher
             SQLitePCL.Batteries_V2.Init();
             PasswordManagerDGV.SelectionChanged += DataGridView1_SelectionChanged;
+            // Handle the TabControl SelectedIndexChanged event
+            tabControl1.SelectedIndexChanged += (sender, e) =>
+            {
+                if (tabControl1.SelectedIndex == 5)
+                {
+                    UMRegisterBtn.PerformClick();
+                }
+            };
 
             // Attach the Load event handler
             this.Load += new EventHandler(this.MainForm_Load);
 
             // User manual buttons event handlers
 
-            foreach (Control control in UMBtnPanel.Controls)
+            foreach (System.Windows.Forms.Control control in UMBtnPanel.Controls)
             {
-                if (control is Button button)
+                if (control is System.Windows.Forms.Button button)
                 {
                     button.Click += new EventHandler(UMPanelbtns_Click);
                 }
             }
-
-            // Assign the specific Click event handler to the UMLoginBtn
-            UMLoginBtn.Click += new EventHandler(UMLoginBtn_Click);
-            UMRegisterBtn.Click += new EventHandler(UMRegisterBtn_Click);
-            UMFileEncBtn.Click += new EventHandler(UMFileEncBtn_Click);
-            UMPasswordMgrBtn.Click += new EventHandler(UMPasswordMgrBtn_Click);
-            UMRegexRenameBtn.Click += new EventHandler(UMRegexRenameBtn_Click);
         }
 
 
@@ -79,7 +80,7 @@ namespace CipherShield
                 if (registerMasterPasswordForm.DialogResult == DialogResult.OK)
                 {
                     string password = registerMasterPasswordForm.RegisterMasterPwdTxtBox.Text; // Ensure you have a public Password property
-                    SecureStorage.SavePassword(password);
+                    SecureStorage.SaveMasterPassword(password);
                     db = new DatabaseHelper(password); // Pass the password to DatabaseHelper constructor
                     SetControlsEnabled(true);
                     LoadData();
@@ -107,14 +108,36 @@ namespace CipherShield
             }
         }
 
+        // method to convert hex string to byte array
+        static byte[] HexStringToByteArray(string hex)
+        {
+            int length = hex.Length;
+            byte[] bytes = new byte[length / 2];
+            for (int i = 0; i < length; i += 2)
+            {
+                bytes[i / 2] = Convert.ToByte(hex.Substring(i, 2), 16);
+            }
+            return bytes;
+        }
+
+        // method to hash the key using SHA256
+        private static byte[] HashKeyWithSHA256(byte[] key)
+        {
+            using (SHA256 sha256 = SHA256.Create())
+            {
+                return sha256.ComputeHash(key);
+            }
+        }
+
         // Method to disable controls
         private void SetControlsEnabled(bool enabled)
         {
-            foreach (Control ctrl in this.Controls)
+            foreach (System.Windows.Forms.Control ctrl in this.Controls)
             {
                 ctrl.Enabled = enabled;
             }
         }
+
 
         // timer for the hintlabel in help tab
 
@@ -159,7 +182,7 @@ namespace CipherShield
         private void SubmitNewPasswordBtn_Click(object sender, EventArgs e)
         {
 
-            string currentPassword = SecureStorage.GetPassword();
+            string currentPassword = SecureStorage.GetMasterPassword();
             string appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Cipher Shield");
             Directory.CreateDirectory(appDataPath); // Ensure the directory exists
             string dbFilePath = Path.Combine(appDataPath, "credentials.db");
@@ -190,7 +213,7 @@ namespace CipherShield
             SecureStorage.ChangeDatabasePassword(dbFilePath, currentPassword, RepeatNewPasswordTxtBox.Text);
             SecureStorage.UpdatePassword(RepeatNewPasswordTxtBox.Text);
             ShowNotification("The lock password has been successfully changed." +
-                Environment.NewLine + " Cipher Shield will be restarted.", "success.png");
+                Environment.NewLine + "Cipher Shield will be restarted.", "success.png");
             Application.Restart();
         }
 
@@ -507,7 +530,8 @@ namespace CipherShield
             PrintDocument printDocument = new PrintDocument();
             printDocument.PrintPage += PrintDocument_PrintPage;
 
-            PrintDialog printDialog = new PrintDialog { Document = printDocument };
+            System.Windows.Forms.PrintDialog printDialog = new System.Windows.Forms.PrintDialog { Document = printDocument };
+
 
             if (printDialog.ShowDialog() == DialogResult.OK)
             {
@@ -517,13 +541,14 @@ namespace CipherShield
             }
         }
 
-        // method to print all entries
+        // method to print all entries in one document as table, possible to print it as pdf
         private void PrintDocument_PrintPage(object sender, PrintPageEventArgs ev)
         {
             int y = ev.MarginBounds.Top;
-            int x = ev.MarginBounds.Left;
-            int columnWidth = 200;
+            int columnWidth = 250;
             int rowHeight = 30;
+            int totalTableWidth = columnWidth * PasswordManagerDGV.Columns.GetColumnCount(DataGridViewElementStates.Visible);
+            int x = ev.MarginBounds.Left + (ev.MarginBounds.Width - totalTableWidth) / 2;
 
             // Set up colors
             Brush headerBrush = new SolidBrush(SystemColors.Highlight);
@@ -555,12 +580,12 @@ namespace CipherShield
             }
 
             y += rowHeight;
-            x = ev.MarginBounds.Left;
+            x = ev.MarginBounds.Left + (ev.MarginBounds.Width - totalTableWidth) / 2;
 
             // Print rows
             foreach (DataGridViewRow row in PasswordManagerDGV.Rows)
             {
-                x = ev.MarginBounds.Left;
+                x = ev.MarginBounds.Left + (ev.MarginBounds.Width - totalTableWidth) / 2;
                 foreach (DataGridViewCell cell in row.Cells)
                 {
                     if (PasswordManagerDGV.Columns[cell.ColumnIndex].Visible)
@@ -575,7 +600,6 @@ namespace CipherShield
                 y += rowHeight;
             }
         }
-
 
         // export all credentials to csv
         private void PasswordManagerExportBtn_Click(object sender, EventArgs e)
@@ -673,14 +697,10 @@ namespace CipherShield
             {
                 try
                 {
-                    byte[] encryptedPassword = EncryptPassword(FilesEncryptionEnterPwdTxtBox.Text);
+                    byte[] encryptedPassword = SecureStorage.EncryptFilesPassword(FilesEncryptionEnterPwdTxtBox.Text);
                     File.WriteAllBytes(sfd.FileName, encryptedPassword);
                     ShowNotification("The password backup file has been saved" + Environment.NewLine + "Keep this file safe.", "success.png");
-
-                    string appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Cipher Shield");
-                    Directory.CreateDirectory(appDataPath); // Ensure the directory exists
-                    string filePath = Path.Combine(appDataPath, "FilesEncryptionPassword.pwd");
-                    File.WriteAllBytes(filePath, encryptedPassword);
+                    SecureStorage.SaveEncPassword(FilesEncryptionEnterPwdTxtBox.Text);
                     return;
                 }
                 catch (Exception ex)
@@ -703,7 +723,7 @@ namespace CipherShield
                 try
                 {
                     byte[] encryptedPassword = File.ReadAllBytes(ofd.FileName);
-                    string decryptedPassword = DecryptPassword(encryptedPassword);
+                    string decryptedPassword = SecureStorage.DecryptFilesPassword(encryptedPassword);
                     if (FilesEncryptionEnterPwdTxtBox != null)
                     {
                         FilesEncryptionEnterPwdTxtBox.Text = decryptedPassword;
@@ -722,46 +742,6 @@ namespace CipherShield
                 ShowNotification("No file selected.", "error.png");
                 return;
             }
-        }
-
-        // method to encrypt the password used to encrypt the files
-        private byte[] EncryptPassword(string password)
-        {
-            Aes aes = Aes.Create();
-            aes.Key = backupKey;
-            aes.GenerateIV(); // Generate a new IV for each encryption
-            byte[] iv = aes.IV;
-
-            MemoryStream msEncrypt = new MemoryStream();
-            // Write the IV to the beginning of the file
-            msEncrypt.Write(iv, 0, iv.Length);
-
-            using (CryptoStream csEncrypt = new CryptoStream(msEncrypt, aes.CreateEncryptor(), CryptoStreamMode.Write))
-            using (StreamWriter swEncrypt = new StreamWriter(csEncrypt))
-            {
-                swEncrypt.Write(password);
-            }
-
-            return msEncrypt.ToArray();
-        }
-
-        // method to decrypt the password used to encrypt the files
-        private string DecryptPassword(byte[] encryptedData)
-        {
-            Aes aes = Aes.Create();
-            aes.Key = backupKey;
-
-            // Get the IV from the beginning of the encrypted data
-            byte[] iv = new byte[16];
-            Array.Copy(encryptedData, 0, iv, 0, iv.Length);
-            aes.IV = iv;
-
-            // Get the encrypted password (skip the IV)
-            MemoryStream msDecrypt = new MemoryStream(encryptedData, iv.Length, encryptedData.Length - iv.Length);
-            CryptoStream csDecrypt = new CryptoStream(msDecrypt, aes.CreateDecryptor(), CryptoStreamMode.Read);
-            StreamReader srDecrypt = new StreamReader(csDecrypt);
-
-            return srDecrypt.ReadToEnd();
         }
 
         // method to encrypt the selected files
@@ -887,7 +867,7 @@ namespace CipherShield
         // method to diable controles during encryption and decryption
         private void DisableControls()
         {
-            foreach (var button in Controls.OfType<Button>())
+            foreach (var button in Controls.OfType<System.Windows.Forms.Button>())
             {
                 button.Enabled = false;
             }
@@ -898,7 +878,7 @@ namespace CipherShield
         // method to enable controles after encryption or after decryption
         private void EnableControls()
         {
-            foreach (var button in Controls.OfType<Button>())
+            foreach (var button in Controls.OfType<System.Windows.Forms.Button>())
             {
                 button.Enabled = true;
             }
@@ -1048,7 +1028,8 @@ namespace CipherShield
                     {
                         var fileInfo = new FileInfo(filePath);
                         selectedFiles2.Add(fileInfo.FullName);
-                        var item = new ListViewItem(new[] { fileInfo.Name, fileInfo.Name });
+                        var item = new System.Windows.Forms.ListViewItem(new[] { fileInfo.Name, fileInfo.Name });
+
                         RegexFilesListView.Items.Add(item);
                     }
 
@@ -1152,7 +1133,7 @@ namespace CipherShield
                         ? GetNewFileName(fileInfo, RegexPatternTxtBox.Text, RegexReplacementTxtBox.Text, ref counter)
                         : new Regex(RegexPatternTxtBox.Text).Replace(fileInfo.Name, RegexReplacementTxtBox.Text);
 
-                    var item = new ListViewItem(new[] { fileInfo.Name, newName });
+                    var item = new System.Windows.Forms.ListViewItem(new[] { fileInfo.Name, newName });
                     RegexFilesListView.Items.Add(item);
 
                     if (fileInfo.Name != newName)
@@ -1235,7 +1216,7 @@ namespace CipherShield
                     var fileInfo = new FileInfo(filePath);
                     string fileName = fileInfo.Name;
                     selectedFiles2.Add(fileName);
-                    var item = new ListViewItem(new[] { fileInfo.Name, fileInfo.Name });
+                    var item = new System.Windows.Forms.ListViewItem(new[] { fileInfo.Name, fileInfo.Name });
                     RegexFilesListView.Items.Add(item);
                 }
             }
@@ -1284,14 +1265,14 @@ namespace CipherShield
                 return;
             }
 
-            if (QuestionsPasswordTxtBox.Text != SecureStorage.GetPassword())
+            if (QuestionsPasswordTxtBox.Text != SecureStorage.GetMasterPassword())
             {
                 ShowNotification("Wrong password.", "error.png");
                 return;
             }
 
             string[] answers = { ChangeSecurityQuestion1TtxBx.Text, ChangeSecurityQuestion2TtxBx.Text, ChangeSecurityQuestion3TtxBx.Text };
-            if (QuestionsPasswordTxtBox.Text == SecureStorage.GetPassword())
+            if (QuestionsPasswordTxtBox.Text == SecureStorage.GetMasterPassword())
             {
                 SecureStorage.SaveSecurityQuestions(answers);
                 ShowNotification("Your security answers are successfully saved.", "success.png");
@@ -1303,9 +1284,10 @@ namespace CipherShield
         // method to offer the user the ability to save lock password file as backup
         private void BackupLockPasswordbtn_Click(object sender, EventArgs e)
         {
-            if (backupPasswordTxtBox.Text == SecureStorage.GetPassword())
+            if (backupPasswordTxtBox.Text == SecureStorage.GetMasterPassword())
             {
                 SecureStorage.BackupPassword(backupPasswordTxtBox.Text);
+                backupPasswordTxtBox.Clear();
                 return;
             }
 
@@ -1321,7 +1303,7 @@ namespace CipherShield
         private void hideShowPassword_MouseDown(object sender, MouseEventArgs e)
         {
             focusBtn.Focus();
-            hideShowPassword.BackgroundImage = Image.FromFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "EyeWhite.png"));
+            hideShowPassword.BackgroundImage = System.Drawing.Image.FromFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "EyeWhite.png"));
             oldPasswordTxtBox.PasswordChar = '\0';
             NewPasswordTxtBox.PasswordChar = '\0';
             RepeatNewPasswordTxtBox.PasswordChar = '\0';
@@ -1337,7 +1319,7 @@ namespace CipherShield
         private void hideShowPassword_MouseUp(object sender, MouseEventArgs e)
         {
             focusBtn.Focus();
-            hideShowPassword.BackgroundImage = Image.FromFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "NotEyeWhite.png"));
+            hideShowPassword.BackgroundImage = System.Drawing.Image.FromFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "NotEyeWhite.png"));
             oldPasswordTxtBox.PasswordChar = '*';
             NewPasswordTxtBox.PasswordChar = '*';
             RepeatNewPasswordTxtBox.PasswordChar = '*';
@@ -1349,7 +1331,7 @@ namespace CipherShield
         }
 
 
-        // text for each button in UserManual tab
+        // methods to show text for each button clicked in UserManual tab
         private void UMRegisterBtn_Click(object sender, EventArgs e)
         {
             UserManualtextBox.Text = "When you launch the app for the first time, you are asked to register yourself by providing:\r\n\r\n• Lock password\r\n• Answers of the security questions\r\n\r\nThe password is used to encrypt and decrypt the database of the passwords manager.\r\n\r\nThe security questions are used to recover your lock password or to change it.\r\n\r\nIt's advisable to backup your lock password by following the instructions in the Help tab so that next time you login, you can simply load it by clicking on Load Password.";
@@ -1380,13 +1362,13 @@ namespace CipherShield
         private void UMPanelbtns_Click(object sender, EventArgs e)
         {
             // Check if the sender is a button and if it's inside the specified panel
-            if (sender is Button clickedButton && clickedButton.Parent == UMBtnPanel)
+            if (sender is System.Windows.Forms.Button clickedButton && clickedButton.Parent == UMBtnPanel)
             {
                 // Loop through all controls in the panel
-                foreach (Control control in UMBtnPanel.Controls)
+                foreach (System.Windows.Forms.Control control in UMBtnPanel.Controls)
                 {
                     // Check if the control is a button
-                    if (control is Button button)
+                    if (control is System.Windows.Forms.Button button)
                     {
                         // Reset the background color of the button
                         button.BackColor = Color.FromArgb(41, 42, 45);

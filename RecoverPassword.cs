@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using Microsoft.Toolkit.Uwp.Notifications;
 using System.IO;
 using System.Drawing;
+using System.Linq;
 
 
 namespace CipherShield
@@ -31,20 +32,46 @@ namespace CipherShield
                 return;
             }
             string[] txtBoxes = { SecurityQuestion1txtBox.Text, SecurityQuestion2txtBox.Text, SecurityQuestion3txtBox.Text };
-            if (SecureStorage.RecoverPassword(txtBoxes) == SecureStorage.GetPassword())
+            var answers = SecureStorage.GetSecurityAnswers();
+            bool theSame = txtBoxes.SequenceEqual(answers);
+            if (theSame == true)
+                try
+                {
+                    {
+                        loginForm.LoginMasterPwdTxtBox.Text = SecureStorage.GetMasterPassword();
+                        string successIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "success.png");
+                        Uri successUri = new Uri($"file:///{successIcon}");
+                        new ToastContentBuilder()
+                            .AddAppLogoOverride(successUri, ToastGenericAppLogoCrop.Default)
+                            .AddText("Successful password recover.")
+                            .AddText("Your password is loaded in the login password tab.")
+                            .Show();
+                        Close();
+                    }
+                }
+
+                catch (Exception ex)
+                {
+                    string errorIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "error.png");
+                    Uri errorUri = new Uri($"file:///{errorIcon}");
+                    new ToastContentBuilder()
+                        .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
+                        .AddText("An error occurred.")
+                        .AddText(ex.Message)
+                        .Show();
+                    return;
+                }
+            if (theSame == false)
             {
-                loginForm.LoginMasterPwdTxtBox.Text = SecureStorage.GetPassword();
-                string successIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "success.png");
-                Uri successUri = new Uri($"file:///{successIcon}");
+                string errorIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "error.png");
+                Uri errorUri = new Uri($"file:///{errorIcon}");
                 new ToastContentBuilder()
-                    .AddAppLogoOverride(successUri, ToastGenericAppLogoCrop.Default)
-                    .AddText("Successful password recover.")
-                    .AddText("Your password is loaded in the login password tab.")
+                    .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
+                    .AddText("Incorrect security answers.")
+                    .AddText("Please try again.")
                     .Show();
-                Close();
+                return;
             }
-
-
         }
 
         private void CancelRecoverPwdBtn_Click(object sender, EventArgs e)

@@ -28,7 +28,7 @@ namespace CipherShield
             string successIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "success.png");
             Uri successUri = new Uri($"file:///{successIcon}");
 
-            if (Password == SecureStorage.GetPassword())
+            if (Password == SecureStorage.GetMasterPassword())
             {
                 // Display a toast notification for successful login
                 new ToastContentBuilder()

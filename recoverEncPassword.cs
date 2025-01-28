@@ -32,11 +32,11 @@ namespace CipherShield
             }
 
             string[] txtBoxes = { SecurityQuestion1txtBox.Text, SecurityQuestion2txtBox.Text, SecurityQuestion3txtBox.Text };
-            string filesEncpass = lockPasswordTxtBox.Text;
-           
-            if (txtBoxes.SequenceEqual(SecureStorage.GetSecurityAnswers()) && filesEncpass == SecureStorage.GetPassword())
+            string lockPass = lockPasswordTxtBox.Text;
+            var answers = SecureStorage.GetSecurityAnswers();
+            if (txtBoxes.SequenceEqual(answers) == true && lockPass == SecureStorage.GetMasterPassword())
             {
-                mainForm.FilesEncryptionEnterPwdTxtBox.Text = SecureStorage.RecoverEncryptionPassword(txtBoxes, filesEncpass);
+                mainForm.FilesEncryptionEnterPwdTxtBox.Text = SecureStorage.GetEncPassword();
                 string successIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "success.png");
                 Uri successUri = new Uri($"file:///{successIcon}");
                 new ToastContentBuilder()
