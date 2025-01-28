@@ -58,7 +58,10 @@ It's also possible to recover your password and load it directly in the login ta
 
 ![about.png](https://github.com/hamdi-bouasker/Cipher-Shield/blob/master/about.png)                          
   
+- **Example of an encrypted text**
 
+![encrypted-text.png](https://github.com/hamdi-bouasker/Cipher-Shield/blob/master/encrypted-text.png)
+  
 ## Advantages of Encrypting Sensitive Data
 
 Encrypting sensitive data is crucial for maintaining privacy and security in today's digital world. Here are some key advantages:
