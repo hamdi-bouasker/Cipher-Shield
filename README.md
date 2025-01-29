@@ -76,14 +76,6 @@ Encrypting sensitive data is crucial for maintaining privacy and security in tod
 
 To get started with Cipher Shield, follow these steps:
 
-**Using the installer:**
-
-Install Cipher Shield using the provided installer. Your browser will warn you that the file will damage your computer but the reason behind this warning is that the installer is not signed with third-party authority such as [sectigo](https://sectigo.com)
-or [digicert](https://digicert.com).
-
-A folder named **Cipher Shield** wil be created in AppData directory which will hold **the database**, the answers of your **security questions**, the password used to encrypt files and **the master password**. Those files are all encrypted.
-When you uninstall the app, this folder will be deleted!
-
  **Clone the repository:**
 
    ```sh
