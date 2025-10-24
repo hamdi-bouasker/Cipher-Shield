@@ -2,10 +2,10 @@
 
 I coded it from the scratch with C# and it's heavily tested for a flawless usability and functionality.
 
-Cipher Shield is a robust and secure solution designed to handle all your password and file management needs. It includes a password generator, password manager, file encryption using **AES-GCM**, and regex-based file renaming. 
+Cipher Shield is a robust and secure solution designed to handle all your password and file management needs. It includes a password generator, password manager, file encryption using **AES-GCM with Argon2id**, and regex-based file renaming. 
 With Cipher Shield, you can ensure that your sensitive data remains protected at all times.
 
-**AES-GCM** is an encryption algorithm wich provides confidentiality + authenticity (tag).
+**AES-GCM with Argon2id** is an encryption algorithm wich provides confidentiality + authenticity.
 
 This type of encryption is known for its speed and security, making it a preferred choice for many organizations, including the U.S. government.
 
@@ -32,15 +32,19 @@ It's also possible to recover your password and load it directly in the login ta
   
   ![password-manager.png](https://github.com/hamdi-bouasker/Cipher-Shield/blob/master/password-manager.png)
   
-- **File Encryption:** Files are encrypted using the AES-GCM encryption algorithm with:
-  
-  * byte[] salt = new byte[32] for KDF
-  * byte[] nonce = new byte[12] for AES-GCM nonce (IV)
-  * 16 bytes: auth tag (AES-GCM tag)
+- **File Encryption:** Files are encrypted using the AES-GCM with Argon2id encryption algorithm.
+- 
   * When decrypting: read salt & nonce, derive key, decrypt with tag verification. If verification fails, fail and delete partial output.
+ 
+- Advantages of using AesGcm with Argon2id:
+  
+  * Memory-hard, GPU-resistant (Argon2id)
+  * AES-GCM (authenticated encryption)
+  * Random salt + nonce for each file
+  * Clear key after use
     
 - The password is saved and encrypted with DPAPI algorithm to easily decrypt your files using Load Password button.
-  The password could be saved to Password.pwd file which is encrypted using DPAPI algorithm.
+- The password could be saved to Password.pwd file which is encrypted using DPAPI algorithm.
   You can recover the password in case you forgot it or lost password.pwd file.
 
   
