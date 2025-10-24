@@ -42,12 +42,17 @@ It's also possible to recover your password and load it directly in the login ta
   * AES-GCM (authenticated encryption)
   * Random salt + nonce for each file
   * Clear key after use
-    
-- The password is saved and encrypted with DPAPI algorithm to easily decrypt your files using Load Password button.
-- The password could be saved to Password.pwd file which is encrypted using DPAPI algorithm.
-  You can recover the password in case you forgot it or lost password.pwd file.
 
+- **How passwords are saved?**
+ 
+- The passwords are saved and encrypted with **DPAPI algorithm**:
   
+  * DPAPI ties the encryption to the user account.
+  * Only the same user on the same system can decrypt the data.
+  * Strong AES encryption handled by Windows.
+  * Automatically unique to each user account.
+  * Works even if someone copies your .dat file — they can’t decrypt it on another PC.
+
   ![enc.png](https://github.com/hamdi-bouasker/Cipher-Shield/blob/master/enc.png)
 
 - **Regex File Rename:** Renames files using C# regex symbols for flexible and powerful file naming.
