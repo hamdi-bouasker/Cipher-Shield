@@ -4,6 +4,7 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
+using Konscious.Security.Cryptography;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -886,56 +887,65 @@ namespace CipherShield
                     RandomNumberGenerator.Fill(nonce);
                 }
 
-                using (FileStream fsInput = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read, bufferSize, true))
-                using (FileStream fsTemp = new FileStream(tempFile, FileMode.Create, FileAccess.Write, FileShare.None, bufferSize, true))
+                using FileStream fsInput = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read, bufferSize, true);
+                using FileStream fsTemp = new FileStream(tempFile, FileMode.Create, FileAccess.Write, FileShare.None, bufferSize, true);
+
+                if (encrypt)
                 {
-                    if (encrypt)
-                    {
-                        await fsTemp.WriteAsync(salt);
-                        await fsTemp.WriteAsync(nonce);
-                    }
-                    else
-                    {
-                        await fsInput.ReadAsync(salt);
-                        await fsInput.ReadAsync(nonce);
-                    }
-
-                    using var pbkdf2 = new Rfc2898DeriveBytes(password, salt, 100000, HashAlgorithmName.SHA256);
-                    byte[] key = pbkdf2.GetBytes(32);
-
-                    using var aesGcm = new AesGcm(key, tagSizeInBytes: 16);
-                    byte[] buffer = new byte[bufferSize];
-                    byte[] tag = new byte[16];
-
-                    if (encrypt)
-                    {
-                        using MemoryStream plaintext = new MemoryStream();
-                        await fsInput.CopyToAsync(plaintext);
-                        byte[] plaintextBytes = plaintext.ToArray();
-                        byte[] ciphertext = new byte[plaintextBytes.Length];
-
-                        aesGcm.Encrypt(nonce, plaintextBytes, ciphertext, tag);
-                        await fsTemp.WriteAsync(ciphertext);
-                        await fsTemp.WriteAsync(tag);
-                    }
-                    else
-                    {
-                        long tagPos = fsInput.Length - 16;
-                        fsInput.Position = tagPos;
-                        await fsInput.ReadAsync(tag);
-                        long cipherLength = tagPos - salt.Length - nonce.Length;
-                        fsInput.Position = salt.Length + nonce.Length;
-
-                        byte[] ciphertext = new byte[cipherLength];
-                        await fsInput.ReadAsync(ciphertext);
-
-                        byte[] plaintext = new byte[cipherLength];
-                        aesGcm.Decrypt(nonce, ciphertext, tag, plaintext);
-                        await fsTemp.WriteAsync(plaintext);
-                    }
-
-                    Array.Clear(key, 0, key.Length);
+                    await fsTemp.WriteAsync(salt);
+                    await fsTemp.WriteAsync(nonce);
                 }
+                else
+                {
+                    await fsInput.ReadAsync(salt);
+                    await fsInput.ReadAsync(nonce);
+                }
+
+                // --- Derive key using Argon2id ---
+                byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
+                byte[] key;
+
+                using (var argon2 = new Argon2id(passwordBytes))
+                {
+                    argon2.Salt = salt;
+                    argon2.DegreeOfParallelism = Environment.ProcessorCount; // threads
+                    argon2.MemorySize = 64 * 1024; // 64 MB
+                    argon2.Iterations = 3; // recommended baseline
+                    key = argon2.GetBytes(32); // 256-bit key
+                }
+
+                using var aesGcm = new AesGcm(key, tagSizeInBytes: 16);
+                byte[] buffer = new byte[bufferSize];
+                byte[] tag = new byte[16];
+
+                if (encrypt)
+                {
+                    using MemoryStream plaintext = new MemoryStream();
+                    await fsInput.CopyToAsync(plaintext);
+                    byte[] plaintextBytes = plaintext.ToArray();
+                    byte[] ciphertext = new byte[plaintextBytes.Length];
+
+                    aesGcm.Encrypt(nonce, plaintextBytes, ciphertext, tag);
+                    await fsTemp.WriteAsync(ciphertext);
+                    await fsTemp.WriteAsync(tag);
+                }
+                else
+                {
+                    long tagPos = fsInput.Length - 16;
+                    fsInput.Position = tagPos;
+                    await fsInput.ReadAsync(tag);
+                    long cipherLength = tagPos - salt.Length - nonce.Length;
+                    fsInput.Position = salt.Length + nonce.Length;
+
+                    byte[] ciphertext = new byte[cipherLength];
+                    await fsInput.ReadAsync(ciphertext);
+
+                    byte[] plaintext = new byte[cipherLength];
+                    aesGcm.Decrypt(nonce, ciphertext, tag, plaintext);
+                    await fsTemp.WriteAsync(plaintext);
+                }
+
+                Array.Clear(key, 0, key.Length);
 
                 File.Delete(filePath);
                 File.Move(tempFile, filePath);
@@ -946,6 +956,7 @@ namespace CipherShield
                     File.Delete(tempFile);
             }
         }
+
 
 
         // recover files encryption password
