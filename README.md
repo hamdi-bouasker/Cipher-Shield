@@ -2,10 +2,11 @@
 
 I coded it from the scratch with C# and it's heavily tested for a flawless usability and functionality.
 
-Cipher Shield is a robust and secure solution designed to handle all your password and file management needs. It includes a password generator, password manager, file encryption using **AES-256**, and regex-based file renaming. 
+Cipher Shield is a robust and secure solution designed to handle all your password and file management needs. It includes a password generator, password manager, file encryption using **AES-GCM**, and regex-based file renaming. 
 With Cipher Shield, you can ensure that your sensitive data remains protected at all times.
 
-**AES-256** is a symmetric key encryption, which means the same key is used for both encrypting and decrypting data. 
+**AES-GCM** is an encryption algorithm wich provides confidentiality + authenticity (tag).
+
 This type of encryption is known for its speed and security, making it a preferred choice for many organizations, including the U.S. government.
 
 When you launch the app for the first time, you will be asked to register a password and security questions which are used to recover the Lock Password and the password used during files encryption.
@@ -31,8 +32,8 @@ It's also possible to recover your password and load it directly in the login ta
   
   ![password-manager.png](https://github.com/hamdi-bouasker/Cipher-Shield/blob/master/password-manager.png)
   
-- **File Encryption:** Files are encrypted using the AES-256 encryption algorithm, and the password is saved and encrypted with the same algorithm to easily decrypt your files using Load Password button.
-  The password could be saved to Password.pwd file which is securely encrypted.
+- **File Encryption:** Files are encrypted using the AES-GCM encryption algorithm, and the password is saved and encrypted with DPAPI algorithm to easily decrypt your files using Load Password button.
+  The password could be saved to Password.pwd file which is encrypted using DPAPI algorithm.
   You can recover the password in case you forgot it or lost password.pwd file.
 
   
