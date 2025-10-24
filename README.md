@@ -32,7 +32,14 @@ It's also possible to recover your password and load it directly in the login ta
   
   ![password-manager.png](https://github.com/hamdi-bouasker/Cipher-Shield/blob/master/password-manager.png)
   
-- **File Encryption:** Files are encrypted using the AES-GCM encryption algorithm, and the password is saved and encrypted with DPAPI algorithm to easily decrypt your files using Load Password button.
+- **File Encryption:** Files are encrypted using the AES-GCM encryption algorithm with:
+  
+  * byte[] salt = new byte[32] for KDF
+  * byte[] nonce = new byte[12] for AES-GCM nonce (IV)
+  * 16 bytes: auth tag (AES-GCM tag)
+  * When decrypting: read salt & nonce, derive key, decrypt with tag verification. If verification fails, fail and delete partial output.
+    
+- The password is saved and encrypted with DPAPI algorithm to easily decrypt your files using Load Password button.
   The password could be saved to Password.pwd file which is encrypted using DPAPI algorithm.
   You can recover the password in case you forgot it or lost password.pwd file.
 
@@ -46,7 +53,7 @@ It's also possible to recover your password and load it directly in the login ta
 
 - **Help:** Change your password or the answers of your security questions anytime.
   You can also save the Lock Password so next time you can login easily by clicking on Load Password.
-  Lock-Password.dat file is securely encrypted.
+  Lock-Password.dat file is securely encrypted using DPAPI algorithm.
 
   
 ![help.png](https://github.com/hamdi-bouasker/Cipher-Shield/blob/master/help.png)        
