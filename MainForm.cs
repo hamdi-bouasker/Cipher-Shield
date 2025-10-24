@@ -16,7 +16,6 @@ using Microsoft.Toolkit.Uwp.Notifications;
 using System.Text;
 using System.Runtime.InteropServices;
 using Windows.UI.Notifications;
-using System.Windows.Controls;
 
 
 
@@ -71,7 +70,7 @@ namespace CipherShield
         private void MainForm_Load(object sender, EventArgs e)
         {
             SetControlsEnabled(false); // Method to disable controls
-            string appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Cipher Shield");
+            string appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Cipher Shield Training");
             string filePath = Path.Combine(appDataPath, "Master-Password.dat");
             if (!File.Exists(filePath))
             {
@@ -108,26 +107,6 @@ namespace CipherShield
             }
         }
 
-        // method to convert hex string to byte array
-        static byte[] HexStringToByteArray(string hex)
-        {
-            int length = hex.Length;
-            byte[] bytes = new byte[length / 2];
-            for (int i = 0; i < length; i += 2)
-            {
-                bytes[i / 2] = Convert.ToByte(hex.Substring(i, 2), 16);
-            }
-            return bytes;
-        }
-
-        // method to hash the key using SHA256
-        private static byte[] HashKeyWithSHA256(byte[] key)
-        {
-            using (SHA256 sha256 = SHA256.Create())
-            {
-                return sha256.ComputeHash(key);
-            }
-        }
 
         // Method to disable controls
         private void SetControlsEnabled(bool enabled)
@@ -178,12 +157,27 @@ namespace CipherShield
                 .Show();
         }
 
+        private static readonly DataProtectionScope Scope = DataProtectionScope.CurrentUser;
+
+        // --- DPAPI Wrappers ---
+        private static byte[] EncryptWithDPAPI(string plainText)
+        {
+            byte[] plainBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
+            return ProtectedData.Protect(plainBytes, null, Scope);
+        }
+
+        private static string DecryptWithDPAPI(byte[] protectedData)
+        {
+            byte[] plainBytes = ProtectedData.Unprotect(protectedData, null, Scope);
+            return System.Text.Encoding.UTF8.GetString(plainBytes);
+        }
+
         // change master password
         private void SubmitNewPasswordBtn_Click(object sender, EventArgs e)
         {
 
             string currentPassword = SecureStorage.GetMasterPassword();
-            string appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Cipher Shield");
+            string appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Cipher Shield Training");
             Directory.CreateDirectory(appDataPath); // Ensure the directory exists
             string dbFilePath = Path.Combine(appDataPath, "credentials.db");
 
@@ -217,7 +211,10 @@ namespace CipherShield
             Application.Restart();
         }
 
+
         // method to generate a password
+        private static readonly RandomNumberGenerator Rng = RandomNumberGenerator.Create();
+
         private string GeneratePassword(int length = 16)
         {
             const string uppercase = "NZAYBXCWDVEUFTGSHRIJPKOLM";
@@ -225,44 +222,35 @@ namespace CipherShield
             const string numbers = "73281564";
             const string special = "]!@-)#}=/$%>|&*(+{<?[";
 
-            // Ensure length is divisible by 4
-            length = length - (length % 4);
+            if (length < 4)
+                throw new ArgumentException("Password length must be at least 4.");
 
-            var chars = new char[length];
-            var randomBytes = new byte[length];
-            using (var rng = RandomNumberGenerator.Create())
+            string allChars = uppercase + lowercase + numbers + special;
+            var password = new char[length];
+
+            // ensure at least one of each type
+            password[0] = uppercase[RandomNumberGenerator.GetInt32(uppercase.Length)];
+            password[1] = lowercase[RandomNumberGenerator.GetInt32(lowercase.Length)];
+            password[2] = numbers[RandomNumberGenerator.GetInt32(numbers.Length)];
+            password[3] = special[RandomNumberGenerator.GetInt32(special.Length)];
+
+            // fill remaining
+            for (int i = 4; i < length; i++)
+                password[i] = allChars[RandomNumberGenerator.GetInt32(allChars.Length)];
+
+            // secure shuffle
+            SecureShuffle(password);
+
+            return new string(password);
+        }
+
+        private static void SecureShuffle(char[] array)
+        {
+            for (int i = array.Length - 1; i > 0; i--)
             {
-                rng.GetBytes(randomBytes);
+                int j = RandomNumberGenerator.GetInt32(i + 1);
+                (array[i], array[j]) = (array[j], array[i]);
             }
-
-            int quarterLength = length / 4;
-
-            // Fill exactly 1/4 with uppercase
-            for (int i = 0; i < quarterLength; i++)
-            {
-                chars[i] = uppercase[randomBytes[i] % uppercase.Length];
-            }
-
-            // Fill exactly 1/4 with numbers
-            for (int i = 0; i < quarterLength; i++)
-            {
-                chars[2 * quarterLength + i] = numbers[randomBytes[2 * quarterLength + i] % numbers.Length];
-            }
-
-            // Fill exactly 1/4 with lowercase
-            for (int i = 0; i < quarterLength; i++)
-            {
-                chars[quarterLength + i] = lowercase[randomBytes[quarterLength + i] % lowercase.Length];
-            }
-
-            // Fill exactly 1/4 with special characters
-            for (int i = 0; i < quarterLength; i++)
-            {
-                chars[3 * quarterLength + i] = special[randomBytes[3 * quarterLength + i] % special.Length];
-            }
-
-            // Shuffle the entire password to mix the characters
-            return new string(chars.OrderBy(x => randomBytes[new Random().Next(randomBytes.Length)]).ToArray());
         }
 
         #region Password Generator Tab
@@ -314,7 +302,6 @@ namespace CipherShield
             }
         }
 
-
         // export passwords
         private void exportPwdBtn_Click(object sender, EventArgs e)
         {
@@ -332,7 +319,6 @@ namespace CipherShield
 
                 }
             }
-
         }
 
         // clear inputs
@@ -444,7 +430,6 @@ namespace CipherShield
             }
         }
 
-
         // delete entry
 
         private void deleteButton_Click_1(object sender, EventArgs e)
@@ -495,7 +480,6 @@ namespace CipherShield
                 ShowNotification("Please select an entry to delete.", "error.png");
             }
         }
-
 
         // clear inputs
         private void ClearBtn_Click(object sender, EventArgs e)
@@ -697,7 +681,7 @@ namespace CipherShield
             {
                 try
                 {
-                    byte[] encryptedPassword = SecureStorage.EncryptFilesPassword(FilesEncryptionEnterPwdTxtBox.Text);
+                    byte[] encryptedPassword = EncryptWithDPAPI(FilesEncryptionEnterPwdTxtBox.Text);
                     File.WriteAllBytes(sfd.FileName, encryptedPassword);
                     ShowNotification("The password backup file has been saved" + Environment.NewLine + "Keep this file safe.", "success.png");
                     SecureStorage.SaveEncPassword(FilesEncryptionEnterPwdTxtBox.Text);
@@ -723,7 +707,7 @@ namespace CipherShield
                 try
                 {
                     byte[] encryptedPassword = File.ReadAllBytes(ofd.FileName);
-                    string decryptedPassword = SecureStorage.DecryptFilesPassword(encryptedPassword);
+                    string decryptedPassword = DecryptWithDPAPI(encryptedPassword);
                     if (FilesEncryptionEnterPwdTxtBox != null)
                     {
                         FilesEncryptionEnterPwdTxtBox.Text = decryptedPassword;
@@ -890,75 +874,67 @@ namespace CipherShield
         private async Task ProcessFileInPlace(string filePath, string password, bool encrypt)
         {
             string tempFile = Path.GetTempFileName();
-            const int bufferSize = 81920; // 80 KB buffer size
+            const int bufferSize = 81920;
 
             try
             {
                 byte[] salt = new byte[32];
-                byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
-
-                if (!encrypt)
+                byte[] nonce = new byte[12]; // AES-GCM nonce (IV)
+                if (encrypt)
                 {
-                    using (FileStream fsInput = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read, bufferSize, true))
+                    RandomNumberGenerator.Fill(salt);
+                    RandomNumberGenerator.Fill(nonce);
+                }
+
+                using (FileStream fsInput = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read, bufferSize, true))
+                using (FileStream fsTemp = new FileStream(tempFile, FileMode.Create, FileAccess.Write, FileShare.None, bufferSize, true))
+                {
+                    if (encrypt)
                     {
-                        await fsInput.ReadAsync(salt, 0, salt.Length);
+                        await fsTemp.WriteAsync(salt);
+                        await fsTemp.WriteAsync(nonce);
                     }
-                }
-                else
-                {
-                    salt = GenerateRandomSalt();
-                }
+                    else
+                    {
+                        await fsInput.ReadAsync(salt);
+                        await fsInput.ReadAsync(nonce);
+                    }
 
-                using (Rfc2898DeriveBytes pbkdf2 = new Rfc2898DeriveBytes(passwordBytes, salt, 100000, HashAlgorithmName.SHA256))
-                {
+                    using var pbkdf2 = new Rfc2898DeriveBytes(password, salt, 100000, HashAlgorithmName.SHA256);
                     byte[] key = pbkdf2.GetBytes(32);
-                    byte[] iv = pbkdf2.GetBytes(16);
 
-                    using (Aes aes = Aes.Create())
+                    using var aesGcm = new AesGcm(key, tagSizeInBytes: 16);
+                    byte[] buffer = new byte[bufferSize];
+                    byte[] tag = new byte[16];
+
+                    if (encrypt)
                     {
-                        aes.Key = key;
-                        aes.IV = iv;
-                        aes.Padding = PaddingMode.PKCS7;
+                        using MemoryStream plaintext = new MemoryStream();
+                        await fsInput.CopyToAsync(plaintext);
+                        byte[] plaintextBytes = plaintext.ToArray();
+                        byte[] ciphertext = new byte[plaintextBytes.Length];
 
-                        if (encrypt)
-                        {
-                            using (FileStream fsInput = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read, bufferSize, true))
-                            using (FileStream fsTemp = new FileStream(tempFile, FileMode.Create, FileAccess.Write, FileShare.None, bufferSize, true))
-                            {
-                                await fsTemp.WriteAsync(salt, 0, salt.Length);
-
-                                using (CryptoStream cs = new CryptoStream(fsTemp, aes.CreateEncryptor(), CryptoStreamMode.Write))
-                                {
-                                    byte[] buffer = new byte[bufferSize];
-                                    int bytesRead;
-                                    while ((bytesRead = await fsInput.ReadAsync(buffer, 0, buffer.Length)) > 0)
-                                    {
-                                        await cs.WriteAsync(buffer, 0, bytesRead);
-                                    }
-                                    await cs.FlushFinalBlockAsync();
-                                }
-                            }
-                        }
-                        else
-                        {
-                            using (FileStream fsInput = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read, bufferSize, true))
-                            using (FileStream fsTemp = new FileStream(tempFile, FileMode.Create, FileAccess.Write, FileShare.None, bufferSize, true))
-                            {
-                                fsInput.Seek(salt.Length, SeekOrigin.Begin);
-
-                                using (CryptoStream cs = new CryptoStream(fsInput, aes.CreateDecryptor(), CryptoStreamMode.Read))
-                                {
-                                    byte[] buffer = new byte[bufferSize];
-                                    int bytesRead;
-                                    while ((bytesRead = await cs.ReadAsync(buffer, 0, buffer.Length)) > 0)
-                                    {
-                                        await fsTemp.WriteAsync(buffer, 0, bytesRead);
-                                    }
-                                    await fsTemp.FlushAsync();
-                                }
-                            }
-                        }
+                        aesGcm.Encrypt(nonce, plaintextBytes, ciphertext, tag);
+                        await fsTemp.WriteAsync(ciphertext);
+                        await fsTemp.WriteAsync(tag);
                     }
+                    else
+                    {
+                        long tagPos = fsInput.Length - 16;
+                        fsInput.Position = tagPos;
+                        await fsInput.ReadAsync(tag);
+                        long cipherLength = tagPos - salt.Length - nonce.Length;
+                        fsInput.Position = salt.Length + nonce.Length;
+
+                        byte[] ciphertext = new byte[cipherLength];
+                        await fsInput.ReadAsync(ciphertext);
+
+                        byte[] plaintext = new byte[cipherLength];
+                        aesGcm.Decrypt(nonce, ciphertext, tag, plaintext);
+                        await fsTemp.WriteAsync(plaintext);
+                    }
+
+                    Array.Clear(key, 0, key.Length);
                 }
 
                 File.Delete(filePath);
@@ -967,11 +943,10 @@ namespace CipherShield
             finally
             {
                 if (File.Exists(tempFile))
-                {
                     File.Delete(tempFile);
-                }
             }
         }
+
 
         // recover files encryption password
         private void forgotPassword_Click(object sender, EventArgs e)
@@ -987,17 +962,6 @@ namespace CipherShield
             FilesEncryptionFilesListBox.Items.Clear();
             FilesEncryptionEnterPwdTxtBox.Clear();
             selectedFiles1.Clear();
-        }
-
-        // generate random salt for encryption key
-        private byte[] GenerateRandomSalt()
-        {
-            byte[] salt = new byte[32];
-            using (var rng = RandomNumberGenerator.Create())
-            {
-                rng.GetBytes(salt);
-            }
-            return salt;
         }
 
         // generate random password

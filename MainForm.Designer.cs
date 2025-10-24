@@ -329,10 +329,10 @@
             PasswordManager.Controls.Add(usernameTxtBox);
             PasswordManager.Controls.Add(PasswordManagerDGV);
             PasswordManager.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            PasswordManager.Location = new System.Drawing.Point(4, 24);
+            PasswordManager.Location = new System.Drawing.Point(4, 27);
             PasswordManager.Name = "PasswordManager";
             PasswordManager.Padding = new System.Windows.Forms.Padding(3);
-            PasswordManager.Size = new System.Drawing.Size(752, 524);
+            PasswordManager.Size = new System.Drawing.Size(752, 521);
             PasswordManager.TabIndex = 3;
             PasswordManager.Text = "Passwords Manager";
             // 
@@ -544,10 +544,10 @@
             FileEncryption.Controls.Add(FilesEncryptionEncryptBtn);
             FileEncryption.Controls.Add(FileEncryptionFilesNumberTxtBox);
             FileEncryption.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            FileEncryption.Location = new System.Drawing.Point(4, 24);
+            FileEncryption.Location = new System.Drawing.Point(4, 27);
             FileEncryption.Name = "FileEncryption";
             FileEncryption.Padding = new System.Windows.Forms.Padding(3);
-            FileEncryption.Size = new System.Drawing.Size(752, 524);
+            FileEncryption.Size = new System.Drawing.Size(752, 521);
             FileEncryption.TabIndex = 0;
             FileEncryption.Text = "Files Encryption";
             // 
@@ -992,7 +992,7 @@
             QuestionsPasswordTxtBox.PasswordChar = '*';
             QuestionsPasswordTxtBox.PlaceholderText = "Enter Password";
             QuestionsPasswordTxtBox.Size = new System.Drawing.Size(239, 19);
-            QuestionsPasswordTxtBox.TabIndex = 9;
+            QuestionsPasswordTxtBox.TabIndex = 10;
             QuestionsPasswordTxtBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label19
@@ -1051,7 +1051,7 @@
             SubmitNewSecurityQuestionsBtn.Location = new System.Drawing.Point(101, 341);
             SubmitNewSecurityQuestionsBtn.Name = "SubmitNewSecurityQuestionsBtn";
             SubmitNewSecurityQuestionsBtn.Size = new System.Drawing.Size(133, 31);
-            SubmitNewSecurityQuestionsBtn.TabIndex = 10;
+            SubmitNewSecurityQuestionsBtn.TabIndex = 11;
             SubmitNewSecurityQuestionsBtn.Text = "Confirm";
             SubmitNewSecurityQuestionsBtn.UseVisualStyleBackColor = true;
             SubmitNewSecurityQuestionsBtn.Click += SubmitNewSecurityQuestionsBtn_Click;
@@ -1339,7 +1339,7 @@
             label14.Name = "label14";
             label14.Size = new System.Drawing.Size(537, 35);
             label14.TabIndex = 26;
-            label14.Text = "Cipher Shield® All Rights Reserved © 2025 By Hamdi Bouasker";
+            label14.Text = "Cipher Shield By Hamdi Bouasker, IT Support Engineer Lead";
             label14.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // panel1
