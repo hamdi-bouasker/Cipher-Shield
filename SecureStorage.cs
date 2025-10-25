@@ -28,7 +28,7 @@ namespace CipherShield
         public static void SaveMasterPassword(string password)
         {
             byte[] protectedPassword = EncryptWithDPAPI(password);
-            string appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Cipher Shield Training");
+            string appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Cipher Shield");
             Directory.CreateDirectory(appDataPath);
             string filePath = Path.Combine(appDataPath, "Master-Password.dat");
             File.WriteAllBytes(filePath, protectedPassword);
@@ -36,7 +36,7 @@ namespace CipherShield
 
         public static string GetMasterPassword()
         {
-            string filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Cipher Shield Training", "Master-Password.dat");
+            string filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Cipher Shield", "Master-Password.dat");
             byte[] encryptedData = File.ReadAllBytes(filePath);
             return DecryptWithDPAPI(encryptedData);
         }
@@ -44,7 +44,7 @@ namespace CipherShield
         // --- Security Questions ---
         public static void SaveSecurityQuestions(string[] answers)
         {
-            string appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Cipher Shield Training");
+            string appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Cipher Shield");
             Directory.CreateDirectory(appDataPath);
 
             for (int i = 0; i < 3; i++)
@@ -56,7 +56,7 @@ namespace CipherShield
 
         public static string[] GetSecurityAnswers()
         {
-            string appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Cipher Shield Training");
+            string appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Cipher Shield");
             string[] answers = new string[3];
 
             for (int i = 0; i < 3; i++)
@@ -72,7 +72,7 @@ namespace CipherShield
         public static void SaveEncPassword(string password)
         {
             byte[] encryptedPassword = EncryptWithDPAPI(password);
-            string appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Cipher Shield Training");
+            string appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Cipher Shield");
             Directory.CreateDirectory(appDataPath);
             string filePath = Path.Combine(appDataPath, "Files-Encryption-Password.pwd");
             File.WriteAllBytes(filePath, encryptedPassword);
@@ -80,7 +80,7 @@ namespace CipherShield
 
         public static string GetEncPassword()
         {
-            string filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Cipher Shield Training", "Files-Encryption-Password.pwd");
+            string filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Cipher Shield", "Files-Encryption-Password.pwd");
             byte[] encryptedData = File.ReadAllBytes(filePath);
             return DecryptWithDPAPI(encryptedData);
         }

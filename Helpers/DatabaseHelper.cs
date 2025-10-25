@@ -20,7 +20,7 @@ namespace CipherShield.Helpers
         public DatabaseHelper(string password)
         {
             // Create the path to the AppData folder
-            string appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Cipher Shield Training");
+            string appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Cipher Shield");
             Directory.CreateDirectory(appDataPath); // Ensure the directory exists
 
             string dbFilePath = Path.Combine(appDataPath, "credentials.db");

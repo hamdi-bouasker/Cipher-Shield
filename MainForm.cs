@@ -71,7 +71,7 @@ namespace CipherShield
         private void MainForm_Load(object sender, EventArgs e)
         {
             SetControlsEnabled(false); // Method to disable controls
-            string appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Cipher Shield Training");
+            string appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Cipher Shield");
             string filePath = Path.Combine(appDataPath, "Master-Password.dat");
             if (!File.Exists(filePath))
             {
@@ -108,7 +108,6 @@ namespace CipherShield
             }
         }
 
-
         // Method to disable controls
         private void SetControlsEnabled(bool enabled)
         {
@@ -117,7 +116,6 @@ namespace CipherShield
                 ctrl.Enabled = enabled;
             }
         }
-
 
         // timer for the hintlabel in help tab
 
@@ -178,7 +176,7 @@ namespace CipherShield
         {
 
             string currentPassword = SecureStorage.GetMasterPassword();
-            string appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Cipher Shield Training");
+            string appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Cipher Shield");
             Directory.CreateDirectory(appDataPath); // Ensure the directory exists
             string dbFilePath = Path.Combine(appDataPath, "credentials.db");
 
@@ -205,6 +203,12 @@ namespace CipherShield
                 ShowNotification("Password must be at least 8 characters long.", "error.png");
                 return;
             }
+
+            if (NewPasswordTxtBox.Text == currentPassword)
+            {
+                ShowNotification("Insert a new password.", "error.png");
+                return;
+            }
             SecureStorage.ChangeDatabasePassword(dbFilePath, currentPassword, RepeatNewPasswordTxtBox.Text);
             SecureStorage.UpdatePassword(RepeatNewPasswordTxtBox.Text);
             ShowNotification("The lock password has been successfully changed." +
@@ -214,7 +218,6 @@ namespace CipherShield
 
 
         // method to generate a password
-        private static readonly RandomNumberGenerator Rng = RandomNumberGenerator.Create();
 
         private string GeneratePassword(int length = 16)
         {
@@ -732,59 +735,45 @@ namespace CipherShield
         // method to encrypt the selected files
         private async void EncryptButton_Click_1(object sender, EventArgs e)
         {
-            if (selectedFiles1.Count == 0)
+            if (selectedFiles1.Count == 0 || string.IsNullOrEmpty(FilesEncryptionEnterPwdTxtBox.Text))
             {
-                ShowNotification("Please select the files first.", "error.png");
+                ShowNotification("Select files and enter a password.", "error.png");
                 return;
-            }
-
-            if (string.IsNullOrEmpty(FilesEncryptionEnterPwdTxtBox.Text))
-            {
-                ShowNotification("Please enter a password.", "error.png");
-                return;
-            }
-
-            foreach (string file in selectedFiles1)
-            {
-                if (file.EndsWith("_ENCRYPTED" + Path.GetExtension(file)))
-                {
-                    ShowNotification("Select the files that are not already encrypted.", "error.png");
-                    return;
-                }
             }
 
             DisableControls();
 
             try
             {
-                await Task.Run(async () =>
+                foreach (var file in selectedFiles1)
                 {
-                    await Parallel.ForEachAsync(selectedFiles1, async (file, cancellationToken) =>
+                    if (file.EndsWith("_ENCRYPTED" + Path.GetExtension(file)))
                     {
-                        try
-                        {
-                            await ProcessFileInPlace(file, FilesEncryptionEnterPwdTxtBox.Text, true);
-                            string encryptedFile = Path.Combine(
-                                Path.GetDirectoryName(file),
-                                Path.GetFileNameWithoutExtension(file) + "_ENCRYPTED" + Path.GetExtension(file)
-                            );
-                            File.Move(file, encryptedFile); // Rename the file
-                            Invoke(new Action(() => currentFileNameLabel.Text = Path.GetFileName(file))); // Update label with current file name
-                            FilesEncryptionFilesListBox.Items.Clear();
-                            FileEncryptionFilesNumberTxtBox.Clear();
+                        ShowNotification("Select files that are not already encrypted.", "error.png");
+                        continue;
+                    }
 
-                        }
-                        catch (Exception ex)
-                        {
-                            ShowNotification($"Error encrypting {Path.GetFileName(file)}: {ex.Message}", "error.png");
-                        }
-                    });
-                });
-                ShowNotification("Successfully encrypted.", "success.png");
-            }
-            catch (Exception ex)
-            {
-                ShowNotification($"Error during encryption: {ex.Message}", "error.png");
+                    try
+                    {
+                        currentFileNameLabel.Text = Path.GetFileName(file);
+                        await ProcessFileInPlace(file, FilesEncryptionEnterPwdTxtBox.Text, true);
+
+                        // Rename the encrypted file
+                        string encryptedFile = Path.Combine(
+                            Path.GetDirectoryName(file),
+                            Path.GetFileNameWithoutExtension(file) + "_ENCRYPTED" + Path.GetExtension(file)
+                        );
+                        File.Move(file, encryptedFile, true);
+                    }
+                    catch (Exception ex)
+                    {
+                        ShowNotification($"Error encrypting {Path.GetFileName(file)}: {ex.Message}", "error.png");
+                    }
+                }
+
+                FilesEncryptionFilesListBox.Items.Clear();
+                FileEncryptionFilesNumberTxtBox.Clear();
+                ShowNotification("Encryption completed.", "success.png");
             }
             finally
             {
@@ -793,54 +782,45 @@ namespace CipherShield
             }
         }
 
-
         // method to decrypt the selected files
         private async void DecryptButton_Click_1(object sender, EventArgs e)
         {
-            if (selectedFiles1.Count == 0)
+            if (selectedFiles1.Count == 0 || string.IsNullOrEmpty(FilesEncryptionEnterPwdTxtBox.Text))
             {
-                ShowNotification("Please select the files first.", "error.png");
+                ShowNotification("Select files and enter a password.", "error.png");
                 return;
-            }
-
-            if (string.IsNullOrEmpty(FilesEncryptionEnterPwdTxtBox.Text))
-            {
-                ShowNotification("Please enter a password.", "error.png");
-                return;
-            }
-
-            foreach (string file in selectedFiles1)
-            {
-                if (!file.EndsWith("_ENCRYPTED" + Path.GetExtension(file)))
-                {
-                    ShowNotification("Select the encrypted files only.", "error.png");
-                    EnableControls();
-                    return;
-                }
             }
 
             DisableControls();
 
             try
             {
-                await Task.Run(async () =>
+                foreach (var file in selectedFiles1)
                 {
-                    await Parallel.ForEachAsync(selectedFiles1, async (file, cancellationToken) =>
+                    if (!file.EndsWith("_ENCRYPTED" + Path.GetExtension(file)))
                     {
-                        await ProcessFileInPlace(file, FilesEncryptionEnterPwdTxtBox.Text, false);
-                        string decryptedFile = file.Substring(0, file.Length - "_ENCRYPTED".Length - Path.GetExtension(file).Length) + Path.GetExtension(file);
-                        File.Move(file, decryptedFile); // Rename the file back to original
-                        Invoke(new Action(() => currentFileNameLabel.Text = Path.GetFileName(file))); // Update label with current file name
-                        FilesEncryptionFilesListBox.Items.Clear();
-                        FileEncryptionFilesNumberTxtBox.Clear();
-                    });
-                    ShowNotification("Successfully decrypted.", "success.png");
+                        ShowNotification("Select encrypted files only.", "error.png");
+                        continue;
+                    }
 
-                });
-            }
-            catch (Exception ex)
-            {
-                ShowNotification($"Error during decryption: {ex.Message}", "error.png");
+                    try
+                    {
+                        currentFileNameLabel.Text = Path.GetFileName(file);
+                        await ProcessFileInPlace(file, FilesEncryptionEnterPwdTxtBox.Text, false);
+
+                        // Rename the decrypted file
+                        string decryptedFile = file.Replace("_ENCRYPTED", "");
+                        File.Move(file, decryptedFile, true);
+                    }
+                    catch (Exception ex)
+                    {
+                        ShowNotification($"Error decrypting {Path.GetFileName(file)}: {ex.Message}", "error.png");
+                    }
+                }
+
+                FilesEncryptionFilesListBox.Items.Clear();
+                FileEncryptionFilesNumberTxtBox.Clear();
+                ShowNotification("Decryption completed.", "success.png");
             }
             finally
             {
@@ -875,89 +855,102 @@ namespace CipherShield
         private async Task ProcessFileInPlace(string filePath, string password, bool encrypt)
         {
             string tempFile = Path.GetTempFileName();
-            const int bufferSize = 81920;
+            const int saltSize = 32;
+            const int nonceSize = 12;
+            const int tagSize = 16;
 
-            try
+            byte[] salt = new byte[saltSize];
+            byte[] nonce = new byte[nonceSize];
+
+            if (encrypt)
             {
-                byte[] salt = new byte[32];
-                byte[] nonce = new byte[12]; // AES-GCM nonce (IV)
+                RandomNumberGenerator.Fill(salt);
+                RandomNumberGenerator.Fill(nonce);
+            }
+
+            // --- Read or prepare file bytes ---
+            byte[] fileBytes = encrypt
+                ? await File.ReadAllBytesAsync(filePath)
+                : null; // we will read after reading salt/nonce
+
+            // --- Derive key using Argon2id ---
+            byte[] key;
+            byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
+
+            if (encrypt)
+            {
+                using var argon2 = new Konscious.Security.Cryptography.Argon2id(passwordBytes);
+                argon2.Salt = salt;
+                argon2.DegreeOfParallelism = Environment.ProcessorCount;
+                argon2.MemorySize = 64 * 1024; // 64 MB
+                argon2.Iterations = 3;
+                key = argon2.GetBytes(32);
+            }
+            else
+            {
+                // Read salt from the file to derive key
+                using FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read);
+                await fs.ReadAsync(salt, 0, salt.Length);
+                await fs.ReadAsync(nonce, 0, nonce.Length);
+
+                using var argon2 = new Konscious.Security.Cryptography.Argon2id(passwordBytes);
+                argon2.Salt = salt;
+                argon2.DegreeOfParallelism = Environment.ProcessorCount;
+                argon2.MemorySize = 64 * 1024;
+                argon2.Iterations = 3;
+                key = argon2.GetBytes(32);
+
+                long cipherLength = fs.Length - saltSize - nonceSize - tagSize;
+                fileBytes = new byte[cipherLength + tagSize]; // read ciphertext + tag
+                fs.Position = saltSize + nonceSize;
+                await fs.ReadAsync(fileBytes, 0, fileBytes.Length);
+            }
+
+            // --- AES-GCM encryption/decryption ---
+            byte[] outputBytes;
+            byte[] tag = new byte[tagSize];
+
+            using var aesGcm = new AesGcm(key, tagSizeInBytes: 16);
+
+
+            if (encrypt)
+            {
+                outputBytes = new byte[fileBytes.Length];
+                aesGcm.Encrypt(nonce, fileBytes, outputBytes, tag);
+            }
+            else
+            {
+                byte[] ciphertext = new byte[fileBytes.Length - tagSize];
+                Array.Copy(fileBytes, 0, ciphertext, 0, ciphertext.Length);
+                Array.Copy(fileBytes, ciphertext.Length, tag, 0, tagSize);
+
+                outputBytes = new byte[ciphertext.Length];
+                aesGcm.Decrypt(nonce, ciphertext, tag, outputBytes);
+            }
+
+            // --- Write to temp file ---
+            using (FileStream fsOut = new FileStream(tempFile, FileMode.Create, FileAccess.Write, FileShare.None))
+            {
                 if (encrypt)
                 {
-                    RandomNumberGenerator.Fill(salt);
-                    RandomNumberGenerator.Fill(nonce);
-                }
-
-                using FileStream fsInput = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read, bufferSize, true);
-                using FileStream fsTemp = new FileStream(tempFile, FileMode.Create, FileAccess.Write, FileShare.None, bufferSize, true);
-
-                if (encrypt)
-                {
-                    await fsTemp.WriteAsync(salt);
-                    await fsTemp.WriteAsync(nonce);
+                    await fsOut.WriteAsync(salt, 0, salt.Length);
+                    await fsOut.WriteAsync(nonce, 0, nonce.Length);
+                    await fsOut.WriteAsync(outputBytes, 0, outputBytes.Length);
+                    await fsOut.WriteAsync(tag, 0, tag.Length);
                 }
                 else
                 {
-                    await fsInput.ReadAsync(salt);
-                    await fsInput.ReadAsync(nonce);
+                    await fsOut.WriteAsync(outputBytes, 0, outputBytes.Length);
                 }
-
-                // --- Derive key using Argon2id ---
-                byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
-                byte[] key;
-
-                using (var argon2 = new Argon2id(passwordBytes))
-                {
-                    argon2.Salt = salt;
-                    argon2.DegreeOfParallelism = Environment.ProcessorCount; // threads
-                    argon2.MemorySize = 64 * 1024; // 64 MB
-                    argon2.Iterations = 3; // recommended baseline
-                    key = argon2.GetBytes(32); // 256-bit key
-                }
-
-                using var aesGcm = new AesGcm(key, tagSizeInBytes: 16);
-                byte[] buffer = new byte[bufferSize];
-                byte[] tag = new byte[16];
-
-                if (encrypt)
-                {
-                    using MemoryStream plaintext = new MemoryStream();
-                    await fsInput.CopyToAsync(plaintext);
-                    byte[] plaintextBytes = plaintext.ToArray();
-                    byte[] ciphertext = new byte[plaintextBytes.Length];
-
-                    aesGcm.Encrypt(nonce, plaintextBytes, ciphertext, tag);
-                    await fsTemp.WriteAsync(ciphertext);
-                    await fsTemp.WriteAsync(tag);
-                }
-                else
-                {
-                    long tagPos = fsInput.Length - 16;
-                    fsInput.Position = tagPos;
-                    await fsInput.ReadAsync(tag);
-                    long cipherLength = tagPos - salt.Length - nonce.Length;
-                    fsInput.Position = salt.Length + nonce.Length;
-
-                    byte[] ciphertext = new byte[cipherLength];
-                    await fsInput.ReadAsync(ciphertext);
-
-                    byte[] plaintext = new byte[cipherLength];
-                    aesGcm.Decrypt(nonce, ciphertext, tag, plaintext);
-                    await fsTemp.WriteAsync(plaintext);
-                }
-
-                Array.Clear(key, 0, key.Length);
-
-                File.Delete(filePath);
-                File.Move(tempFile, filePath);
             }
-            finally
-            {
-                if (File.Exists(tempFile))
-                    File.Delete(tempFile);
-            }
+
+            Array.Clear(key, 0, key.Length);
+            Array.Clear(passwordBytes, 0, passwordBytes.Length);
+
+            // --- Replace original file ---
+            File.Delete(filePath);
+            File.Move(tempFile, filePath);
         }
-
-
 
         // recover files encryption password
         private void forgotPassword_Click(object sender, EventArgs e)
@@ -1243,6 +1236,13 @@ namespace CipherShield
             if (QuestionsPasswordTxtBox.Text != SecureStorage.GetMasterPassword())
             {
                 ShowNotification("Wrong password.", "error.png");
+                return;
+            }
+
+            string[] NewSecurityQuestions = [ChangeSecurityQuestion1TtxBx.Text, ChangeSecurityQuestion2TtxBx.Text, ChangeSecurityQuestion3TtxBx.Text];
+            if (NewSecurityQuestions == SecureStorage.GetSecurityAnswers())
+            {
+                ShowNotification("Please insert new security questions.", "error.png");
                 return;
             }
 
