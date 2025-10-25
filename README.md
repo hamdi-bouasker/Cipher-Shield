@@ -101,7 +101,6 @@ To get started with Cipher Shield, follow these steps:
 **Compile the code:**
 
 - Open the project in Visual Studio
-- In *SecureStorage.cs*, insert your own hex keys.The hex key should be 32 bytes. Or for testing, use the ones provided.
 - Click on *Build* -> *Build Solution*
 
 
