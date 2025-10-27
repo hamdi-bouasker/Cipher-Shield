@@ -126,12 +126,11 @@
             UMLoginBtn = new System.Windows.Forms.Button();
             UMRegisterBtn = new System.Windows.Forms.Button();
             About = new System.Windows.Forms.TabPage();
+            verticalLabel1 = new VerticalLabel();
             label14 = new System.Windows.Forms.Label();
             panel1 = new System.Windows.Forms.Panel();
             aboutCarousselLbl = new System.Windows.Forms.Label();
             AboutTtxBox = new System.Windows.Forms.TextBox();
-            panel5 = new System.Windows.Forms.Panel();
-            verticalLabel1 = new VerticalLabel();
             openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             openFileDialog2 = new System.Windows.Forms.OpenFileDialog();
@@ -167,7 +166,6 @@
             UMBtnPanel.SuspendLayout();
             About.SuspendLayout();
             panel1.SuspendLayout();
-            panel5.SuspendLayout();
             SuspendLayout();
             // 
             // tabControl1
@@ -920,10 +918,10 @@
             Help.Controls.Add(panel3);
             Help.Controls.Add(panel2);
             Help.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            Help.Location = new System.Drawing.Point(4, 24);
+            Help.Location = new System.Drawing.Point(4, 27);
             Help.Name = "Help";
             Help.Padding = new System.Windows.Forms.Padding(3);
-            Help.Size = new System.Drawing.Size(752, 524);
+            Help.Size = new System.Drawing.Size(752, 521);
             Help.TabIndex = 4;
             Help.Text = "Help";
             // 
@@ -1062,7 +1060,7 @@
             panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             panel3.Controls.Add(homeCarousselLbl);
             panel3.Dock = System.Windows.Forms.DockStyle.Bottom;
-            panel3.Location = new System.Drawing.Point(3, 453);
+            panel3.Location = new System.Drawing.Point(3, 450);
             panel3.Name = "panel3";
             panel3.Size = new System.Drawing.Size(746, 68);
             panel3.TabIndex = 20;
@@ -1321,15 +1319,27 @@
             // About
             // 
             About.BackColor = System.Drawing.Color.FromArgb(32, 33, 36);
+            About.Controls.Add(verticalLabel1);
             About.Controls.Add(label14);
             About.Controls.Add(panel1);
             About.Controls.Add(AboutTtxBox);
-            About.Controls.Add(panel5);
-            About.Location = new System.Drawing.Point(4, 24);
+            About.Location = new System.Drawing.Point(4, 27);
             About.Name = "About";
-            About.Size = new System.Drawing.Size(752, 524);
+            About.Size = new System.Drawing.Size(752, 521);
             About.TabIndex = 5;
             About.Text = "About";
+            // 
+            // verticalLabel1
+            // 
+            verticalLabel1.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            verticalLabel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            verticalLabel1.Font = new System.Drawing.Font("Comic Sans MS", 14F);
+            verticalLabel1.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            verticalLabel1.Location = new System.Drawing.Point(5, 50);
+            verticalLabel1.Name = "verticalLabel1";
+            verticalLabel1.Size = new System.Drawing.Size(38, 400);
+            verticalLabel1.TabIndex = 27;
+            verticalLabel1.Text = "Cipher Shield ©   Secure Your Data";
             // 
             // label14
             // 
@@ -1349,7 +1359,7 @@
             panel1.Controls.Add(aboutCarousselLbl);
             panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             panel1.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            panel1.Location = new System.Drawing.Point(0, 456);
+            panel1.Location = new System.Drawing.Point(0, 453);
             panel1.Name = "panel1";
             panel1.Size = new System.Drawing.Size(752, 68);
             panel1.TabIndex = 25;
@@ -1382,27 +1392,6 @@
             AboutTtxBox.TabStop = false;
             AboutTtxBox.Text = resources.GetString("AboutTtxBox.Text");
             AboutTtxBox.MouseDown += AboutTtxBox_MouseDown;
-            // 
-            // panel5
-            // 
-            panel5.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            panel5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            panel5.Controls.Add(verticalLabel1);
-            panel5.ForeColor = System.Drawing.SystemColors.ControlLight;
-            panel5.Location = new System.Drawing.Point(3, 3);
-            panel5.Name = "panel5";
-            panel5.Size = new System.Drawing.Size(38, 447);
-            panel5.TabIndex = 23;
-            // 
-            // verticalLabel1
-            // 
-            verticalLabel1.Font = new System.Drawing.Font("Comic Sans MS", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
-            verticalLabel1.Location = new System.Drawing.Point(2, 24);
-            verticalLabel1.Name = "verticalLabel1";
-            verticalLabel1.Size = new System.Drawing.Size(31, 401);
-            verticalLabel1.TabIndex = 0;
-            verticalLabel1.Text = "Cipher Shield ®  Secure your sensitive data";
-            verticalLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // openFileDialog1
             // 
@@ -1543,7 +1532,6 @@
             About.ResumeLayout(false);
             About.PerformLayout();
             panel1.ResumeLayout(false);
-            panel5.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -1639,8 +1627,6 @@
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip2;
         private System.Windows.Forms.TabPage About;
         private System.Windows.Forms.TextBox AboutTtxBox;
-        private System.Windows.Forms.Panel panel5;
-        private VerticalLabel verticalLabel1;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label aboutCarousselLbl;
@@ -1657,6 +1643,7 @@
         private System.Windows.Forms.Button UMPasswordMgrBtn;
         private System.Windows.Forms.Button UMFileEncBtn;
         private System.Windows.Forms.Button UMRegexRenameBtn;
+        private VerticalLabel verticalLabel1;
     }
 }
 

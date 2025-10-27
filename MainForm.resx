@@ -253,11 +253,11 @@
   <data name="AboutTtxBox.Text" xml:space="preserve">
     <value>Cipher Shield is a comprehensive offline security application designed to safeguard sensitive information through robust encryption and secure password management. 
 
-Cipher Shield allows you to securely manage your passwords, and encrypt/decrypt files using DPAPI encryption algorithms. 
+Cipher Shield allows you to securely manage your passwords using DPAPI encryption algorithms. 
 
 Cipher Shield employs sophisticated techniques ensuring your stored passwords and encrypted files remain confidential and protected from unauthorized access. 
 
-Cipher Shield use AES-GCM with Argon2id encryption algorithm, using symetric encryption key which means the same key is used for both encrypting and decrypting data. 
+Cipher Shield uses AES-GCM with Argon2id encryption algorithm, using symetric encryption key which means the same key is used for both encrypting and decrypting data. 
 
 This type of encryption is known for its speed and security, making it a preferred choice for many organizations, including the U.S. government.
 
