@@ -4,7 +4,6 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
-using Konscious.Security.Cryptography;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -32,6 +31,8 @@ namespace CipherShield
         string[] Hints = { "A stitch in time saves nine.", "Always secure your files from curious eyes.", "Your password should be at least 16 random characters long.", "Don't be lazy, always make a new strong password.", "Daily system backup is your best friend." };
         private System.Windows.Forms.Button previousButton;
 
+
+        #region Main Form Methods
         // mainform method
         public MainForm()
         {
@@ -71,7 +72,7 @@ namespace CipherShield
         private void MainForm_Load(object sender, EventArgs e)
         {
             SetControlsEnabled(false); // Method to disable controls
-            string appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Cipher Shield");
+            string appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Cipher Shield Pro");
             string filePath = Path.Combine(appDataPath, "Master-Password.dat");
             if (!File.Exists(filePath))
             {
@@ -84,6 +85,7 @@ namespace CipherShield
                     db = new DatabaseHelper(password); // Pass the password to DatabaseHelper constructor
                     SetControlsEnabled(true);
                     LoadData();
+                    
                 }
                 else
                 {
@@ -105,6 +107,7 @@ namespace CipherShield
                 {
                     Close();
                 }
+                
             }
         }
 
@@ -135,7 +138,23 @@ namespace CipherShield
         // close the form
         private void CloseBtn_Click(object sender, EventArgs e)
         {
+            ClearInputFields();
+            DisposeAllResources();
             Close();
+        }
+
+        private void DisposeAllResources()
+        {
+            // Force cleanup
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+        }
+
+        // Handle close method
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            DisposeAllResources();
+            base.OnFormClosing(e);
         }
 
         // minimize the form
@@ -156,6 +175,44 @@ namespace CipherShield
                 .Show();
         }
 
+        // method to show inputs
+        private void hideShowPassword_MouseDown(object sender, MouseEventArgs e)
+        {
+            focusBtn.Focus();
+            hideShowPassword.BackgroundImage = System.Drawing.Image.FromFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "EyeWhite.png"));
+            oldPasswordTxtBox.PasswordChar = '\0';
+            NewPasswordTxtBox.PasswordChar = '\0';
+            RepeatNewPasswordTxtBox.PasswordChar = '\0';
+            backupPasswordTxtBox.PasswordChar = '\0';
+            ChangeSecurityQuestion1TtxBx.PasswordChar = '\0';
+            ChangeSecurityQuestion2TtxBx.PasswordChar = '\0';
+            ChangeSecurityQuestion3TtxBx.PasswordChar = '\0';
+            QuestionsPasswordTxtBox.PasswordChar = '\0';
+            FilesEncryptionEnterPwdTxtBox.PasswordChar = '\0';
+
+        }
+
+        // method to hide inputs
+        private void hideShowPassword_MouseUp(object sender, MouseEventArgs e)
+        {
+            focusBtn.Focus();
+            hideShowPassword.BackgroundImage = System.Drawing.Image.FromFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "NotEyeWhite.png"));
+            oldPasswordTxtBox.PasswordChar = '*';
+            NewPasswordTxtBox.PasswordChar = '*';
+            RepeatNewPasswordTxtBox.PasswordChar = '*';
+            backupPasswordTxtBox.PasswordChar = '*';
+            ChangeSecurityQuestion1TtxBx.PasswordChar = '*';
+            ChangeSecurityQuestion2TtxBx.PasswordChar = '*';
+            ChangeSecurityQuestion3TtxBx.PasswordChar = '*';
+            QuestionsPasswordTxtBox.PasswordChar = '*';
+            FilesEncryptionEnterPwdTxtBox.PasswordChar = '*';
+        }
+
+   
+        #endregion
+
+        #region DPAPI Methods
+
         private static readonly DataProtectionScope Scope = DataProtectionScope.CurrentUser;
 
         // --- DPAPI Wrappers ---
@@ -168,15 +225,19 @@ namespace CipherShield
         private static string DecryptWithDPAPI(byte[] protectedData)
         {
             byte[] plainBytes = ProtectedData.Unprotect(protectedData, null, Scope);
-            return System.Text.Encoding.UTF8.GetString(plainBytes);
+            return Encoding.UTF8.GetString(plainBytes);
         }
+
+        #endregion
+
+        #region Help Tab - User Manual
 
         // change master password
         private void SubmitNewPasswordBtn_Click(object sender, EventArgs e)
         {
 
             string currentPassword = SecureStorage.GetMasterPassword();
-            string appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Cipher Shield");
+            string appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Cipher Shield Pro");
             Directory.CreateDirectory(appDataPath); // Ensure the directory exists
             string dbFilePath = Path.Combine(appDataPath, "credentials.db");
 
@@ -198,9 +259,9 @@ namespace CipherShield
                 return;
             }
 
-            if (NewPasswordTxtBox.Text.Length < 8)
+            if (!ValidatePasswordStrength(NewPasswordTxtBox.Text) && !ValidatePasswordStrength(RepeatNewPasswordTxtBox.Text)) 
             {
-                ShowNotification("Password must be at least 8 characters long.", "error.png");
+                ShowNotification("Password must be at least 8 characters long and composed of:" + Environment.NewLine + "- Uppercase and lowercase letters" + Environment.NewLine + "- Numbers and special characters", "error.png");
                 return;
             }
 
@@ -216,6 +277,110 @@ namespace CipherShield
             Application.Restart();
         }
 
+        // method to update security questions answers
+        private void SubmitNewSecurityQuestionsBtn_Click(object sender, EventArgs e)
+        {
+            if (ChangeSecurityQuestion1TtxBx.Text.Length == 0 || ChangeSecurityQuestion2TtxBx.Text.Length == 0 || ChangeSecurityQuestion3TtxBx.Text.Length == 0)
+            {
+                ShowNotification("All security questions should be filled.", "error.png");
+                return;
+            }
+
+            if (QuestionsPasswordTxtBox.Text != SecureStorage.GetMasterPassword())
+            {
+                ShowNotification("Wrong password.", "error.png");
+                return;
+            }
+
+            string[] NewSecurityQuestions = [ChangeSecurityQuestion1TtxBx.Text, ChangeSecurityQuestion2TtxBx.Text, ChangeSecurityQuestion3TtxBx.Text];
+            if (NewSecurityQuestions == SecureStorage.GetSecurityAnswers())
+            {
+                ShowNotification("Please insert new security questions.", "error.png");
+                return;
+            }
+
+            string[] answers = { ChangeSecurityQuestion1TtxBx.Text, ChangeSecurityQuestion2TtxBx.Text, ChangeSecurityQuestion3TtxBx.Text };
+            if (QuestionsPasswordTxtBox.Text == SecureStorage.GetMasterPassword())
+            {
+                SecureStorage.SaveSecurityQuestions(answers);
+                ShowNotification("Your security answers are successfully saved.", "success.png");
+                return;
+            }
+
+        }
+
+        // methods to show text for each button clicked in UserManual tab
+        private void UMRegisterBtn_Click(object sender, EventArgs e)
+        {
+            UserManualtextBox.Text = "When you launch the app for the first time, you are asked to register yourself by providing:\r\n\r\n• Lock password\r\n• Answers of the security questions\r\n\r\nThe password is used to encrypt and decrypt the database of the passwords manager.\r\n\r\nThe security questions are used to recover your lock password or to change it.\r\n\r\nIt's advisable to backup your lock password by following the instructions in the Help tab so that next time you login, you can simply load it by clicking on Load Password.";
+        }
+
+        private void UMLoginBtn_Click(object sender, EventArgs e)
+        {
+            UserManualtextBox.Text = "Login using your lock password.\r\n\r\nYou can load the lock password by clicking on Load Password\r\nand select the Lock-Password.dat file. You will see your password\r\nloaded in the login tab.\r\n\r\nIn case you forgot it, click on Forgot Password and follow the instructions.\r\n";
+        }
+
+        private void UMPasswordMgrBtn_Click(object sender, EventArgs e)
+        {
+            UserManualtextBox.Text = "The password manager securely saves your credentials\r\nto an encrypted database.\r\n\r\nYou can add, update or delete an entry which is composed of:\r\n\r\n• Website\r\n• Username or email address\r\n• Password\r\n\r\nYou can print all inserted entries or export them as csv.\r\n\r\nThe database is securely encrypted and protected from\r\nunauthorized persons.\r\n";
+        }
+
+        private void UMFileEncBtn_Click(object sender, EventArgs e)
+        {
+            UserManualtextBox.Text = "Secure your important files from curious eyes and unauthorized persons. \r\n\r\nThe files are encrypted and decrypted using a password which you can\r\ngenerate within Files Encryption tab or input your own password \r\nbut it's highly advisable to not insert your app lock password.\r\n\r\nThe encryption does not rely on your password only, \r\nadditional encryption layers are executed for maximum protection.\r\n\r\nYou can backup your password by clicking on Save password \r\nso that next time when you want to decrypt a file, \r\nsimply click on Load password and import the password file you already saved.\r\n\r\nIn case you forgot it, you can recover it by clicking on Forgot password.\r\n\r\n";
+            ;
+        }
+
+        private void UMRegexRenameBtn_Click(object sender, EventArgs e)
+        {
+            UserManualtextBox.Text = "Embrace the power of files renaming using Regex\r\nwhich stands for Regular Expression.\r\n\r\nYou can easily rename entire filename or part of it in few clicks.\r\n\r\nPreview offers you great renaming visualization before you confirm\r\nthe renaming.\r\n\r\nPlease refer to C# regex symbols to get the pattern\r\nyou need.\r\n\r\nIf you want to use the counter, in Replacement tab add this symbol: {n}\r\n";
+        }
+
+        // handle backcolor of UserManual buttons
+        private void UMPanelbtns_Click(object sender, EventArgs e)
+        {
+            // Check if the sender is a button and if it's inside the specified panel
+            if (sender is System.Windows.Forms.Button clickedButton && clickedButton.Parent == UMBtnPanel)
+            {
+                // Loop through all controls in the panel
+                foreach (System.Windows.Forms.Control control in UMBtnPanel.Controls)
+                {
+                    // Check if the control is a button
+                    if (control is System.Windows.Forms.Button button)
+                    {
+                        // Reset the background color of the button
+                        button.BackColor = Color.FromArgb(41, 42, 45);
+                    }
+                }
+
+                // Change the background color of the clicked button to black
+                clickedButton.BackColor = Color.Black;
+
+                // Update the previously clicked button
+                previousButton = clickedButton;
+            }
+        }
+
+        // hide the cursor in all textboxes
+        private void AboutTtxBox_MouseDown(object sender, MouseEventArgs e)
+        {
+            this.ActiveControl = About;
+        }
+
+        private void UserManualtextBox_MouseDown(object sender, MouseEventArgs e)
+        {
+            this.ActiveControl = UserManual;
+        }
+
+        private void PasswordGeneratorGeneratedPwdTextBox_MouseDown(object sender, MouseEventArgs e)
+        {
+            this.ActiveControl = PasswordGenerator;
+        }
+
+
+        #endregion
+
+        #region Password Generator Tab
 
         // method to generate a password
 
@@ -256,8 +421,6 @@ namespace CipherShield
                 (array[i], array[j]) = (array[j], array[i]);
             }
         }
-
-        #region Password Generator Tab
 
         // method to generate passwords
         private void GenerateButton_Click(object sender, EventArgs e)
@@ -741,39 +904,101 @@ namespace CipherShield
                 return;
             }
 
+            if (!ValidatePasswordStrength(FilesEncryptionEnterPwdTxtBox.Text))
+            {
+                ShowNotification("Password is too weak. Use at least 8 characters with uppercase, lowercase, numbers, and special characters.", "error.png");
+                return;
+            }
+
             DisableControls();
 
             try
             {
-                foreach (var file in selectedFiles1)
+                // Filter valid files first
+                var validFiles = selectedFiles1.Where(file =>
+                    !file.EndsWith("_ENCRYPTED" + Path.GetExtension(file)) &&
+                    File.Exists(file) &&
+                    new FileInfo(file).Length <= 2147483648L
+                ).ToList();
+
+                // Remove invalid files and show notifications
+                foreach (var file in selectedFiles1.Except(validFiles))
                 {
                     if (file.EndsWith("_ENCRYPTED" + Path.GetExtension(file)))
                     {
-                        ShowNotification("Select files that are not already encrypted.", "error.png");
-                        continue;
+                        ShowNotification($"{Path.GetFileName(file)} is already encrypted.", "warning.png");
                     }
+                    else if (!File.Exists(file))
+                    {
+                        ShowNotification($"{Path.GetFileName(file)} does not exist.", "error.png");
+                    }
+                    else if (new FileInfo(file).Length > 2147483648L)
+                    {
+                        ShowNotification($"{Path.GetFileName(file)} is too large (max 2GB).", "error.png");
+                    }
+                }
+
+                if (validFiles.Count == 0)
+                {
+                    ShowNotification("No valid files to process.", "warning.png");
+                    return;
+                }
+
+                // Initialize progress tracking
+                InitializeProgressLabel(validFiles.Count);
+
+                int successCount = 0;
+
+                // Process files sequentially
+                for (int i = 0; i < validFiles.Count; i++)
+                {
+                    var file = validFiles[i];
+                    currentFileNameLabel.Text = $"Encrypting: {Path.GetFileName(file)} ({i + 1}/{validFiles.Count})";
 
                     try
                     {
-                        currentFileNameLabel.Text = Path.GetFileName(file);
-                        await ProcessFileInPlace(file, FilesEncryptionEnterPwdTxtBox.Text, true);
-
-                        // Rename the encrypted file
-                        string encryptedFile = Path.Combine(
-                            Path.GetDirectoryName(file),
-                            Path.GetFileNameWithoutExtension(file) + "_ENCRYPTED" + Path.GetExtension(file)
-                        );
-                        File.Move(file, encryptedFile, true);
+                        bool success = await ProcessFileInPlace(file, FilesEncryptionEnterPwdTxtBox.Text, true);
+                        if (success)
+                        {
+                            // Rename the encrypted file
+                            string encryptedFile = Path.Combine(
+                                Path.GetDirectoryName(file),
+                                Path.GetFileNameWithoutExtension(file) + "_ENCRYPTED" + Path.GetExtension(file)
+                            );
+                            File.Move(file, encryptedFile, true);
+                            successCount++;
+                            UpdateProgressUI(Path.GetFileName(file), true);
+                        }
+                        else
+                        {
+                            UpdateProgressUI(Path.GetFileName(file), false);
+                        }
                     }
                     catch (Exception ex)
                     {
                         ShowNotification($"Error encrypting {Path.GetFileName(file)}: {ex.Message}", "error.png");
+                        UpdateProgressUI(Path.GetFileName(file), false);
                     }
+
+                    // Update progress percentage
+                    UpdateProgressPercentage(i + 1, validFiles.Count);
+
+                    // Small delay to prevent UI freezing
+                    await Task.Delay(50);
                 }
 
+                // Show 100% completion briefly
+                UpdateProgressPercentage(validFiles.Count, validFiles.Count);
+                await Task.Delay(300);
+
+                // Clear UI and show results
                 FilesEncryptionFilesListBox.Items.Clear();
                 FileEncryptionFilesNumberTxtBox.Clear();
-                ShowNotification("Encryption completed.", "success.png");
+                ShowNotification($"Encryption completed. {successCount} out of {validFiles.Count} file(s) processed successfully.", "success.png");
+            }
+            catch (Exception ex)
+            {
+                ShowNotification($"Encryption failed: {ex.Message}", "error.png");
             }
             finally
             {
@@ -795,32 +1020,83 @@ namespace CipherShield
 
             try
             {
-                foreach (var file in selectedFiles1)
+                // Filter valid files first
+                var validFiles = selectedFiles1.Where(file =>
+                    file.EndsWith("_ENCRYPTED" + Path.GetExtension(file)) &&
+                    File.Exists(file)
+                ).ToList();
+
+                // Remove invalid files and show notifications
+                foreach (var file in selectedFiles1.Except(validFiles))
                 {
                     if (!file.EndsWith("_ENCRYPTED" + Path.GetExtension(file)))
                     {
-                        ShowNotification("Select encrypted files only.", "error.png");
-                        continue;
+                        ShowNotification($"{Path.GetFileName(file)} is not an encrypted file.", "warning.png");
                     }
+                    else if (!File.Exists(file))
+                    {
+                        ShowNotification($"{Path.GetFileName(file)} does not exist.", "error.png");
+                    }
+                }
+
+                if (validFiles.Count == 0)
+                {
+                    ShowNotification("No valid encrypted files to process.", "warning.png");
+                    return;
+                }
+
+                // Initialize progress tracking
+                InitializeProgressLabel(validFiles.Count);
+
+                int successCount = 0;
+
+                // Process files sequentially
+                for (int i = 0; i < validFiles.Count; i++)
+                {
+                    var file = validFiles[i];
+                    currentFileNameLabel.Text = $"Decrypting: {Path.GetFileName(file)} ({i + 1}/{validFiles.Count})";
 
                     try
                     {
-                        currentFileNameLabel.Text = Path.GetFileName(file);
-                        await ProcessFileInPlace(file, FilesEncryptionEnterPwdTxtBox.Text, false);
-
-                        // Rename the decrypted file
-                        string decryptedFile = file.Replace("_ENCRYPTED", "");
-                        File.Move(file, decryptedFile, true);
+                        bool success = await ProcessFileInPlace(file, FilesEncryptionEnterPwdTxtBox.Text, false);
+                        if (success)
+                        {
+                            // Rename the decrypted file
+                            string decryptedFile = file.Replace("_ENCRYPTED", "");
+                            File.Move(file, decryptedFile, true);
+                            successCount++;
+                            UpdateProgressUI(Path.GetFileName(file), true);
+                        }
+                        else
+                        {
+                            UpdateProgressUI(Path.GetFileName(file), false);
+                        }
                     }
                     catch (Exception ex)
                     {
                         ShowNotification($"Error decrypting {Path.GetFileName(file)}: {ex.Message}", "error.png");
+                        UpdateProgressUI(Path.GetFileName(file), false);
                     }
+
+                    // Update progress percentage
+                    UpdateProgressPercentage(i + 1, validFiles.Count);
+
+                    // Small delay to prevent UI freezing
+                    await Task.Delay(50);
                 }
 
+                // Show 100% completion briefly
+                UpdateProgressPercentage(validFiles.Count, validFiles.Count);
+                await Task.Delay(2000);
+
+                // Clear UI and show results
                 FilesEncryptionFilesListBox.Items.Clear();
                 FileEncryptionFilesNumberTxtBox.Clear();
-                ShowNotification("Decryption completed.", "success.png");
+                ShowNotification($"Decryption completed. {successCount} out of {validFiles.Count} file(s) processed successfully.", "success.png");
+            }
+            catch (Exception ex)
+            {
+                ShowNotification($"Decryption failed: {ex.Message}", "error.png");
             }
             finally
             {
@@ -829,30 +1105,138 @@ namespace CipherShield
             }
         }
 
-        // method to diable controles during encryption and decryption
+        // ===== PROGRESS LABEL MANAGEMENT METHODS =====
+
+        // Initialize progress label
+        private void InitializeProgressLabel(int totalFiles)
+        {
+            if (progressPercentageLabel == null) return;
+
+            if (progressPercentageLabel.InvokeRequired)
+            {
+                progressPercentageLabel.Invoke(new Action<int>(InitializeProgressLabel), totalFiles);
+                return;
+            }
+
+            progressPercentageLabel.Visible = true;
+            progressPercentageLabel.Text = "0%";
+
+            // Force UI update
+            progressPercentageLabel.Refresh();
+            Application.DoEvents();
+        }
+
+        // Update progress percentage
+        private void UpdateProgressPercentage(int currentFile, int totalFiles)
+        {
+            if (progressPercentageLabel == null) return;
+
+            if (progressPercentageLabel.InvokeRequired)
+            {
+                progressPercentageLabel.Invoke(new Action<int, int>(UpdateProgressPercentage), currentFile, totalFiles);
+                return;
+            }
+
+            try
+            {
+                if (totalFiles > 0)
+                {
+                    int percentage = (int)((double)currentFile / totalFiles * 100);
+                    progressPercentageLabel.Text = $"{percentage}%";
+
+                    // Force UI update for smooth display
+                    progressPercentageLabel.Refresh();
+
+                    // Update every ~10% to reduce UI overhead
+                    if (percentage % 10 == 0 || currentFile == totalFiles)
+                    {
+                        Application.DoEvents();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Progress label update error: {ex.Message}");
+            }
+        }
+
+        // Control management with progress label
         private void DisableControls()
         {
-            foreach (var button in Controls.OfType<System.Windows.Forms.Button>())
+            FilesEncryptionEncryptBtn.Enabled = false;
+            FilesEncryptionDecryptFilesBtn.Enabled = false;
+            FilesEncryptionEnterPwdTxtBox.Enabled = false;
+
+            // Hide progress label initially (it will be shown when processing starts)
+            if (progressPercentageLabel != null)
             {
-                button.Enabled = false;
+                progressPercentageLabel.Visible = false;
             }
-            if (FilesEncryptionEnterPwdTxtBox.Text != null)
-                FilesEncryptionEnterPwdTxtBox.Enabled = false;
         }
 
-        // method to enable controles after encryption or after decryption
         private void EnableControls()
         {
-            foreach (var button in Controls.OfType<System.Windows.Forms.Button>())
+            FilesEncryptionEncryptBtn.Enabled = true;
+            FilesEncryptionDecryptFilesBtn.Enabled = true;
+            FilesEncryptionEnterPwdTxtBox.Enabled = true;
+
+            // Hide progress label when processing is done
+            if (progressPercentageLabel != null)
             {
-                button.Enabled = true;
+                progressPercentageLabel.Visible = false;
             }
-            if (FilesEncryptionEnterPwdTxtBox.Text != null)
-                FilesEncryptionEnterPwdTxtBox.Enabled = true;
         }
 
-        // asyncronous method to encrypt/decrypt multiple files in parallel
-        private async Task ProcessFileInPlace(string filePath, string password, bool encrypt)
+        // ===== EXISTING UTILITY METHODS =====
+
+        private bool ValidatePasswordStrength(string password)
+        {
+            if (string.IsNullOrEmpty(password) || password.Length < 8)
+                return false;
+
+            bool hasUpper = false;
+            bool hasLower = false;
+            bool hasDigit = false;
+            bool hasSpecial = false;
+
+            foreach (char c in password)
+            {
+                if (char.IsUpper(c)) hasUpper = true;
+                else if (char.IsLower(c)) hasLower = true;
+                else if (char.IsDigit(c)) hasDigit = true;
+                else if (!char.IsWhiteSpace(c)) hasSpecial = true;
+            }
+
+            int criteriaMet = 0;
+            if (hasUpper) criteriaMet++;
+            if (hasLower) criteriaMet++;
+            if (hasDigit) criteriaMet++;
+            if (hasSpecial) criteriaMet++;
+
+            return criteriaMet >= 3;
+        }
+
+        private void UpdateProgressUI(string fileName, bool success)
+        {
+            // Update UI to show progress for individual files
+            string status = success ? "✓" : "✗";
+
+            // Optional: Update a progress list or status area
+            if (FilesEncryptionFilesListBox != null)
+            {
+                if (FilesEncryptionFilesListBox.InvokeRequired)
+                {
+                    FilesEncryptionFilesListBox.Invoke(new Action<string, bool>(UpdateProgressUI), fileName, success);
+                    return;
+                }
+
+                FilesEncryptionFilesListBox.Items.Add($"{status} {fileName}");
+                FilesEncryptionFilesListBox.TopIndex = FilesEncryptionFilesListBox.Items.Count - 1;
+            }
+        }
+
+        // Optimized asyncronous method to encrypt/decrypt files
+        private async Task<bool> ProcessFileInPlace(string filePath, string password, bool encrypt)
         {
             string tempFile = Path.GetTempFileName();
             const int saltSize = 32;
@@ -861,95 +1245,157 @@ namespace CipherShield
 
             byte[] salt = new byte[saltSize];
             byte[] nonce = new byte[nonceSize];
+            byte[] key = null;
+            byte[] passwordBytes = null;
 
-            if (encrypt)
+            try
             {
-                RandomNumberGenerator.Fill(salt);
-                RandomNumberGenerator.Fill(nonce);
+                FileStream inputStream = null;
+                FileStream outputStream = null;
+
+                try
+                {
+                    if (encrypt)
+                    {
+                        // Generate random salt and nonce for encryption
+                        RandomNumberGenerator.Fill(salt);
+                        RandomNumberGenerator.Fill(nonce);
+                    }
+                    else
+                    {
+                        // Read salt and nonce from the beginning of the file for decryption
+                        using (var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read, 4096, FileOptions.SequentialScan))
+                        {
+                            if (fs.Length < saltSize + nonceSize + tagSize)
+                            {
+                                throw new InvalidOperationException("File is too small to be a valid encrypted file.");
+                            }
+
+                            await fs.ReadExactlyAsync(salt, 0, saltSize);
+                            await fs.ReadExactlyAsync(nonce, 0, nonceSize);
+                        }
+                    }
+
+                    // Derive key using Argon2id with optimized parameters
+                    passwordBytes = Encoding.UTF8.GetBytes(password);
+
+                    using var argon2 = new Konscious.Security.Cryptography.Argon2id(passwordBytes)
+                    {
+                        Salt = salt,
+                        DegreeOfParallelism = Math.Max(2, Environment.ProcessorCount / 2), // More conservative parallelism
+                        MemorySize = 32 * 1024, // Reduced from 64MB to 32MB for better performance
+                        Iterations = 2 // Reduced from 3 for better performance
+                    };
+
+                    key = argon2.GetBytes(32);
+
+                    // Process the file
+                    if (encrypt)
+                    {
+                        await EncryptFile(filePath, tempFile, key, salt, nonce, tagSize);
+                    }
+                    else
+                    {
+                        await DecryptFile(filePath, tempFile, key, salt, nonce, tagSize);
+                    }
+
+                    // Replace original file with processed file
+                    File.Delete(filePath);
+                    File.Move(tempFile, filePath);
+
+                    return true;
+                }
+                finally
+                {
+                    inputStream?.Dispose();
+                    outputStream?.Dispose();
+                }
             }
-
-            // --- Read or prepare file bytes ---
-            byte[] fileBytes = encrypt
-                ? await File.ReadAllBytesAsync(filePath)
-                : null; // we will read after reading salt/nonce
-
-            // --- Derive key using Argon2id ---
-            byte[] key;
-            byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
-
-            if (encrypt)
+            catch (CryptographicException ex)
             {
-                using var argon2 = new Konscious.Security.Cryptography.Argon2id(passwordBytes);
-                argon2.Salt = salt;
-                argon2.DegreeOfParallelism = Environment.ProcessorCount;
-                argon2.MemorySize = 64 * 1024; // 64 MB
-                argon2.Iterations = 3;
-                key = argon2.GetBytes(32);
+                ShowNotification($"Security error processing {Path.GetFileName(filePath)}: The password may be incorrect.", "error.png");
+                return false;
             }
-            else
+            catch (IOException ex)
             {
-                // Read salt from the file to derive key
-                using FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read);
-                await fs.ReadAsync(salt, 0, salt.Length);
-                await fs.ReadAsync(nonce, 0, nonce.Length);
-
-                using var argon2 = new Konscious.Security.Cryptography.Argon2id(passwordBytes);
-                argon2.Salt = salt;
-                argon2.DegreeOfParallelism = Environment.ProcessorCount;
-                argon2.MemorySize = 64 * 1024;
-                argon2.Iterations = 3;
-                key = argon2.GetBytes(32);
-
-                long cipherLength = fs.Length - saltSize - nonceSize - tagSize;
-                fileBytes = new byte[cipherLength + tagSize]; // read ciphertext + tag
-                fs.Position = saltSize + nonceSize;
-                await fs.ReadAsync(fileBytes, 0, fileBytes.Length);
+                ShowNotification($"File error processing {Path.GetFileName(filePath)}: {ex.Message}", "error.png");
+                return false;
             }
+            catch (Exception ex)
+            {
+                ShowNotification($"Error processing {Path.GetFileName(filePath)}: {ex.Message}", "error.png");
+                return false;
+            }
+            finally
+            {
+                // Clear sensitive data from memory
+                if (key != null) Array.Clear(key, 0, key.Length);
+                if (passwordBytes != null) Array.Clear(passwordBytes, 0, passwordBytes.Length);
+                Array.Clear(salt, 0, salt.Length);
+                Array.Clear(nonce, 0, nonce.Length);
 
-            // --- AES-GCM encryption/decryption ---
-            byte[] outputBytes;
+                // Clean up temp file if it still exists
+                if (File.Exists(tempFile))
+                {
+                    try { File.Delete(tempFile); } catch { /* Ignore cleanup errors */ }
+                }
+            }
+        }
+
+        private async Task EncryptFile(string inputPath, string outputPath, byte[] key, byte[] salt, byte[] nonce, int tagSize)
+        {
+            using var inputStream = new FileStream(inputPath, FileMode.Open, FileAccess.Read, FileShare.Read, 81920, FileOptions.SequentialScan);
+            using var outputStream = new FileStream(outputPath, FileMode.Create, FileAccess.Write, FileShare.None, 81920);
+
+            // Write salt and nonce at the beginning
+            await outputStream.WriteAsync(salt, 0, salt.Length);
+            await outputStream.WriteAsync(nonce, 0, nonce.Length);
+
+            // Encrypt file content
+            using var aesGcm = new AesGcm(key, tagSize);
+
+            // For simplicity, read the entire file for AES-GCM (suitable for smaller files)
+            byte[] fileBytes = await File.ReadAllBytesAsync(inputPath);
+            byte[] encryptedBytes = new byte[fileBytes.Length];
             byte[] tag = new byte[tagSize];
 
-            using var aesGcm = new AesGcm(key, tagSizeInBytes: 16);
+            aesGcm.Encrypt(nonce, fileBytes, encryptedBytes, tag);
 
+            await outputStream.WriteAsync(encryptedBytes, 0, encryptedBytes.Length);
+            await outputStream.WriteAsync(tag, 0, tag.Length);
 
-            if (encrypt)
-            {
-                outputBytes = new byte[fileBytes.Length];
-                aesGcm.Encrypt(nonce, fileBytes, outputBytes, tag);
-            }
-            else
-            {
-                byte[] ciphertext = new byte[fileBytes.Length - tagSize];
-                Array.Copy(fileBytes, 0, ciphertext, 0, ciphertext.Length);
-                Array.Copy(fileBytes, ciphertext.Length, tag, 0, tagSize);
+            // Clear sensitive data
+            Array.Clear(fileBytes, 0, fileBytes.Length);
+            Array.Clear(encryptedBytes, 0, encryptedBytes.Length);
+        }
 
-                outputBytes = new byte[ciphertext.Length];
-                aesGcm.Decrypt(nonce, ciphertext, tag, outputBytes);
-            }
+        private async Task DecryptFile(string inputPath, string outputPath, byte[] key, byte[] salt, byte[] nonce, int tagSize)
+        {
+            using var inputStream = new FileStream(inputPath, FileMode.Open, FileAccess.Read, FileShare.Read, 81920, FileOptions.SequentialScan);
 
-            // --- Write to temp file ---
-            using (FileStream fsOut = new FileStream(tempFile, FileMode.Create, FileAccess.Write, FileShare.None))
-            {
-                if (encrypt)
-                {
-                    await fsOut.WriteAsync(salt, 0, salt.Length);
-                    await fsOut.WriteAsync(nonce, 0, nonce.Length);
-                    await fsOut.WriteAsync(outputBytes, 0, outputBytes.Length);
-                    await fsOut.WriteAsync(tag, 0, tag.Length);
-                }
-                else
-                {
-                    await fsOut.WriteAsync(outputBytes, 0, outputBytes.Length);
-                }
-            }
+            // Skip salt and nonce (already read)
+            inputStream.Position = salt.Length + nonce.Length;
 
-            Array.Clear(key, 0, key.Length);
-            Array.Clear(passwordBytes, 0, passwordBytes.Length);
+            // Read the encrypted content and tag
+            long ciphertextLength = inputStream.Length - salt.Length - nonce.Length - tagSize;
+            byte[] encryptedBytes = new byte[ciphertextLength];
+            byte[] tag = new byte[tagSize];
 
-            // --- Replace original file ---
-            File.Delete(filePath);
-            File.Move(tempFile, filePath);
+            await inputStream.ReadExactlyAsync(encryptedBytes, 0, encryptedBytes.Length);
+            await inputStream.ReadExactlyAsync(tag, 0, tag.Length);
+
+            // Decrypt
+            using var aesGcm = new AesGcm(key, tagSize);
+            byte[] decryptedBytes = new byte[encryptedBytes.Length];
+
+            aesGcm.Decrypt(nonce, encryptedBytes, tag, decryptedBytes);
+
+            // Write decrypted content
+            await File.WriteAllBytesAsync(outputPath, decryptedBytes);
+
+            // Clear sensitive data
+            Array.Clear(encryptedBytes, 0, encryptedBytes.Length);
+            Array.Clear(decryptedBytes, 0, decryptedBytes.Length);
         }
 
         // recover files encryption password
@@ -972,6 +1418,24 @@ namespace CipherShield
         private void GeneratePasswordButton_Click(object sender, EventArgs e)
         {
             FilesEncryptionEnterPwdTxtBox.Text = GeneratePassword();
+        }
+
+        // method to offer the user the ability to save lock password file as backup
+        private void BackupLockPasswordbtn_Click(object sender, EventArgs e)
+        {
+            if (backupPasswordTxtBox.Text == SecureStorage.GetMasterPassword())
+            {
+                SecureStorage.BackupPassword(backupPasswordTxtBox.Text);
+                backupPasswordTxtBox.Clear();
+                return;
+            }
+
+            else
+            {
+                ShowNotification("Wrong password.", "error.png");
+                return;
+            }
+
         }
 
         #endregion
@@ -1224,155 +1688,6 @@ namespace CipherShield
 
         #endregion
 
-        // method to update security questions answers
-        private void SubmitNewSecurityQuestionsBtn_Click(object sender, EventArgs e)
-        {
-            if (ChangeSecurityQuestion1TtxBx.Text.Length == 0 || ChangeSecurityQuestion2TtxBx.Text.Length == 0 || ChangeSecurityQuestion3TtxBx.Text.Length == 0)
-            {
-                ShowNotification("All security questions should be filled.", "error.png");
-                return;
-            }
-
-            if (QuestionsPasswordTxtBox.Text != SecureStorage.GetMasterPassword())
-            {
-                ShowNotification("Wrong password.", "error.png");
-                return;
-            }
-
-            string[] NewSecurityQuestions = [ChangeSecurityQuestion1TtxBx.Text, ChangeSecurityQuestion2TtxBx.Text, ChangeSecurityQuestion3TtxBx.Text];
-            if (NewSecurityQuestions == SecureStorage.GetSecurityAnswers())
-            {
-                ShowNotification("Please insert new security questions.", "error.png");
-                return;
-            }
-
-            string[] answers = { ChangeSecurityQuestion1TtxBx.Text, ChangeSecurityQuestion2TtxBx.Text, ChangeSecurityQuestion3TtxBx.Text };
-            if (QuestionsPasswordTxtBox.Text == SecureStorage.GetMasterPassword())
-            {
-                SecureStorage.SaveSecurityQuestions(answers);
-                ShowNotification("Your security answers are successfully saved.", "success.png");
-                return;
-            }
-
-        }
-
-        // method to offer the user the ability to save lock password file as backup
-        private void BackupLockPasswordbtn_Click(object sender, EventArgs e)
-        {
-            if (backupPasswordTxtBox.Text == SecureStorage.GetMasterPassword())
-            {
-                SecureStorage.BackupPassword(backupPasswordTxtBox.Text);
-                backupPasswordTxtBox.Clear();
-                return;
-            }
-
-            else
-            {
-                ShowNotification("Wrong password.", "error.png");
-                return;
-            }
-
-        }
-
-        // method to show inputs
-        private void hideShowPassword_MouseDown(object sender, MouseEventArgs e)
-        {
-            focusBtn.Focus();
-            hideShowPassword.BackgroundImage = System.Drawing.Image.FromFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "EyeWhite.png"));
-            oldPasswordTxtBox.PasswordChar = '\0';
-            NewPasswordTxtBox.PasswordChar = '\0';
-            RepeatNewPasswordTxtBox.PasswordChar = '\0';
-            backupPasswordTxtBox.PasswordChar = '\0';
-            ChangeSecurityQuestion1TtxBx.PasswordChar = '\0';
-            ChangeSecurityQuestion2TtxBx.PasswordChar = '\0';
-            ChangeSecurityQuestion3TtxBx.PasswordChar = '\0';
-            QuestionsPasswordTxtBox.PasswordChar = '\0';
-
-        }
-
-        // method to hide inputs
-        private void hideShowPassword_MouseUp(object sender, MouseEventArgs e)
-        {
-            focusBtn.Focus();
-            hideShowPassword.BackgroundImage = System.Drawing.Image.FromFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "NotEyeWhite.png"));
-            oldPasswordTxtBox.PasswordChar = '*';
-            NewPasswordTxtBox.PasswordChar = '*';
-            RepeatNewPasswordTxtBox.PasswordChar = '*';
-            backupPasswordTxtBox.PasswordChar = '*';
-            ChangeSecurityQuestion1TtxBx.PasswordChar = '*';
-            ChangeSecurityQuestion2TtxBx.PasswordChar = '*';
-            ChangeSecurityQuestion3TtxBx.PasswordChar = '*';
-            QuestionsPasswordTxtBox.PasswordChar = '*';
-        }
-
-
-        // methods to show text for each button clicked in UserManual tab
-        private void UMRegisterBtn_Click(object sender, EventArgs e)
-        {
-            UserManualtextBox.Text = "When you launch the app for the first time, you are asked to register yourself by providing:\r\n\r\n• Lock password\r\n• Answers of the security questions\r\n\r\nThe password is used to encrypt and decrypt the database of the passwords manager.\r\n\r\nThe security questions are used to recover your lock password or to change it.\r\n\r\nIt's advisable to backup your lock password by following the instructions in the Help tab so that next time you login, you can simply load it by clicking on Load Password.";
-        }
-
-        private void UMLoginBtn_Click(object sender, EventArgs e)
-        {
-            UserManualtextBox.Text = "Login using your lock password.\r\n\r\nYou can load the lock password by clicking on Load Password\r\nand select the Lock-Password.dat file. You will see your password\r\nloaded in the login tab.\r\n\r\nIn case you forgot it, click on Forgot Password and follow the instructions.\r\n";
-        }
-
-        private void UMPasswordMgrBtn_Click(object sender, EventArgs e)
-        {
-            UserManualtextBox.Text = "The password manager securely saves your credentials\r\nto an encrypted database.\r\n\r\nYou can add, update or delete an entry which is composed of:\r\n\r\n• Website\r\n• Username or email address\r\n• Password\r\n\r\nYou can print all inserted entries or export them as csv.\r\n\r\nThe database is securely encrypted and protected from\r\nunauthorized persons.\r\n";
-        }
-
-        private void UMFileEncBtn_Click(object sender, EventArgs e)
-        {
-            UserManualtextBox.Text = "Secure your important files from curious eyes and unauthorized persons. \r\n\r\nThe files are encrypted and decrypted using a password which you can\r\ngenerate within Files Encryption tab or input your own password \r\nbut it's highly advisable to not insert your app lock password.\r\n\r\nThe encryption does not rely on your password only, \r\nadditional encryption layers are executed for maximum protection.\r\n\r\nYou can backup your password by clicking on Save password \r\nso that next time when you want to decrypt a file, \r\nsimply click on Load password and import the password file you already saved.\r\n\r\nIn case you forgot it, you can recover it by clicking on Forgot password.\r\n\r\n";
-            ;
-        }
-
-        private void UMRegexRenameBtn_Click(object sender, EventArgs e)
-        {
-            UserManualtextBox.Text = "Embrace the power of files renaming using Regex\r\nwhich stands for Regular Expression.\r\n\r\nYou can easily rename entire filename or part of it in few clicks.\r\n\r\nPreview offers you great renaming visualization before you confirm\r\nthe renaming.\r\n\r\nPlease refer to C# regex symbols to get the pattern\r\nyou need.\r\n\r\nIf you want to use the counter, in Replacement tab add this symbol: {n}\r\n";
-        }
-
-        // handle backcolor of UserManual buttons
-        private void UMPanelbtns_Click(object sender, EventArgs e)
-        {
-            // Check if the sender is a button and if it's inside the specified panel
-            if (sender is System.Windows.Forms.Button clickedButton && clickedButton.Parent == UMBtnPanel)
-            {
-                // Loop through all controls in the panel
-                foreach (System.Windows.Forms.Control control in UMBtnPanel.Controls)
-                {
-                    // Check if the control is a button
-                    if (control is System.Windows.Forms.Button button)
-                    {
-                        // Reset the background color of the button
-                        button.BackColor = Color.FromArgb(41, 42, 45);
-                    }
-                }
-
-                // Change the background color of the clicked button to black
-                clickedButton.BackColor = Color.Black;
-
-                // Update the previously clicked button
-                previousButton = clickedButton;
-            }
-        }
-
-        // hide the cursor in all textboxes
-        private void AboutTtxBox_MouseDown(object sender, MouseEventArgs e)
-        {
-            this.ActiveControl = About;
-        }
-
-        private void UserManualtextBox_MouseDown(object sender, MouseEventArgs e)
-        {
-            this.ActiveControl = UserManual;
-        }
-
-        private void PasswordGeneratorGeneratedPwdTextBox_MouseDown(object sender, MouseEventArgs e)
-        {
-            this.ActiveControl = PasswordGenerator;
-        }
     }
 }
 

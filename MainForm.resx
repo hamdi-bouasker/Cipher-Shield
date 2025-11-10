@@ -118,6 +118,19 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="hideShowPasswordFilesEnc.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
+        DAAACwwBP0AiyAAAAZFJREFUOE/NUz1LA0EQDSqC4lcR0EJEEAQbbfwCQaxs/Bda+T/8FxbaqCAIkkoL
+        tRYUOwvRSoOGHHfz3l6KiLIyx51s1kvUFOKD5Y43bx6zM7OFwn+EiMxZa3t8vi2Q3ADwJiLzfiwXYRiO
+        AVjQo/9uLDPTr8t/gYjMktwB8ELSeqdkre38kRnJIsk9TQRwDmAdwGS5XO6NomgojuOZMAwHU7N3ADdB
+        EAz4Pgk0keQDgFuSS348Q1YZgC2S9yTvRGSiQWSMGQbwSPKkWq32Z3ytVhsFsA3gQKv0r6laAGdqHMfx
+        yKchyVOSV+7ooygaB/BM8lKvm12TZOAOp1Kp9JG8BnCcEADWALySnMpEKX+YY5YMRit2tcaYafUQkVWt
+        rkRy1xUodCh5Zumhrye5D+BIE8skl92gtbajhZlWWFeNm2OMWQHwpMldbiBDM7PU8MLXK6y13T6XwFkN
+        7a1vVgew6Oc0hbsa2gpdXsdM/xva0xL+njm8vqCiy32L9Jmp2aYf+zW0J3mVtQ19Vr9q9F/iA3PdGTUx
+        A/y+AAAAAElFTkSuQmCC
+</value>
+  </data>
   <data name="FilesEncryptionDecryptFilesBtn.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
@@ -314,7 +327,7 @@ Cipher Shield serves as an essential tool for individuals and organizations aimi
     <value>1099, 17</value>
   </metadata>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>78</value>
+    <value>25</value>
   </metadata>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

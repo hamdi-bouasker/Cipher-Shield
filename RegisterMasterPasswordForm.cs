@@ -39,13 +39,13 @@ namespace CipherShield
                     .Show();
                 return;
             }
-            if (RegisterMasterPwdTxtBox.Text.Length < 8)
+            if (!ValidatePasswordStrength(RegisterMasterPwdTxtBox.Text))
             {
                 string errorIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "error.png");
                 Uri errorUri = new Uri($"file:///{errorIcon}");
                 new ToastContentBuilder()
                     .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
-                    .AddText("Password must be at least 8 characters long.")
+                    .AddText("Password must be at least 8 characters long and composed of:" + Environment.NewLine + "- Uppercase and lowercase letters" + Environment.NewLine + "- Numbers and special characters")
                     .Show();
                 return;
             }
@@ -75,6 +75,35 @@ namespace CipherShield
                 Close();
             }
 
+        }
+
+        // ===== EXISTING UTILITY METHODS =====
+
+        private bool ValidatePasswordStrength(string password)
+        {
+            if (string.IsNullOrEmpty(password) || password.Length < 8)
+                return false;
+
+            bool hasUpper = false;
+            bool hasLower = false;
+            bool hasDigit = false;
+            bool hasSpecial = false;
+
+            foreach (char c in password)
+            {
+                if (char.IsUpper(c)) hasUpper = true;
+                else if (char.IsLower(c)) hasLower = true;
+                else if (char.IsDigit(c)) hasDigit = true;
+                else if (!char.IsWhiteSpace(c)) hasSpecial = true;
+            }
+
+            int criteriaMet = 0;
+            if (hasUpper) criteriaMet++;
+            if (hasLower) criteriaMet++;
+            if (hasDigit) criteriaMet++;
+            if (hasSpecial) criteriaMet++;
+
+            return criteriaMet == 4;
         }
 
         // Cancel the registration process

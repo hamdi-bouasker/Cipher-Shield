@@ -63,6 +63,8 @@
             usernameTxtBox = new System.Windows.Forms.TextBox();
             PasswordManagerDGV = new System.Windows.Forms.DataGridView();
             FileEncryption = new System.Windows.Forms.TabPage();
+            progressPercentageLabel = new System.Windows.Forms.Label();
+            hideShowPasswordFilesEnc = new System.Windows.Forms.Button();
             panel7 = new System.Windows.Forms.Panel();
             forgotPassword = new System.Windows.Forms.Button();
             FilesEncryptionBrowseFilesBtn = new System.Windows.Forms.Button();
@@ -266,7 +268,6 @@
             PasswordGeneratorGeneratedPwdTextBox.Location = new System.Drawing.Point(23, 123);
             PasswordGeneratorGeneratedPwdTextBox.Multiline = true;
             PasswordGeneratorGeneratedPwdTextBox.Name = "PasswordGeneratorGeneratedPwdTextBox";
-            PasswordGeneratorGeneratedPwdTextBox.ReadOnly = true;
             PasswordGeneratorGeneratedPwdTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             PasswordGeneratorGeneratedPwdTextBox.Size = new System.Drawing.Size(553, 281);
             PasswordGeneratorGeneratedPwdTextBox.TabIndex = 7;
@@ -509,7 +510,7 @@
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.ControlLightLight;
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             PasswordManagerDGV.DefaultCellStyle = dataGridViewCellStyle3;
-            PasswordManagerDGV.Location = new System.Drawing.Point(73, 218);
+            PasswordManagerDGV.Location = new System.Drawing.Point(73, 234);
             PasswordManagerDGV.Name = "PasswordManagerDGV";
             PasswordManagerDGV.ReadOnly = true;
             dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -526,13 +527,15 @@
             dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.ActiveCaptionText;
             dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.ControlLightLight;
             PasswordManagerDGV.RowsDefaultCellStyle = dataGridViewCellStyle5;
-            PasswordManagerDGV.Size = new System.Drawing.Size(600, 254);
+            PasswordManagerDGV.Size = new System.Drawing.Size(600, 265);
             PasswordManagerDGV.TabIndex = 10;
             PasswordManagerDGV.CellClick += dataGridView1_CellClick;
             // 
             // FileEncryption
             // 
             FileEncryption.BackColor = System.Drawing.Color.FromArgb(32, 33, 36);
+            FileEncryption.Controls.Add(progressPercentageLabel);
+            FileEncryption.Controls.Add(hideShowPasswordFilesEnc);
             FileEncryption.Controls.Add(panel7);
             FileEncryption.Controls.Add(currentFileNameLabel);
             FileEncryption.Controls.Add(FilesEncryptionFilesListBox);
@@ -542,12 +545,37 @@
             FileEncryption.Controls.Add(FilesEncryptionEncryptBtn);
             FileEncryption.Controls.Add(FileEncryptionFilesNumberTxtBox);
             FileEncryption.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            FileEncryption.Location = new System.Drawing.Point(4, 24);
+            FileEncryption.Location = new System.Drawing.Point(4, 27);
             FileEncryption.Name = "FileEncryption";
             FileEncryption.Padding = new System.Windows.Forms.Padding(3);
-            FileEncryption.Size = new System.Drawing.Size(752, 524);
+            FileEncryption.Size = new System.Drawing.Size(752, 521);
             FileEncryption.TabIndex = 0;
             FileEncryption.Text = "Files Encryption";
+            // 
+            // progressPercentageLabel
+            // 
+            progressPercentageLabel.Location = new System.Drawing.Point(459, 488);
+            progressPercentageLabel.Name = "progressPercentageLabel";
+            progressPercentageLabel.Size = new System.Drawing.Size(52, 22);
+            progressPercentageLabel.TabIndex = 25;
+            progressPercentageLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            progressPercentageLabel.Visible = false;
+            // 
+            // hideShowPasswordFilesEnc
+            // 
+            hideShowPasswordFilesEnc.BackgroundImage = (System.Drawing.Image)resources.GetObject("hideShowPasswordFilesEnc.BackgroundImage");
+            hideShowPasswordFilesEnc.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            hideShowPasswordFilesEnc.FlatAppearance.BorderSize = 0;
+            hideShowPasswordFilesEnc.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(32, 33, 36);
+            hideShowPasswordFilesEnc.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            hideShowPasswordFilesEnc.ForeColor = System.Drawing.Color.FromArgb(32, 33, 36);
+            hideShowPasswordFilesEnc.Location = new System.Drawing.Point(464, 376);
+            hideShowPasswordFilesEnc.Name = "hideShowPasswordFilesEnc";
+            hideShowPasswordFilesEnc.Size = new System.Drawing.Size(22, 24);
+            hideShowPasswordFilesEnc.TabIndex = 24;
+            hideShowPasswordFilesEnc.UseVisualStyleBackColor = true;
+            hideShowPasswordFilesEnc.MouseDown += hideShowPassword_MouseDown;
+            hideShowPasswordFilesEnc.MouseUp += hideShowPassword_MouseUp;
             // 
             // panel7
             // 
@@ -643,9 +671,10 @@
             // 
             // currentFileNameLabel
             // 
-            currentFileNameLabel.Location = new System.Drawing.Point(22, 484);
+            currentFileNameLabel.Font = new System.Drawing.Font("Comic Sans MS", 8F);
+            currentFileNameLabel.Location = new System.Drawing.Point(22, 487);
             currentFileNameLabel.Name = "currentFileNameLabel";
-            currentFileNameLabel.Size = new System.Drawing.Size(493, 25);
+            currentFileNameLabel.Size = new System.Drawing.Size(419, 25);
             currentFileNameLabel.TabIndex = 13;
             currentFileNameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -656,7 +685,7 @@
             FilesEncryptionFilesListBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             FilesEncryptionFilesListBox.FormattingEnabled = true;
             FilesEncryptionFilesListBox.ItemHeight = 18;
-            FilesEncryptionFilesListBox.Location = new System.Drawing.Point(21, 105);
+            FilesEncryptionFilesListBox.Location = new System.Drawing.Point(21, 78);
             FilesEncryptionFilesListBox.Name = "FilesEncryptionFilesListBox";
             FilesEncryptionFilesListBox.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             FilesEncryptionFilesListBox.Size = new System.Drawing.Size(493, 218);
@@ -665,7 +694,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new System.Drawing.Point(215, 335);
+            label1.Location = new System.Drawing.Point(215, 340);
             label1.Name = "label1";
             label1.Size = new System.Drawing.Size(102, 18);
             label1.TabIndex = 10;
@@ -676,9 +705,10 @@
             FilesEncryptionEnterPwdTxtBox.BackColor = System.Drawing.Color.FromArgb(41, 42, 45);
             FilesEncryptionEnterPwdTxtBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             FilesEncryptionEnterPwdTxtBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            FilesEncryptionEnterPwdTxtBox.Location = new System.Drawing.Point(22, 379);
+            FilesEncryptionEnterPwdTxtBox.Location = new System.Drawing.Point(83, 376);
             FilesEncryptionEnterPwdTxtBox.Name = "FilesEncryptionEnterPwdTxtBox";
-            FilesEncryptionEnterPwdTxtBox.Size = new System.Drawing.Size(493, 26);
+            FilesEncryptionEnterPwdTxtBox.PasswordChar = '*';
+            FilesEncryptionEnterPwdTxtBox.Size = new System.Drawing.Size(358, 26);
             FilesEncryptionEnterPwdTxtBox.TabIndex = 10;
             FilesEncryptionEnterPwdTxtBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -688,7 +718,7 @@
             FilesEncryptionDecryptFilesBtn.ForeColor = System.Drawing.SystemColors.Desktop;
             FilesEncryptionDecryptFilesBtn.Image = (System.Drawing.Image)resources.GetObject("FilesEncryptionDecryptFilesBtn.Image");
             FilesEncryptionDecryptFilesBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            FilesEncryptionDecryptFilesBtn.Location = new System.Drawing.Point(280, 438);
+            FilesEncryptionDecryptFilesBtn.Location = new System.Drawing.Point(280, 439);
             FilesEncryptionDecryptFilesBtn.Name = "FilesEncryptionDecryptFilesBtn";
             FilesEncryptionDecryptFilesBtn.Size = new System.Drawing.Size(235, 33);
             FilesEncryptionDecryptFilesBtn.TabIndex = 9;
@@ -1323,23 +1353,23 @@
             About.Controls.Add(label14);
             About.Controls.Add(panel1);
             About.Controls.Add(AboutTtxBox);
-            About.Location = new System.Drawing.Point(4, 27);
+            About.Location = new System.Drawing.Point(4, 24);
             About.Name = "About";
-            About.Size = new System.Drawing.Size(752, 521);
+            About.Size = new System.Drawing.Size(752, 524);
             About.TabIndex = 5;
             About.Text = "About";
             // 
             // verticalLabel1
             // 
-            verticalLabel1.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            verticalLabel1.BackColor = System.Drawing.Color.Black;
             verticalLabel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            verticalLabel1.Font = new System.Drawing.Font("Comic Sans MS", 14F);
-            verticalLabel1.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            verticalLabel1.Font = new System.Drawing.Font("Comic Sans MS", 13F);
+            verticalLabel1.ForeColor = System.Drawing.Color.White;
             verticalLabel1.Location = new System.Drawing.Point(5, 50);
             verticalLabel1.Name = "verticalLabel1";
             verticalLabel1.Size = new System.Drawing.Size(38, 400);
             verticalLabel1.TabIndex = 27;
-            verticalLabel1.Text = "Cipher Shield ©   Secure Your Data";
+            verticalLabel1.Text = "Cipher Shield © Secure you sensitive data";
             // 
             // label14
             // 
@@ -1359,7 +1389,7 @@
             panel1.Controls.Add(aboutCarousselLbl);
             panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             panel1.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            panel1.Location = new System.Drawing.Point(0, 453);
+            panel1.Location = new System.Drawing.Point(0, 456);
             panel1.Name = "panel1";
             panel1.Size = new System.Drawing.Size(752, 68);
             panel1.TabIndex = 25;
@@ -1644,6 +1674,8 @@
         private System.Windows.Forms.Button UMFileEncBtn;
         private System.Windows.Forms.Button UMRegexRenameBtn;
         private VerticalLabel verticalLabel1;
+        private System.Windows.Forms.Button hideShowPasswordFilesEnc;
+        private System.Windows.Forms.Label progressPercentageLabel;
     }
 }
 

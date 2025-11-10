@@ -3,6 +3,9 @@ using Microsoft.Data.Sqlite;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Security;
+using System.Runtime.InteropServices;
+
 
 namespace CipherShield.Helpers
 {
@@ -20,7 +23,7 @@ namespace CipherShield.Helpers
         public DatabaseHelper(string password)
         {
             // Create the path to the AppData folder
-            string appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Cipher Shield");
+            string appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Cipher Shield Pro");
             Directory.CreateDirectory(appDataPath); // Ensure the directory exists
 
             string dbFilePath = Path.Combine(appDataPath, "credentials.db");
@@ -41,7 +44,9 @@ namespace CipherShield.Helpers
                     Id INTEGER PRIMARY KEY AUTOINCREMENT,
                     Website TEXT NOT NULL,
                     Username TEXT NOT NULL,
-                    Password TEXT NOT NULL
+                    Password TEXT NOT NULL,
+                    Created DATETIME DEFAULT CURRENT_TIMESTAMP,
+                    Updated DATETIME DEFAULT CURRENT_TIMESTAMP
                 )";
                 command.ExecuteNonQuery();
             }
@@ -57,7 +62,7 @@ namespace CipherShield.Helpers
                 connection.Open();
 
                 var command = connection.CreateCommand();
-                command.CommandText = "SELECT Id, Website, Username, Password FROM PasswordEntries";
+                command.CommandText = "SELECT Id, Website, Username, Password, Created, Updated FROM PasswordEntries";
 
                 using (var reader = command.ExecuteReader())
                 {
@@ -68,7 +73,9 @@ namespace CipherShield.Helpers
                             Id = reader.GetInt32(0),
                             Website = reader.GetString(1),
                             Username = reader.GetString(2),
-                            Password = reader.GetString(3)
+                            Password = reader.GetString(3),
+                            Created = reader.GetDateTime(4),
+                            Updated = reader.GetDateTime(5)
                         };
                         entries.Add(entry);
                     }
@@ -87,12 +94,13 @@ namespace CipherShield.Helpers
 
                 var command = connection.CreateCommand();
                 command.CommandText = @"
-                INSERT INTO PasswordEntries (Website, Username, Password)
-                VALUES ($website, $username, $password)";
+                INSERT INTO PasswordEntries (Website, Username, Password, Created, Updated)
+                VALUES ($website, $username, $password, $created, $updated)";
                 command.Parameters.AddWithValue("$website", entry.Website);
                 command.Parameters.AddWithValue("$username", entry.Username);
                 command.Parameters.AddWithValue("$password", entry.Password);
-
+                command.Parameters.AddWithValue("$created", DateTime.Now);
+                command.Parameters.AddWithValue("$updated", DateTime.Now);
                 command.ExecuteNonQuery();
             }
         }
@@ -107,13 +115,13 @@ namespace CipherShield.Helpers
                 var command = connection.CreateCommand();
                 command.CommandText = @"
                 UPDATE PasswordEntries
-                SET Website = $website, Username = $username, Password = $password
+                SET Website = $website, Username = $username, Password = $password, Updated = $updated
                 WHERE Id = $id";
                 command.Parameters.AddWithValue("$website", entry.Website);
                 command.Parameters.AddWithValue("$username", entry.Username);
                 command.Parameters.AddWithValue("$password", entry.Password);
                 command.Parameters.AddWithValue("$id", entry.Id);
-
+                command.Parameters.AddWithValue("$updated", DateTime.Now);
                 command.ExecuteNonQuery();
             }
         }
