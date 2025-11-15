@@ -2,6 +2,8 @@
 
 I coded it from the scratch with C# and it's heavily tested for a flawless usability and functionality.
 
+Deepseek AI helped me in optimizing encryption algorithm. 
+
 Cipher Shield is a robust and secure solution designed to handle all your password and file management needs. It includes a password generator, password manager, file encryption using **AES-GCM with Argon2id**, and regex-based file renaming. 
 With Cipher Shield, you can ensure that your sensitive data remains protected at all times.
 
